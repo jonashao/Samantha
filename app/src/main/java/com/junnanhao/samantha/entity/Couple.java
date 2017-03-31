@@ -7,15 +7,12 @@ import lombok.experimental.Accessors;
 
 /**
  * Created by Jonas on 2017/3/31.
- * describe how to display and react with action menu
+ * Use List of Couple to simulate Map
  */
-
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(fluent = true)
-public class MenuItem extends RealmObject {
-    String title;
-    int type;
-    String data;
+public class Couple extends RealmObject {
+    int key;
+    String value;
 }
-

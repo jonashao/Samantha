@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,13 @@ import com.junnanhao.samantha.entity.InfoBean;
 import com.junnanhao.samantha.ui.adapter.RecyclerViewAdapter;
 import com.junnanhao.samantha.ui.utils.PaddingItemDecoration;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.realm.Realm;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -31,7 +30,6 @@ public class CardsFragment extends Fragment {
 
     private Unbinder unbinder;
     private RecyclerViewAdapter mAdapter;
-    private List<InfoBean> mDataSet;
 
     public CardsFragment() {
     }
@@ -39,6 +37,8 @@ public class CardsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Realm realm = Realm.getDefaultInstance();
+        mAdapter = new RecyclerViewAdapter(realm.where(InfoBean.class).findAllAsync());
     }
 
     @Override
@@ -46,17 +46,14 @@ public class CardsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cards, container, false);
         unbinder = ButterKnife.bind(this, view);
+        setupRecyclerView();
+        return view;
+    }
 
-        mDataSet = new ArrayList<>();
-        SparseArray<String> data = new SparseArray<>();
-        data.put(1, "hi");
-        mDataSet.add(new InfoBean().type(0).data(data));
-        mAdapter = new RecyclerViewAdapter( mDataSet);
-
+    private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new PaddingItemDecoration(getActivity(), PaddingItemDecoration.VERTICAL));
         recyclerView.setAdapter(mAdapter);
-        return view;
     }
 
 

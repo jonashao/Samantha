@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.entity.InfoBean;
+
+import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,8 +33,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Realm realm = Realm.getDefaultInstance();
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        InfoBean infoBean = realm.createObject(InfoBean.class);
+                        infoBean.type(2);
+                    }
+                });
             }
         });
 

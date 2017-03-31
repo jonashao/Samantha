@@ -1,36 +1,40 @@
+/*
+ * Copyright 2016 Realm Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.junnanhao.samantha.ui.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+
 import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.entity.InfoBean;
 import com.junnanhao.samantha.ui.custom.TrainTicketView;
 
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
 
-/**
- * Created by Jonas on 2017/3/31.
- * Adapter to bind data to view.
- */
 
-public class RecyclerViewAdapter extends RecyclerSwipeAdapter<RecyclerViewAdapter.ViewHolder> {
-
-    private List<InfoBean> infoBeans;
-
-    public RecyclerViewAdapter(List<InfoBean> infoBeans) {
-
-        this.infoBeans = infoBeans;
+public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean, RecyclerViewAdapter.ViewHolder> {
+    public RecyclerViewAdapter(OrderedRealmCollection<InfoBean> data) {
+        super(data);
     }
 
     @Override
@@ -41,22 +45,12 @@ public class RecyclerViewAdapter extends RecyclerSwipeAdapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        InfoBean bean = infoBeans.get(position);
-        viewHolder.setData(bean);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final InfoBean bean = getItem(position);
+        holder.bindData(bean);
     }
 
-    @Override
-    public int getItemCount() {
-        return infoBeans.size();
-    }
-
-    @Override
-    public int getSwipeLayoutResourceId(int position) {
-        return R.id.swipe;
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends SwipeRealmRecyclerViewAdapter.ViewHolder {
 
         @BindView(R.id.swipe) SwipeLayout swipeLayout;
         @BindView(R.id.menu_wrapper) LinearLayout menus;
@@ -64,12 +58,10 @@ public class RecyclerViewAdapter extends RecyclerSwipeAdapter<RecyclerViewAdapte
 
         ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
         }
 
-        public void setData(InfoBean bean) {
+        void bindData(InfoBean bean) {
             surface.addView(new TrainTicketView(itemView.getContext()));
-
         }
     }
 }
