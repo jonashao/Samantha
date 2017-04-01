@@ -1,7 +1,5 @@
 package com.junnanhao.samantha.entity;
 
-import java.util.List;
-
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -19,6 +17,6 @@ import lombok.experimental.Accessors;
 public class InfoBean extends RealmObject {
     long id;
     private int type;
-    private RealmList<MenuItem> actions;
+    private RealmList<ActionMenuItem> actions;
     private RealmList<Couple> data;
 }

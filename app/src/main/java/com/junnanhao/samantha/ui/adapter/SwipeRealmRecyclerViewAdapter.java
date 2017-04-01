@@ -1,5 +1,6 @@
 package com.junnanhao.samantha.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,9 +97,11 @@ abstract class SwipeRealmRecyclerViewAdapter<T extends RealmModel, VH extends Sw
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        protected Context context;
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
         }
     }
 }

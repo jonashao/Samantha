@@ -3,7 +3,6 @@ package com.junnanhao.samantha.ui.activity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.entity.ActionMenuItem;
 import com.junnanhao.samantha.entity.InfoBean;
 
 import io.realm.Realm;
@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
                     public void execute(Realm realm) {
                         InfoBean infoBean = realm.createObject(InfoBean.class);
                         infoBean.type(2);
+                        infoBean.actions().add(new ActionMenuItem().title("action").type(0));
+                        infoBean.actions().add(new ActionMenuItem().title("action").type(0));
+
                     }
                 });
             }

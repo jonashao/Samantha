@@ -21,15 +21,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import com.daimajia.swipe.SwipeLayout;
 import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.entity.ActionMenuItem;
 import com.junnanhao.samantha.entity.InfoBean;
 import com.junnanhao.samantha.ui.custom.TrainTicketView;
 
 import butterknife.BindView;
 import io.realm.OrderedRealmCollection;
+
 
 
 public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean, RecyclerViewAdapter.ViewHolder> {
@@ -61,7 +64,17 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
         }
 
         void bindData(InfoBean bean) {
-            surface.addView(new TrainTicketView(itemView.getContext()));
+            surface.addView(new TrainTicketView(context));
+            for (ActionMenuItem item : bean.actions()) {
+                addMenu(item);
+            }
+        }
+
+        void addMenu(ActionMenuItem item) {
+            TextView tv  = (TextView)LayoutInflater.from(context)
+                    .inflate(R.layout.item_swipe_menu, menus,false);
+            tv.setText(item.title());
+            menus.addView(tv);
         }
     }
 }

@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(fluent = true)
-public class MenuItem extends RealmObject {
+public class ActionMenuItem extends RealmObject {
     String title;
     int type;
     String data;
