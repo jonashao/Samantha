@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SamanthaViews</string>
+    <string name="click_to_remove">Click a note to remove it</string>
+    <string name="start_station">start station</string>
+    <string name="final_station">final station</string>
+    <string name="arrow">arrow</string>
+</resources>

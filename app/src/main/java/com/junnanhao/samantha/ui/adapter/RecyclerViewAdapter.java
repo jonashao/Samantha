@@ -26,9 +26,9 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.entity.ActionMenuItem;
-import com.junnanhao.samantha.entity.InfoBean;
-import com.junnanhao.samantha.ui.custom.TrainTicketView;
+import com.junnanhao.samantha.model.entity.ActionMenuItem;
+import com.junnanhao.samantha.model.entity.InfoBean;
+import com.junnanhao.samanthaviews.TrainTicketView;
 
 import butterknife.BindView;
 import io.realm.OrderedRealmCollection;

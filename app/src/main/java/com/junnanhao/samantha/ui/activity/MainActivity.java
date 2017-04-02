@@ -1,22 +1,27 @@
 package com.junnanhao.samantha.ui.activity;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.entity.ActionMenuItem;
-import com.junnanhao.samantha.entity.InfoBean;
+import com.junnanhao.samantha.workflow.Workflow;
+import com.junnanhao.samantha.model.entity.ActionMenuItem;
+import com.junnanhao.samantha.model.entity.InfoBean;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 import io.realm.Realm;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
-
+    private Workflow workflow;
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
@@ -26,30 +31,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        InfoBean infoBean = realm.createObject(InfoBean.class);
-                        infoBean.type(2);
-                        infoBean.actions().add(new ActionMenuItem().title("action").type(0));
-                        infoBean.actions().add(new ActionMenuItem().title("action").type(0));
-
-                    }
-                });
-            }
-        });
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
+
+        workflow = new Workflow(this);
+        workflow.start();
+
+        RxPermissions permissions = new RxPermissions(this);
+        permissions.request(Manifest.permission.READ_SMS)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if(aBoolean){
+                            workflow.scan();
+                        }
+                    }
+                });
     }
 
     @Override
@@ -73,6 +76,22 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @OnClick(R.id.fab)
+    void onFabClick() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                InfoBean infoBean = realm.createObject(InfoBean.class);
+                infoBean.type(2);
+                infoBean.actions().add(new ActionMenuItem().title("action").type(0));
+                infoBean.actions().add(new ActionMenuItem().title("action").type(0));
+            }
+        });
+        workflow.scan();
+    }
+
 
     /**
      * A native method that is implemented by the 'native-lib' native library,

@@ -80,4 +80,13 @@ dependencies {
         exclude group: 'com.jakewharton.timber', module: 'timber'
     }
     compile 'io.realm:android-adapters:2.0.0'
+    compile project(path: ':samanthaviews')
+
+    compile ('com.hwangjr.rxbus:rxbus:1.0.5') {
+        exclude group: 'com.jakewharton.timber', module: 'timber'
+    }
+
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
+    compile 'com.google.guava:guava:20.0'
+
 }

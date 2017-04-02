@@ -1,14 +1,13 @@
-package com.junnanhao.samantha.ui.custom;
+package com.junnanhao.samanthaviews;
 
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import com.junnanhao.samantha.R;
-
 /**
  * Created by Jonas on 2017/3/31.
+ * train ticket
  */
 
 public class TrainTicketView extends LinearLayout {
@@ -18,7 +17,7 @@ public class TrainTicketView extends LinearLayout {
     }
 
     private void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.content_card_train_ticket, this);
+        LayoutInflater.from(context).inflate(R.layout.card_train_ticket, this);
         setGravity(Gravity.CENTER);
     }
 }

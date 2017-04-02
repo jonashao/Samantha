@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Samantha</string>
     <string name="delete">删除</string>
+    <string name="toast_warn_sms_permission_not_granted">您未授权读取短信，无法帮您处理短信</string>
 </resources>

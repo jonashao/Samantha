@@ -13,5 +13,6 @@
     <string name="arrow">arrow</string>
     <string name="archive">archive</string>
     <string name="delete">delete</string>
+    <string name="toast_warn_sms_permission_not_granted">您未授权读取短信，无法帮您处理短信</string>
 
 </resources>

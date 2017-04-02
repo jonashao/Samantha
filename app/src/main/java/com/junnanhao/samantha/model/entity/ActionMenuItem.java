@@ -1,4 +1,4 @@
-package com.junnanhao.samantha.entity;
+package com.junnanhao.samantha.model.entity;
 
 import io.realm.RealmObject;
 import lombok.Data;
