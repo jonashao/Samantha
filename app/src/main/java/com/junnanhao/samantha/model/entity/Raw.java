@@ -22,14 +22,9 @@ import lombok.experimental.Accessors;
 public class Raw extends RealmObject {
     public static final String TYPE_SMS = "sms";
 
-    @PrimaryKey
-    private long id;
-    private String category;
-    /**
-     * Type of source, like email and sms
-     */
-    private String type;
-    private String sender;
+    @PrimaryKey private long id;
+
+    private Sender sender;
     private String subject;
     private String body;
     private Date datetime;

@@ -6,13 +6,14 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * Created by Jonas on 2017/3/31.
- * Use List of Couple to simulate Map
+ * Created by Jonas on 2017/4/3.
+ * Map concept to their formatter in a template pattern
  */
-@Data
+
 @EqualsAndHashCode(callSuper = true)
+@Data
 @Accessors(fluent = true)
-public class Couple extends RealmObject {
-    int key;
-    String value;
+public class ConceptFormat extends RealmObject {
+    private Concept concept;
+    private String formatter;
 }

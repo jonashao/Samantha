@@ -3,8 +3,12 @@ package com.junnanhao.samantha.workflow;
 import android.content.Context;
 
 import com.junnanhao.samantha.app.RxBus;
+import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.model.entity.Raw;
+import com.junnanhao.samantha.model.entity.SenderBook;
+import com.junnanhao.samantha.model.entity.Template;
 import com.junnanhao.samantha.util.ClassUtils;
+import com.junnanhao.samantha.workflow.extractor.Extractor;
 import com.junnanhao.samantha.workflow.scanner.Scanner;
 import com.junnanhao.samantha.workflow.scanner.SmsScanner;
 
@@ -17,12 +21,10 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.Subject;
-import timber.log.Timber;
+import io.realm.Realm;
 
 public class Workflow {
     private Context mContext;
-    private Subject<Object> bus;
 
     private List<Scanner> scanners = new ArrayList<>();
 
@@ -41,10 +43,14 @@ public class Workflow {
                 .subscribeOn(Schedulers.computation())
                 .subscribe(new Consumer<LinkedList<Raw>>() {
                     @Override
-                    public void accept(LinkedList<Raw> raws) throws Exception {
-                        extract(raws);
+                    public void accept(LinkedList<Raw> rawList) throws Exception {
+                        extract(rawList);
                     }
                 }));
+    }
+
+    public void stop() {
+        disposable.clear();
     }
 
     private void setupScanners() {
@@ -58,7 +64,6 @@ public class Workflow {
      * @return all information scanned from sources
      */
     private LinkedList<Raw> scanSource() {
-        Timber.d("scan source");
         LinkedList<Raw> data = new LinkedList<>();
         for (Scanner scanner : scanners) {
             List<Raw> scanned = scanner.scan();
@@ -66,26 +71,38 @@ public class Workflow {
                 data.addAll(scanner.scan());
             }
         }
-        Timber.d("scanned: %s", data.toString());
         return data;
     }
 
 
     private void extract(LinkedList<Raw> rawList) {
         System.out.println(rawList.toString());
-//        Realm realm = Realm.getDefaultInstance();
-//        for (Raw raw : rawList) {
-//            RawClassifier classifier = realm
-//                    .where(RawClassifier.class)
-//                    .equalTo("sender", raw.sender())
-//                    .findFirst();
-//            if (classifier == null) continue;
-//
-//            for (ExtractPattern next : classifier.templates()) {
-//                Extractor extractor = new Extractor(next);
-//                extractor.extract(raw);
-//            }
-//        }
+        Realm realm = Realm.getDefaultInstance();
+
+        final List<InfoBean> beans = new ArrayList<>(rawList.size());
+        for (Raw raw : rawList) {
+            SenderBook senderBook = realm
+                    .where(SenderBook.class)
+                    .equalTo("sender.type",raw.sender().type())
+                    .equalTo("sender.value", raw.sender().value())
+                    .findFirst();
+            if (senderBook == null) continue;
+
+            for (Template next : senderBook.templates()) {
+                Extractor extractor = new Extractor(next);
+                InfoBean infoBean = extractor.extract(raw);
+                if(infoBean!=null) {
+                    beans.add(infoBean);
+                    break;
+                }
+            }
+        }
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealm(beans);
+            }
+        });
     }
 
     public void scan() {

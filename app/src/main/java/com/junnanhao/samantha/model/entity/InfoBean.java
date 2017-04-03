@@ -3,6 +3,7 @@ package com.junnanhao.samantha.model.entity;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,8 +16,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 public class InfoBean extends RealmObject {
-    long id;
-    private int type;
+    @PrimaryKey long id;
+    private InfoType type;
+    private Raw raw;
     private RealmList<ActionMenuItem> actions;
-    private RealmList<Couple> data;
+    private RealmList<ConceptValue> data;
 }

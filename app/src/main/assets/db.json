@@ -1,0 +1,67 @@
+[
+  {
+    "sender": {
+      "type": "sms",
+      "value": "12306"
+    },
+    "templates": [
+      {
+        "type": {
+          "id": 1
+        },
+        "pattern": "订单(E\\d{9,10}),(\\w+)您已购(\\d+)月(\\d+)日([A-Z]\\d{1,5})次(\\d{1,2})车(\\w+)号([^\\d]+)(\\d{1,2}):(\\d{1,2})开。",
+        "conceptFormats": [
+          {
+            "concept": {
+              "id": 1,
+              "meaning": "order_number"
+            },
+            "formatter": "$1"
+          },
+          {
+            "concept": {
+              "id": 2,
+              "meaning": "passenger"
+            },
+            "formatter": "$2"
+          },
+          {
+            "concept": {
+              "id": 3,
+              "meaning": "date"
+            },
+            "formatter": "$3月$4日"
+          },
+          {
+            "concept": {
+              "id": 4,
+              "meaning": "train_number"
+            },
+            "formatter": "$5"
+          },
+          {
+            "concept": {
+              "id": 5,
+              "meaning": "seat_number"
+            },
+            "formatter": "$6车$7号"
+          },
+          {
+            "concept": {
+              "id": 6,
+              "meaning": "start_station"
+            },
+            "formatter": "$8站"
+          },
+          {
+            "concept": {
+              "id": 7,
+              "meaning": "start_time"
+            },
+            "formatter": "$9:$10"
+          }
+        ]
+      }
+    ]
+  }
+]

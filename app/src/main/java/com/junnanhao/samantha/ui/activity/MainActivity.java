@@ -14,14 +14,16 @@ import com.junnanhao.samantha.model.entity.ActionMenuItem;
 import com.junnanhao.samantha.model.entity.InfoBean;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.UUID;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 import io.realm.Realm;
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     private Workflow workflow;
+
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
@@ -48,11 +50,17 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        if(aBoolean){
+                        if (aBoolean) {
                             workflow.scan();
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        workflow.stop();
     }
 
     @Override
@@ -83,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                InfoBean infoBean = realm.createObject(InfoBean.class);
-                infoBean.type(2);
+                //todo: UUID hashcode's possible to repeat
+                InfoBean infoBean = realm.createObject(InfoBean.class, UUID.randomUUID().hashCode());
                 infoBean.actions().add(new ActionMenuItem().title("action").type(0));
                 infoBean.actions().add(new ActionMenuItem().title("action").type(0));
             }

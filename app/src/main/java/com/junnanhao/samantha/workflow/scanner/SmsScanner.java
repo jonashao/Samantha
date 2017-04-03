@@ -7,21 +7,15 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
-import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.Raw;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.junnanhao.samantha.model.entity.Sender;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import io.realm.Realm;
 import timber.log.Timber;
 
 /**
@@ -59,56 +53,6 @@ public class SmsScanner implements Scanner {
         editor.apply();
     }
 
-    public static Cursor readSms(Context context, int year, int month, int date) {
-
-        Calendar selectAfter = Calendar.getInstance();
-        selectAfter.set(year, month, date);
-
-        String[] selectionArgs = new String[]{Long.toString(selectAfter.getTimeInMillis())};
-        final Cursor cursor = context.getContentResolver().query(SMS_CONTENT, projection, selection, selectionArgs, "date desc");    // 获取手机短信
-
-
-        if (cursor != null) {
-            final int bodyIndex = cursor.getColumnIndex("body");
-            final int dateIndex = cursor.getColumnIndex("date");
-            final int senderIndex = cursor.getColumnIndex("address");
-
-            Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-
-                    final Pattern pattern = Pattern.compile(SUBJECT_PATTERN);
-
-                    while (cursor.moveToNext()) {
-
-
-                        Raw sms = realm.createObject(Raw.class, UUID.randomUUID().hashCode());
-                        sms.body(cursor.getString(bodyIndex))
-                                .datetime(new Date(cursor.getLong(dateIndex)))
-                                .type(Raw.TYPE_SMS)
-                                .sender(cursor.getString(senderIndex));
-
-                        Matcher matcher = pattern.matcher(sms.body());
-                        if (matcher.find()) {
-                            int count = matcher.groupCount();
-                            for (int i = 1; i <= count; i++) {
-                                String group_i = matcher.group(i);
-                                if (group_i != null) {
-                                    sms.subject(group_i);
-                                    break;
-                                }
-                            }
-                        }
-
-                        System.out.println("--sms-- : " + sms.toString());
-                    }
-                }
-            });
-        }
-
-        return cursor;
-    }
-
 
     @Override
     public List<Raw> scan() {
@@ -141,8 +85,7 @@ public class SmsScanner implements Scanner {
                 data.add(new Raw()
                         .body(cursor.getString(bodyIndex))
                         .datetime(new Date(cursor.getLong(dateIndex)))
-                        .type(Raw.TYPE_SMS)
-                        .sender(cursor.getString(senderIndex)));
+                        .sender(new Sender(Raw.TYPE_SMS, cursor.getString(senderIndex))));
             }
             cursor.close();
         }
