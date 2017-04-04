@@ -16,6 +16,7 @@
 
 package com.junnanhao.samantha.ui.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,6 @@ import com.junnanhao.samantha.model.entity.ActionMenuItem;
 import com.junnanhao.samantha.model.entity.Concept;
 import com.junnanhao.samantha.model.entity.ConceptValue;
 import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samanthaviews.CardSurfaceContainer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,16 +65,43 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
             super(itemView);
         }
 
+        private TextView findViewByResName(String resName, View view) {
+            if (resName == null) {
+                return null;
+            }
+            int id = context.getResources().getIdentifier(resName, "id", context.getPackageName());
+            if (id != 0) {
+                return ButterKnife.findById(view, id);
+            } else return null;
+        }
+
         void bindData(InfoBean bean) {
             CardView cardView = new CardView(context);
             LayoutInflater.from(context).inflate(com.junnanhao.samanthaviews.R.layout.card_train_ticket, cardView);
 
-            for (ConceptValue conceptValue : bean.data()) {
-                String resIdName = conceptValue.concept().resIdName();
-                if (resIdName != null) {
-                    int id = context.getResources().getIdentifier(resIdName, "id", context.getPackageName());
-                    TextView tv = ButterKnife.findById(cardView, id);
-                    tv.setText(conceptValue.value());
+            TextView tvSetting = findViewByResName(bean.type().resNameSetting(), cardView);
+            tvSetting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            for (Concept concept : bean.type().concepts()) {
+                String resName = concept.resIdName();
+                if (resName != null) {
+                    TextView tv = findViewByResName(resName, cardView);
+                    String value = bean.valueOfConcept(concept);
+                    if (tv != null && value != null) {
+                        tv.setText(value);
+                    } else {
+                        if (tv != null) {
+                            tv.setVisibility(View.INVISIBLE);
+                        }
+                        if (tvSetting != null) {
+                            tvSetting.setVisibility(View.VISIBLE);
+                        }
+                    }
                 }
             }
 
@@ -83,8 +110,6 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
             for (ActionMenuItem item : bean.actions()) {
                 addMenu(item);
             }
-
-
         }
 
         void addMenu(ActionMenuItem item) {

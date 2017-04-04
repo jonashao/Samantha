@@ -2,6 +2,7 @@ package com.junnanhao.samantha.model.entity;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,6 +17,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 public class SenderBook extends RealmObject {
+    @PrimaryKey private int id;
     private Sender sender;
     private RealmList<Template> templates;
 }

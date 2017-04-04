@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 import com.junnanhao.samantha.BuildConfig;
+import com.junnanhao.samantha.model.entity.Concept;
 import com.junnanhao.samantha.model.entity.Sender;
 import com.junnanhao.samantha.model.entity.SenderBook;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
@@ -41,8 +42,13 @@ public class App extends Application {
             @Override
             public void execute(Realm realm) {
                 try {
-                    InputStream is = getAssets().open("db.json");
-                    realm.createAllFromJson(SenderBook.class, is);
+                    InputStream is = getAssets().open("db_concept.json");
+                    realm.createAllFromJson(Concept.class, is);
+                    is.close();
+
+                    is = getAssets().open("db.json");
+                    realm.createOrUpdateAllFromJson(SenderBook.class, is);
+                    is.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

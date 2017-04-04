@@ -18,6 +18,6 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @NoArgsConstructor
 public class ConceptValue extends RealmObject {
-    Concept concept;
-    String value;
+    private Concept concept;
+    private String value;
 }

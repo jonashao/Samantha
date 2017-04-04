@@ -21,4 +21,13 @@ public class InfoBean extends RealmObject {
     private Raw raw;
     private RealmList<ActionMenuItem> actions;
     private RealmList<ConceptValue> data;
+
+    public String valueOfConcept(Concept concept) {
+        for (ConceptValue conceptValue : data) {
+            if (conceptValue.concept().equals(concept)) {
+                return conceptValue.value();
+            }
+        }
+        return null;
+    }
 }

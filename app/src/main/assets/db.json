@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "sender": {
       "type": "sms",
       "value": "12306"
@@ -7,7 +8,50 @@
     "templates": [
       {
         "type": {
-          "id": 1
+          "id": 1,
+          "resNameSetting": "tv_select_destination",
+          "concepts": [
+            {
+              "id": 3,
+              "meaning": "start date",
+              "resIdName": "tv_start_date"
+            },
+            {
+              "id": 4,
+              "meaning": "train_number",
+              "resIdName": "tv_travel_number"
+            },
+            {
+              "id": 5,
+              "meaning": "seat_number",
+              "resIdName": "tv_seat_number"
+            },
+            {
+              "id": 6,
+              "meaning": "start_station",
+              "resIdName": "tv_start_station"
+            },
+            {
+              "id": 7,
+              "meaning": "start_time",
+              "resIdName": "tv_start_time"
+            },
+            {
+              "id": 8,
+              "meaning": "arrive time",
+              "resIdName": "tv_arrive_time"
+            },
+            {
+              "id": 9,
+              "meaning": "arrive station",
+              "resIdName": "tv_arrive_station"
+            },
+            {
+              "id": 10,
+              "meaning": "arrive_date",
+              "resIdName": "tv_arrive_date"
+            }
+          ]
         },
         "pattern": "订单(E\\d{9,10}),(\\w+)您已购(\\d+)月(\\d+)日([A-Z]\\d{1,5})次(\\d{1,2})车(\\w+)号([^\\d]+)(\\d{1,2}):(\\d{1,2})开。",
         "conceptFormats": [
@@ -29,7 +73,7 @@
             "concept": {
               "id": 3,
               "meaning": "date",
-              "resIdName":"tv_start_date"
+              "resIdName": "tv_start_date"
             },
             "formatter": "$3月$4日"
           },
@@ -37,7 +81,7 @@
             "concept": {
               "id": 4,
               "meaning": "train_number",
-              "resIdName":"tv_travel_number"
+              "resIdName": "tv_travel_number"
             },
             "formatter": "$5"
           },
@@ -45,7 +89,7 @@
             "concept": {
               "id": 5,
               "meaning": "seat_number",
-              "resIdName":"tv_seat_number"
+              "resIdName": "tv_seat_number"
             },
             "formatter": "$6车$7号"
           },
@@ -53,7 +97,7 @@
             "concept": {
               "id": 6,
               "meaning": "start_station",
-              "resIdName":"tv_start_station"
+              "resIdName": "tv_start_station"
             },
             "formatter": "$8站"
           },
@@ -61,7 +105,7 @@
             "concept": {
               "id": 7,
               "meaning": "start_time",
-              "resIdName":"tv_start_time"
+              "resIdName": "tv_start_time"
             },
             "formatter": "$9:$10"
           }

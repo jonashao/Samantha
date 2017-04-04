@@ -11,4 +11,5 @@
     <string name="start_date">3月28日</string>
     <string name="arrive_date">3月28日</string>
     <string name="seat_number">3车6F号</string>
+    <string name="direction">Direction</string>
 </resources>

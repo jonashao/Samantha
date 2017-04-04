@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "meaning": "order_number"
+  },
+  {
+    "id": 2,
+    "meaning": "passenger"
+  },
+  {
+    "id": 3,
+    "meaning": "start date",
+    "resIdName": "tv_start_date"
+  },
+  {
+    "id": 4,
+    "meaning": "train_number",
+    "resIdName": "tv_travel_number"
+  },
+  {
+    "id": 5,
+    "meaning": "seat_number",
+    "resIdName": "tv_seat_number"
+  },
+  {
+    "id": 6,
+    "meaning": "start_station",
+    "resIdName": "tv_start_station"
+  },
+  {
+    "id": 7,
+    "meaning": "start_time",
+    "resIdName": "tv_start_time"
+  },
+  {
+    "id": 8,
+    "meaning": "arrive time",
+    "resIdName": "tv_arrive_time"
+  },
+  {
+    "id": 9,
+    "meaning": "arrive station",
+    "resIdName": "tv_arrive_station"
+  },
+  {
+    "id": 10,
+    "meaning": "arrive_date",
+    "resIdName": "tv_arrive_date"
+  }
+]
