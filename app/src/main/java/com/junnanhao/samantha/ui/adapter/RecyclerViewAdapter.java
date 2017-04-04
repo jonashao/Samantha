@@ -16,7 +16,6 @@
 
 package com.junnanhao.samantha.ui.adapter;
 
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,6 @@ import com.daimajia.swipe.SwipeLayout;
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.ActionMenuItem;
 import com.junnanhao.samantha.model.entity.Concept;
-import com.junnanhao.samantha.model.entity.ConceptValue;
 import com.junnanhao.samantha.model.entity.InfoBean;
 
 import butterknife.BindView;
@@ -77,15 +75,17 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
 
         void bindData(InfoBean bean) {
             CardView cardView = new CardView(context);
-            LayoutInflater.from(context).inflate(com.junnanhao.samanthaviews.R.layout.card_train_ticket, cardView);
+            LayoutInflater.from(context).inflate(com.junnanhao.samanthaviews.R.layout.train_ticket_card, cardView);
 
             TextView tvSetting = findViewByResName(bean.type().resNameSetting(), cardView);
-            tvSetting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            if (tvSetting != null) {
+                tvSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                }
-            });
+                    }
+                });
+            }
 
             for (Concept concept : bean.type().concepts()) {
                 String resName = concept.resIdName();

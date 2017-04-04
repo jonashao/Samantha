@@ -25,6 +25,7 @@ import timber.log.Timber;
 public class Extractor {
     private Template template;
     private Pattern mPattern;
+    private Pattern formatPattern = Pattern.compile("\\$\\{(\\d+)\\}");
 
     public Extractor(Template pattern) {
         // todo:check if need update pattern
@@ -43,7 +44,7 @@ public class Extractor {
             bean = new InfoBean()
                     .type(category)
                     .id(UUID.randomUUID().hashCode())
-//                    .raw(raw)
+                    .raw(raw)
                     .data(new RealmList<ConceptValue>());
             bean.data().addAll(itemList);
         }
@@ -52,15 +53,22 @@ public class Extractor {
 
     private List<ConceptValue> extract(Matcher matcher) {
         List<ConceptValue> list = new ArrayList<>();
-        Timber.d(matcher.replaceFirst("$10"));
-        Timber.d(matcher.group(10));
+
         for (ConceptFormat item : template.conceptFormats()) {
-            String v = matcher.replaceFirst(item.formatter());
+            String formatter = item.formatter();
+            Matcher formatMather = formatPattern.matcher(formatter);
+            while (formatMather.find()) {
+                formatter = formatMather.replaceFirst(matcher.group(Integer.valueOf(formatMather.group(1))));
+                formatMather = formatPattern.matcher(formatter);
+            }
+
+            String v = matcher.replaceFirst(formatter);
             if (v != null) {
                 list.add(new ConceptValue(item.concept(), v));
             }
         }
         return list;
     }
+
 
 }

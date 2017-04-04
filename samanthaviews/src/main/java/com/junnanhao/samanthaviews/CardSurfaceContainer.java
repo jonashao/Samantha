@@ -17,7 +17,7 @@ public class CardSurfaceContainer extends LinearLayout {
     }
 
     private void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.card_train_ticket, this);
+        LayoutInflater.from(context).inflate(R.layout.train_ticket_card, this);
         setGravity(Gravity.CENTER);
 
     }

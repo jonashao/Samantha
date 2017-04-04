@@ -107,7 +107,7 @@
               "meaning": "start_time",
               "resIdName": "tv_start_time"
             },
-            "formatter": "$9:$10"
+            "formatter": "$9:${10}"
           }
         ]
       }
