@@ -1,5 +1,6 @@
 package com.junnanhao.samantha.model.entity;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import lombok.Data;
@@ -15,5 +16,6 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @Data
 public class InfoType extends RealmObject {
-    @PrimaryKey int id;
+    @PrimaryKey private int id;
+    private RealmList<Concept> concepts;
 }

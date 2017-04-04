@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -39,6 +40,8 @@ public class ExtractorUnitTest {
         assertEquals(time,"12:20");
         String seat =  matcher.replaceFirst("$6车$7号");
         assertEquals(seat,"12车2A号");
+
+        assertFalse(mPattern.matcher(smsTxt2).find());
 
     }
 }

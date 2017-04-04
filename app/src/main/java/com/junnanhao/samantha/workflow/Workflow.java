@@ -76,7 +76,6 @@ public class Workflow {
 
 
     private void extract(LinkedList<Raw> rawList) {
-        System.out.println(rawList.toString());
         Realm realm = Realm.getDefaultInstance();
 
         final List<InfoBean> beans = new ArrayList<>(rawList.size());

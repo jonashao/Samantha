@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
+import com.junnanhao.samantha.BuildConfig;
 import com.junnanhao.samantha.model.entity.Raw;
 import com.junnanhao.samantha.model.entity.Sender;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import timber.log.Timber;
 
@@ -64,9 +66,11 @@ public class SmsScanner implements Scanner {
         }
 
         String[] selectionArgs = new String[]{Long.toString(lastReadDate)};
-        Calendar selectAfter = Calendar.getInstance();
-        selectAfter.set(2015, 1, 1);
-        selectionArgs = new String[]{Long.toString(selectAfter.getTimeInMillis())};
+        if (BuildConfig.DEBUG) {
+            Calendar selectAfter = Calendar.getInstance();
+            selectAfter.set(2015, 1, 1);
+            selectionArgs = new String[]{Long.toString(selectAfter.getTimeInMillis())};
+        }
 
         final Cursor cursor = mContext.getContentResolver()
                 .query(SMS_CONTENT, projection, selection, selectionArgs, sortOrder);    // 获取手机短信
@@ -85,6 +89,7 @@ public class SmsScanner implements Scanner {
                 data.add(new Raw()
                         .body(cursor.getString(bodyIndex))
                         .datetime(new Date(cursor.getLong(dateIndex)))
+                        .id(UUID.randomUUID().hashCode())
                         .sender(new Sender(Raw.TYPE_SMS, cursor.getString(senderIndex))));
             }
             cursor.close();

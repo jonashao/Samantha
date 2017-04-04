@@ -43,7 +43,7 @@ public class Extractor {
             bean = new InfoBean()
                     .type(category)
                     .id(UUID.randomUUID().hashCode())
-                    .raw(raw)
+//                    .raw(raw)
                     .data(new RealmList<ConceptValue>());
             bean.data().addAll(itemList);
         }

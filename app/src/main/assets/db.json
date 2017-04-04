@@ -28,35 +28,40 @@
           {
             "concept": {
               "id": 3,
-              "meaning": "date"
+              "meaning": "date",
+              "resIdName":"tv_start_date"
             },
             "formatter": "$3月$4日"
           },
           {
             "concept": {
               "id": 4,
-              "meaning": "train_number"
+              "meaning": "train_number",
+              "resIdName":"tv_travel_number"
             },
             "formatter": "$5"
           },
           {
             "concept": {
               "id": 5,
-              "meaning": "seat_number"
+              "meaning": "seat_number",
+              "resIdName":"tv_seat_number"
             },
             "formatter": "$6车$7号"
           },
           {
             "concept": {
               "id": 6,
-              "meaning": "start_station"
+              "meaning": "start_station",
+              "resIdName":"tv_start_station"
             },
             "formatter": "$8站"
           },
           {
             "concept": {
               "id": 7,
-              "meaning": "start_time"
+              "meaning": "start_time",
+              "resIdName":"tv_start_time"
             },
             "formatter": "$9:$10"
           }

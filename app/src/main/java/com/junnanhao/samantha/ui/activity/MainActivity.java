@@ -87,16 +87,16 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     void onFabClick() {
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                //todo: UUID hashcode's possible to repeat
-                InfoBean infoBean = realm.createObject(InfoBean.class, UUID.randomUUID().hashCode());
-                infoBean.actions().add(new ActionMenuItem().title("action").type(0));
-                infoBean.actions().add(new ActionMenuItem().title("action").type(0));
-            }
-        });
+//        Realm realm = Realm.getDefaultInstance();
+//        realm.executeTransactionAsync(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                //todo: UUID hashcode's possible to repeat
+//                InfoBean infoBean = realm.createObject(InfoBean.class, UUID.randomUUID().hashCode());
+//                infoBean.actions().add(new ActionMenuItem().title("action").type(0));
+//                infoBean.actions().add(new ActionMenuItem().title("action").type(0));
+//            }
+//        });
         workflow.scan();
     }
 

@@ -27,12 +27,14 @@ import android.widget.TextView;
 import com.daimajia.swipe.SwipeLayout;
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.ActionMenuItem;
+import com.junnanhao.samantha.model.entity.Concept;
+import com.junnanhao.samantha.model.entity.ConceptValue;
 import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samanthaviews.TrainTicketView;
+import com.junnanhao.samanthaviews.CardSurfaceContainer;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
-
 
 
 public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean, RecyclerViewAdapter.ViewHolder> {
@@ -64,15 +66,30 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
         }
 
         void bindData(InfoBean bean) {
-            surface.addView(new TrainTicketView(context));
+            CardView cardView = new CardView(context);
+            LayoutInflater.from(context).inflate(com.junnanhao.samanthaviews.R.layout.card_train_ticket, cardView);
+
+            for (ConceptValue conceptValue : bean.data()) {
+                String resIdName = conceptValue.concept().resIdName();
+                if (resIdName != null) {
+                    int id = context.getResources().getIdentifier(resIdName, "id", context.getPackageName());
+                    TextView tv = ButterKnife.findById(cardView, id);
+                    tv.setText(conceptValue.value());
+                }
+            }
+
+            surface.addView(cardView);
+
             for (ActionMenuItem item : bean.actions()) {
                 addMenu(item);
             }
+
+
         }
 
         void addMenu(ActionMenuItem item) {
-            TextView tv  = (TextView)LayoutInflater.from(context)
-                    .inflate(R.layout.item_swipe_menu, menus,false);
+            TextView tv = (TextView) LayoutInflater.from(context)
+                    .inflate(R.layout.item_swipe_menu, menus, false);
             tv.setText(item.title());
             menus.addView(tv);
         }

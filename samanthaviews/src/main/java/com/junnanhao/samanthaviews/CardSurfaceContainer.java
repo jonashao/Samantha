@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
  * train ticket
  */
 
-public class TrainTicketView extends LinearLayout {
-    public TrainTicketView(Context context) {
+public class CardSurfaceContainer extends LinearLayout {
+    public CardSurfaceContainer(Context context) {
         super(context);
         init(context);
     }
@@ -19,5 +19,6 @@ public class TrainTicketView extends LinearLayout {
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.card_train_ticket, this);
         setGravity(Gravity.CENTER);
+
     }
 }

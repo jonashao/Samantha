@@ -1,41 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
-    <LinearLayout
+    <ImageView
+        android:contentDescription="@string/vehicle"
+        android:id="@+id/img_vehicle"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_start_station"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:srcCompat="@drawable/ic_high_train"/>
+
+    <TextView
+        android:id="@+id/tv_travel_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:text="@string/travel_number"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_start_station"
+        android:layout_marginTop="8dp"/>
 
-        <TextView
-            android:id="@+id/text_start_station"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/text_stations_height"
-            android:gravity="center_vertical"
-            android:text="@string/start_station"
-            android:textAlignment="center"
-            android:textStyle="normal|bold" />
+    <TextView
+        android:id="@+id/tv_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="1dp"
+        android:gravity="center_vertical"
+        android:text="@string/start_time"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="30sp"
+        android:textStyle="normal|bold"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintRight_toLeftOf="@+id/img_to"
+        app:layout_constraintTop_toBottomOf="@+id/tv_start_station"/>
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/text_stations_height"
-            android:layout_marginLeft="@dimen/stations_margin"
-            android:layout_marginRight="@dimen/stations_margin"
-            android:contentDescription="@string/arrow"
-            android:gravity="center_vertical"
-            app:srcCompat="@drawable/ic_arrow" />
+    <ImageView
+        android:id="@+id/img_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/arrow"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_narrow_arrow"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_travel_number"/>
 
-        <TextView
-            android:id="@+id/text_final_station"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/text_stations_height"
-            android:gravity="center_vertical"
-            android:text="@string/final_station"
-            android:textAlignment="center"
-            android:textStyle="normal|bold" />
-    </LinearLayout>
-</merge>
+    <TextView
+        android:id="@+id/tv_arrive_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center_vertical"
+        android:text="@string/arrive_time"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="30sp"
+        android:textStyle="normal|bold"
+        app:layout_constraintLeft_toRightOf="@+id/img_to"
+        app:layout_constraintTop_toTopOf="@id/tv_start_time"/>
+
+    <TextView
+        android:id="@+id/tv_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/start_date"
+        app:layout_constraintRight_toRightOf="@+id/tv_start_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_start_time"
+    />
+
+    <TextView
+        android:id="@+id/tv_start_station"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_station"
+        app:layout_constraintRight_toRightOf="@+id/tv_start_time"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_arrive_station"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/arrive_station"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_arrive_time"
+        app:layout_constraintTop_toTopOf="@+id/tv_start_station"/>
+
+    <TextView
+        android:id="@+id/tv_arrive_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/arrive_date"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_arrive_time"
+        app:layout_constraintTop_toTopOf="@+id/tv_start_date"/>
+
+    <TextView
+        android:id="@+id/tv_seat_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/seat_number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/img_to"
+        app:layout_constraintHorizontal_bias="0.503"/>
+
+
+
+
+</android.support.constraint.ConstraintLayout>
