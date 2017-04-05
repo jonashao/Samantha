@@ -63,21 +63,20 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
             super(itemView);
         }
 
-        private TextView findViewByResName(String resName, View view) {
+        private TextView findViewByResName(String resName) {
             if (resName == null) {
                 return null;
             }
             int id = context.getResources().getIdentifier(resName, "id", context.getPackageName());
             if (id != 0) {
-                return ButterKnife.findById(view, id);
+                return ButterKnife.findById(surface, id);
             } else return null;
         }
 
         void bindData(InfoBean bean) {
-            CardView cardView = new CardView(context);
-            LayoutInflater.from(context).inflate(com.junnanhao.samanthaviews.R.layout.train_ticket_card, cardView);
+            LayoutInflater.from(context).inflate(com.junnanhao.samanthaviews.R.layout.train_ticket_card, surface);
 
-            TextView tvSetting = findViewByResName(bean.type().resNameEdit(), cardView);
+            TextView tvSetting = findViewByResName(bean.type().resNameEdit());
             if (tvSetting != null) {
                 tvSetting.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -90,7 +89,7 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
             for (Concept concept : bean.type().concepts()) {
                 String resName = concept.resIdName();
                 if (resName != null) {
-                    TextView tv = findViewByResName(resName, cardView);
+                    TextView tv = findViewByResName(resName);
                     String value = bean.valueOfConcept(concept);
                     if (tv != null && value != null) {
                         tv.setText(value);
@@ -104,8 +103,6 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
                     }
                 }
             }
-
-            surface.addView(cardView);
 
             for (ActionMenuItem item : bean.actions()) {
                 addMenu(item);
