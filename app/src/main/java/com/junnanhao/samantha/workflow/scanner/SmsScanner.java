@@ -17,6 +17,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
@@ -37,7 +39,22 @@ public class SmsScanner implements Scanner {
 
     private long lastReadDate;
 
-    private static final String SUBJECT_PATTERN = "^【([^【】]+)】|^\\[([^\\[\\]]+)\\]|【([^【】]+)】$|\\[([^\\[\\]]+)\\]$";
+    private static final String SUBJECT_PATTERN = "(^【[^【】]+】|^\\[[^\\[\\]]+\\]|【[^【】]+】$|\\[[^\\[\\]]+\\]$)";
+    private Pattern mPattern;
+
+    private Raw splitSubject(Raw raw) {
+        if (mPattern == null) {
+            mPattern = Pattern.compile(SUBJECT_PATTERN);
+        }
+        Matcher matcher = mPattern.matcher(raw.body());
+
+        if (matcher.find()) {
+            String matched = matcher.group(0);
+            raw.subject(matched.substring(1, matched.length() - 1));
+            raw.body(matcher.replaceAll(""));
+        }
+        return raw;
+    }
 
     public SmsScanner(Context context) {
         mContext = context;
@@ -86,11 +103,11 @@ public class SmsScanner implements Scanner {
             lastReadDate = System.currentTimeMillis();
 
             while (cursor.moveToNext()) {
-                data.add(new Raw()
+                data.add(splitSubject(new Raw()
                         .body(cursor.getString(bodyIndex))
-                        .datetime(new Date(cursor.getLong(dateIndex)))
                         .id(UUID.randomUUID().hashCode())
-                        .sender(new Sender(Raw.TYPE_SMS, cursor.getString(senderIndex))));
+                        .datetime(new Date(cursor.getLong(dateIndex)))
+                        .sender(new Sender().type(Raw.TYPE_SMS).value(cursor.getString(senderIndex)))));
             }
             cursor.close();
         }

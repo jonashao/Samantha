@@ -1,6 +1,9 @@
 package com.junnanhao.samantha.model.entity;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
+import io.realm.annotations.PrimaryKey;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,8 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * Created by Jonas on 2017/4/3.
- * encapsulate sender type and address/number
+ * Created by Jonas on 2017/4/3.<br/>
+ * Encapsulate sender type and address/number
  */
 @EqualsAndHashCode(callSuper = true)
 @Accessors(fluent = true)
@@ -21,5 +24,6 @@ public class Sender extends RealmObject {
      * Type of source, like email and sms
      */
     private String type;
-    private String value;
+    @PrimaryKey private String value;
+    private RealmList<Template> templates;
 }

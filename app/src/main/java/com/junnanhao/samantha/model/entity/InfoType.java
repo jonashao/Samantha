@@ -10,13 +10,14 @@ import lombok.experimental.Accessors;
 /**
  * Created by Jonas on 2017/4/3.
  * info classification output.
- * Main types are: Travel, Financial, Notification. Tobe added.
+ * Main types are: Travel, Financial, Notification. To be added.
  */
 @EqualsAndHashCode(callSuper = true)
 @Accessors(fluent = true)
 @Data
 public class InfoType extends RealmObject {
     @PrimaryKey private int id;
+    private String resNameEdit;
     private RealmList<Concept> concepts;
-    private String resNameSetting;
+    private RealmList<Sender> senders;
 }

@@ -77,7 +77,7 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
             CardView cardView = new CardView(context);
             LayoutInflater.from(context).inflate(com.junnanhao.samanthaviews.R.layout.train_ticket_card, cardView);
 
-            TextView tvSetting = findViewByResName(bean.type().resNameSetting(), cardView);
+            TextView tvSetting = findViewByResName(bean.type().resNameEdit(), cardView);
             if (tvSetting != null) {
                 tvSetting.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -9,7 +9,7 @@
       {
         "type": {
           "id": 1,
-          "resNameSetting": "tv_select_destination",
+          "resNameEdit": "tv_select_destination",
           "concepts": [
             {
               "id": 3,

@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * Created by Jonas on 2017/4/3.
- * a address list, matching sender with specific enterprise or in other word,
+ * An address list, matching sender with specific enterprise or in other word,
  * templates that are likely to use from the enterprise
  */
 

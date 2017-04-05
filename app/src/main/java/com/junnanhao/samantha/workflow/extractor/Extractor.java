@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.realm.RealmList;
-import timber.log.Timber;
 
 
 /**
@@ -56,6 +55,7 @@ public class Extractor {
 
         for (ConceptFormat item : template.conceptFormats()) {
             String formatter = item.formatter();
+
             Matcher formatMather = formatPattern.matcher(formatter);
             while (formatMather.find()) {
                 formatter = formatMather.replaceFirst(matcher.group(Integer.valueOf(formatMather.group(1))));
@@ -63,9 +63,7 @@ public class Extractor {
             }
 
             String v = matcher.replaceFirst(formatter);
-            if (v != null) {
-                list.add(new ConceptValue(item.concept(), v));
-            }
+            list.add(new ConceptValue(item.concept(), v));
         }
         return list;
     }
