@@ -1,6 +1,7 @@
 package com.junnanhao.samanthaviews;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -10,15 +11,21 @@ import android.widget.LinearLayout;
  * train ticket
  */
 
-public class CardSurfaceContainer extends LinearLayout {
-    public CardSurfaceContainer(Context context) {
+public class InfoView extends LinearLayout {
+    public InfoView(Context context) {
         super(context);
         init(context);
     }
 
     private void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.train_ticket_card, this);
+        LayoutInflater.from(context).inflate(R.layout.content_card, this);
         setGravity(Gravity.CENTER);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
 
     }
 }
