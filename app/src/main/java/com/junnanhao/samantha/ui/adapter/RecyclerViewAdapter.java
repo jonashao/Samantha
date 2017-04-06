@@ -16,7 +16,7 @@
 
 package com.junnanhao.samantha.ui.adapter;
 
-import android.support.v7.widget.CardView;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,18 +24,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.daimajia.swipe.SwipeLayout;
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.ActionMenuItem;
 import com.junnanhao.samantha.model.entity.Concept;
 import com.junnanhao.samantha.model.entity.InfoBean;
+import com.ramotion.foldingcell.FoldingCell;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.realm.OrderedRealmCollection;
 
 
-public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean, RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapter.ViewHolder> {
     public RecyclerViewAdapter(OrderedRealmCollection<InfoBean> data) {
         super(data);
     }
@@ -43,7 +44,7 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.content_card, parent, false);
+        View view = inflater.inflate(com.junnanhao.samanthaviews.R.layout.content_card, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,11 +54,11 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
         holder.bindData(bean);
     }
 
-    static class ViewHolder extends SwipeRealmRecyclerViewAdapter.ViewHolder {
+    static class ViewHolder extends BaseAdapter.ViewHolder {
 
-        @BindView(R.id.swipe) SwipeLayout swipeLayout;
+        @BindView(R.id.cell) FoldingCell cell;
         @BindView(R.id.menu_wrapper) LinearLayout menus;
-        @BindView(R.id.surface) CardView surface;
+        @BindView(R.id.surface) ConstraintLayout surface;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -74,6 +75,7 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
         }
 
         void bindData(InfoBean bean) {
+            surface.removeAllViews();
             LayoutInflater.from(context).inflate(com.junnanhao.samanthaviews.R.layout.train_ticket_card, surface);
 
             TextView tvSetting = findViewByResName(bean.type().resNameEdit());
@@ -114,6 +116,11 @@ public class RecyclerViewAdapter extends SwipeRealmRecyclerViewAdapter<InfoBean,
                     .inflate(R.layout.item_swipe_menu, menus, false);
             tv.setText(item.title());
             menus.addView(tv);
+        }
+
+        @OnClick(R.id.swipe)
+        void toggle(){
+            cell.toggle(false);
         }
     }
 }

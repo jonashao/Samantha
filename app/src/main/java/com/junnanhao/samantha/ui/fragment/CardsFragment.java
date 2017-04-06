@@ -52,7 +52,7 @@ public class CardsFragment extends Fragment {
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new PaddingItemDecoration(getActivity(), PaddingItemDecoration.VERTICAL));
+//        recyclerView.addItemDecoration(new PaddingItemDecoration(getActivity(), PaddingItemDecoration.VERTICAL));
         recyclerView.setAdapter(mAdapter);
     }
 

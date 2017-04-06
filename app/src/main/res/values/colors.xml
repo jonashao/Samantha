@@ -4,6 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="white">#F1F8E9</color>
+    <color name="white_2">#dcedc8</color>
+
+    <color name="green">#91b54d</color>
+    <color name="green_dark">#719234</color>
+
     <color name="red">#FF3B00</color>
     <color name="red_press">#990000</color>
     <color name="red_normal">#FF0000</color>
@@ -14,7 +20,7 @@
     <color name="purple_pressed">#9F79EE</color>
 
 
-    <color name="backgroundColor">#E8E8E0</color>
+    <color name="backgroundColor">#dbf2e7</color>
     <color name="backgroundColorPress">#DBDBD3</color>
 
     <color name="dark_gray">#4C535B</color>
