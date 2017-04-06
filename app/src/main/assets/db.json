@@ -53,7 +53,7 @@
             }
           ]
         },
-        "pattern": "订单(E\\d{9,10}),(\\w+)您已购(\\d+)月(\\d+)日([A-Z]\\d{1,5})次(\\d{1,2})车(\\w+)号([^\\d]+)(\\d{1,2}):(\\d{1,2})开。",
+        "pattern": "订单(E\\d{9,10}),(\\w+)您已购(\\d+)月(\\d+)日([A-Z]\\d{1,5})次(\\d{1,2})车(\\w+)号([上中下]铺)?([^\\d]+)(\\d{1,2}):(\\d{1,2})开。",
         "conceptFormats": [
           {
             "concept": {
@@ -91,7 +91,7 @@
               "meaning": "seat_number",
               "resIdName": "tv_seat_number"
             },
-            "formatter": "$6车$7号"
+            "formatter": "$6车$7号$8"
           },
           {
             "concept": {
@@ -99,7 +99,7 @@
               "meaning": "start_station",
               "resIdName": "tv_start_station"
             },
-            "formatter": "$8站"
+            "formatter": "$9站"
           },
           {
             "concept": {
@@ -107,7 +107,7 @@
               "meaning": "start_time",
               "resIdName": "tv_start_time"
             },
-            "formatter": "$9:${10}"
+            "formatter": "${10}:${11}"
           }
         ]
       }

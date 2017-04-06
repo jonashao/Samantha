@@ -58,11 +58,15 @@ public class Extractor {
 
             Matcher formatMather = formatPattern.matcher(formatter);
             while (formatMather.find()) {
-                formatter = formatMather.replaceFirst(matcher.group(Integer.valueOf(formatMather.group(1))));
-                formatMather = formatPattern.matcher(formatter);
+                String groupValue = formatMather.group(1);
+                if (groupValue != null) {
+                    formatter = formatMather.replaceFirst(matcher.group(Integer.valueOf(groupValue)));
+                    formatMather = formatPattern.matcher(formatter);
+                }
             }
 
             String v = matcher.replaceFirst(formatter);
+            v = v.replaceAll("null", "");
             list.add(new ConceptValue(item.concept(), v));
         }
         return list;
