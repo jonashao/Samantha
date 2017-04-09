@@ -6,14 +6,15 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * Created by Jonas on 2017/4/3.
- * Map concept to their formatter in a template pattern
- */
+     * Created by Jonas on 2017/4/3.
+     * Map concept to their formatter in a template pattern
+     */
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-@Accessors(fluent = true)
-public class ConceptFormat extends RealmObject {
-    private Concept concept;
-    private String formatter;
-}
+    @EqualsAndHashCode(callSuper = true)
+    @Data
+    @Accessors(fluent = true)
+    public class ConceptFormat extends RealmObject {
+        private Concept concept;
+        private String formatter;
+        private Boolean required;
+    }

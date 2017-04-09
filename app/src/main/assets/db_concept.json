@@ -46,5 +46,21 @@
     "id": 10,
     "meaning": "arrive_date",
     "resIdName": "tv_arrive_date"
+  },
+  {
+    "id": 11,
+    "meaning": "courier_phone_number"
+  },
+  {
+    "id": 12,
+    "meaning": "logistics_company"
+  },
+  {
+    "id": 13,
+    "meaning": "place"
+  },
+  {
+    "id": 14,
+    "meaning": "time"
   }
 ]

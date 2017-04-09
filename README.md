@@ -1,6 +1,8 @@
-#Samantha
+# Samantha
 
 [![Build Status](https://travis-ci.com/jonashao/Samantha.svg?token=w8o6xkMwHcpfRFpW3KZW&branch=master)](https://travis-ci.com/jonashao/Samantha)
+
+## About
 A smart assistant.
 
 ## Techs

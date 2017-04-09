@@ -1,7 +1,19 @@
 package com.junnanhao.samantha;
 
+import android.text.TextUtils;
+
+import com.facebook.stetho.common.StringUtil;
+import com.google.common.base.Joiner;
+import com.junnanhao.samantha.model.entity.Concept;
+import com.junnanhao.samantha.model.entity.ConceptDescription;
+import com.junnanhao.samantha.model.entity.InfoBean;
+import com.junnanhao.samantha.workflow.extractor.ConceptsExtractor;
+import com.junnanhao.samantha.workflow.extractor.Extractor;
+
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +36,43 @@ public class ExtractorUnitTest {
 
     private static final String pattern2 = "(^【[^【】]+】|^\\[[^\\[\\]]+\\]|【[^【】]+】$|\\[[^\\[\\]]+\\]$)";
     private static final String test = "[京东]得到的【hi】";
+
+    private static final String test2 = "【邮政EMS】你好，请带证件于下午17点到化工天桥底马路边取，可叫同学代领，联系18988900358，谢谢！";
+
+    @Test
+    public void conceptExtractor_match_correct() throws Exception {
+        List<ConceptDescription> descriptions = new ArrayList<>();
+        descriptions.add(new ConceptDescription()
+                .formatter("(((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[0-1])|(18[0,5-9]))\\d{8})")
+                .concept(new Concept().id(1))
+                .cather("$1")
+        );
+
+        String[] placeAdverbialModifiers = new String[]{"来", "到"};
+        String[] placeVerb = new String[]{"取", "拿", "领"};
+
+        String placeFormatter = Joiner.on("|").join(placeAdverbialModifiers) +
+                "([^" + Joiner.on("").join(placeVerb) + "]*)" + Joiner.on("|").join(placeVerb);
+        descriptions.add(new ConceptDescription()
+                .concept(new Concept().id(1))
+                .formatter(placeFormatter)
+                .cather("$1")
+        )
+        ;
+
+        descriptions.add(new ConceptDescription()
+                .concept(new Concept().id(2))
+                .formatter("((上午?|下午?|早上?|晚上?)(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))(点|:)(([0-5][0-9])分)?((-|至)(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))(点|:)(([0-5][0-9])分)?)?)")
+                .cather("$1")
+        );
+
+        Extractor extractor = new ConceptsExtractor(descriptions);
+        InfoBean bean = extractor.extract(test2);
+
+        assertEquals(bean.data().size(), 3);
+        assertEquals(bean.data().get(0).value(), "18988900358");
+    }
+
 
     @Test
     public void patternSubject_isCorrect() throws Exception {

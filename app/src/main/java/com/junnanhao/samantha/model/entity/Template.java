@@ -18,4 +18,5 @@ public class Template extends RealmObject {
     private InfoType type;
     private String pattern;
     private RealmList<ConceptFormat> conceptFormats;
+
 }

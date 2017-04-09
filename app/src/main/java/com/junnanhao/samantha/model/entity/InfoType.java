@@ -2,6 +2,7 @@ package com.junnanhao.samantha.model.entity;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ import lombok.experimental.Accessors;
 public class InfoType extends RealmObject {
     @PrimaryKey private int id;
     private String resNameEdit;
-    private RealmList<Concept> concepts;
+    private RealmList<ConceptDescription> conceptDescriptions;
     private RealmList<Sender> senders;
+    private String subjects;
 }

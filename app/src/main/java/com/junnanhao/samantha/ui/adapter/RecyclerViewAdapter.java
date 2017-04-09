@@ -16,6 +16,7 @@
 
 package com.junnanhao.samantha.ui.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,14 +27,20 @@ import android.widget.TextView;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.ActionMenuItem;
-import com.junnanhao.samantha.model.entity.Concept;
+import com.junnanhao.samantha.model.entity.ConceptDescription;
 import com.junnanhao.samantha.model.entity.InfoBean;
+import com.junnanhao.samantha.model.entity.InfoType;
+import com.junnanhao.samanthaviews.InfoView;
+import com.junnanhao.samanthaviews.R2;
 import com.ramotion.foldingcell.FoldingCell;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.OrderedRealmCollection;
+
+import static com.junnanhao.samanthaviews.R.layout.preview_strip;
+import static com.junnanhao.samanthaviews.R.layout.train_ticket_card;
 
 
 public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapter.ViewHolder> {
@@ -43,8 +50,7 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(com.junnanhao.samanthaviews.R.layout.content_card, parent, false);
+        InfoView view = new InfoView(parent.getContext());
         return new ViewHolder(view);
     }
 
@@ -59,26 +65,55 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
         @BindView(R.id.cell) FoldingCell cell;
         @BindView(R.id.menu_wrapper) LinearLayout menus;
         @BindView(R.id.surface) ConstraintLayout surface;
+        private InfoView infoView;
 
-        ViewHolder(View itemView) {
+        ViewHolder(InfoView itemView) {
             super(itemView);
+            infoView = itemView;
         }
 
-        private TextView findViewByResName(String resName) {
-            if (resName == null) {
+        private TextView findViewByResName(String name, String defType) {
+            if (name == null) {
                 return null;
             }
-            int id = context.getResources().getIdentifier(resName, "id", context.getPackageName());
+            int id = context.getResources().getIdentifier(name, defType, context.getPackageName());
             if (id != 0) {
                 return ButterKnife.findById(surface, id);
             } else return null;
         }
 
         void bindData(InfoBean bean) {
-            surface.removeAllViews();
-            LayoutInflater.from(context).inflate(com.junnanhao.samanthaviews.R.layout.train_ticket_card, surface);
+            switch (bean.type().id()) {
+                case 1: {
+                    // ticket
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    surface.removeAllViews();
+                    inflater.inflate(train_ticket_card, surface);
+                    bindTicketData(bean);
+                    break;
+                }
+                case 2: {
+                    // logistics
+                    bindLogisticsData(bean);
+                    break;
+                }
 
-            TextView tvSetting = findViewByResName(bean.type().resNameEdit());
+            }
+        }
+
+        void bindLogisticsData(InfoBean bean) {
+            for (ConceptDescription description : bean.type().conceptDescriptions()) {
+                String resName = description.resName();
+                String defType = description.resType();
+
+            }
+
+            infoView.setIcon(R.drawable.ic_ems);
+
+        }
+
+        void bindTicketData(InfoBean bean) {
+            TextView tvSetting = findViewByResName(bean.type().resNameEdit(), "id");
             if (tvSetting != null) {
                 tvSetting.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -88,11 +123,12 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
                 });
             }
 
-            for (Concept concept : bean.type().concepts()) {
-                String resName = concept.resIdName();
+            for (ConceptDescription description : bean.type().conceptDescriptions()) {
+                String resName = description.resName();
+                String defType = description.resType();
                 if (resName != null) {
-                    TextView tv = findViewByResName(resName);
-                    String value = bean.valueOfConcept(concept);
+                    TextView tv = findViewByResName(resName, defType);
+                    String value = bean.valueOfConcept(description.concept());
                     if (tv != null && value != null) {
                         tv.setText(value);
                     } else {
@@ -119,7 +155,7 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
         }
 
         @OnClick(R.id.swipe)
-        void toggle(){
+        void toggle() {
             cell.toggle(false);
         }
     }

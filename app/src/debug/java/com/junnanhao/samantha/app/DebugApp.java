@@ -5,6 +5,8 @@ import android.app.Application;
 import com.facebook.stetho.Stetho;
 import com.junnanhao.samantha.BuildConfig;
 import com.junnanhao.samantha.model.entity.Concept;
+import com.junnanhao.samantha.model.entity.ConceptDescription;
+import com.junnanhao.samantha.model.entity.InfoType;
 import com.junnanhao.samantha.model.entity.SenderBook;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
@@ -46,6 +48,14 @@ public class DebugApp extends Application {
 
                     is = getAssets().open("db.json");
                     realm.createOrUpdateAllFromJson(SenderBook.class, is);
+                    is.close();
+
+                    is = getAssets().open("db_concept_description.json");
+                    realm.createOrUpdateAllFromJson(ConceptDescription.class, is);
+                    is.close();
+
+                    is = getAssets().open("db_info_type.json");
+                    realm.createOrUpdateAllFromJson(InfoType.class, is);
                     is.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "concept": {
+      "id": 11
+    },
+    "formatter": "(((\\d{3,4}-)?\\d{7,8})$|(((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[0-1])|(18[0,5-9]))\\d{8}))",
+    "resType":"drawable",
+    "resName":"ic_ems"
+  },
+  {
+    "id": 2,
+    "concept": {
+      "id": 12
+    },
+    "formatter": "(申通|韵达|圆通|EMS)"
+  },
+  {
+    "id": 3,
+    "concept": {
+      "id": 13
+    },
+    "formatter": "(来|到)([^来到取拿领]*)(取|拿|领)",
+    "cather": "$2"
+  },
+  {
+    "id": 4,
+    "concept": {
+      "id": 14
+    },
+    "formatter": "((上午?|下午?|早上?|晚上?)((([1-9]{1})|([0-1][0-9])|([1-2][0-3]))(点|:)(([0-5][0-9])分|半)?|现在)((-|至)(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))(点|:)(([0-5][0-9])分|半)?)?)",
+    "cather": "$2"
+  },
+  {
+    "id": 5,
+    "concept": {
+      "id": 3
+    },
+    "resName": "tv_start_date"
+  },
+  {
+    "id": 6,
+    "concept": {
+      "id": 4
+    },
+    "resName": "tv_travel_number"
+  },
+  {
+    "id": 7,
+    "concept": {
+      "id": 5
+    },
+    "resName": "tv_seat_number"
+  },
+  {
+    "id": 8,
+    "concept": {
+      "id": 6
+    },
+    "resName": "tv_start_station"
+  },
+  {
+    "id": 9,
+    "concept": {
+      "id": 7
+    },
+    "resName": "tv_start_time"
+  },
+  {
+    "id": 11,
+    "concept": {
+      "id": 8
+    },
+    "resName": "tv_arrive_time"
+  },
+  {
+    "id": 12,
+    "concept": {
+      "id": 9
+    },
+    "resName": "tv_arrive_station"
+  },
+  {
+    "id": 13,
+    "concept": {
+      "id": 10
+    },
+    "resName": "tv_arrive_date"
+  }
+]
