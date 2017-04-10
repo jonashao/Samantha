@@ -16,7 +16,6 @@
 
 package com.junnanhao.samantha.ui.adapter;
 
-import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,19 +26,19 @@ import android.widget.TextView;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.ActionMenuItem;
-import com.junnanhao.samantha.model.entity.ConceptDescription;
+import com.junnanhao.samantha.model.entity.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samantha.model.entity.InfoType;
+import com.junnanhao.samantha.model.entity.Synonyms;
 import com.junnanhao.samanthaviews.InfoView;
-import com.junnanhao.samanthaviews.R2;
+import com.junnanhao.samanthaviews.MetaInfo;
 import com.ramotion.foldingcell.FoldingCell;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
 
-import static com.junnanhao.samanthaviews.R.layout.preview_strip;
 import static com.junnanhao.samanthaviews.R.layout.train_ticket_card;
 
 
@@ -63,8 +62,9 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
     static class ViewHolder extends BaseAdapter.ViewHolder {
 
         @BindView(R.id.cell) FoldingCell cell;
-        @BindView(R.id.menu_wrapper) LinearLayout menus;
+        @BindView(R.id.detail) LinearLayout menus;
         @BindView(R.id.surface) ConstraintLayout surface;
+
         private InfoView infoView;
 
         ViewHolder(InfoView itemView) {
@@ -72,13 +72,18 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
             infoView = itemView;
         }
 
-        private TextView findViewByResName(String name, String defType) {
-            if (name == null) {
-                return null;
+        private int findIdByResName(String name, String defType) {
+            int id = 0;
+            if (name != null) {
+                id = context.getResources().getIdentifier(name, defType, context.getPackageName());
             }
-            int id = context.getResources().getIdentifier(name, defType, context.getPackageName());
+            return id;
+        }
+
+        private View findViewByResName(String name, String defType) {
+            int id = findIdByResName(name, defType);
             if (id != 0) {
-                return ButterKnife.findById(surface, id);
+                return ButterKnife.findById(cell, id);
             } else return null;
         }
 
@@ -102,18 +107,38 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
         }
 
         void bindLogisticsData(InfoBean bean) {
-            for (ConceptDescription description : bean.type().conceptDescriptions()) {
-                String resName = description.resName();
-                String defType = description.resType();
-
+            for (ConceptDesc desc : bean.type().conceptDescs()) {
+                String value = bean.valueOfConcept(desc.concept());
+                if (value == null ) {
+                    continue;
+                }
+                switch ((int) desc.concept().id()) {
+                    case 12: // logistics company
+                        Realm realm = Realm.getDefaultInstance();
+                        Synonyms synonyms = realm.where(Synonyms.class)
+                                .contains("candidates", value)
+                                .findFirst();
+                        if (synonyms != null) {
+                            int drawableId = context.getResources().getIdentifier("ic_" + synonyms.identifier(), "drawable", context.getPackageName());
+                            infoView.setIcon(drawableId);
+                            int colorId = context.getResources().getIdentifier(synonyms.identifier(), "color", context.getPackageName());
+                            infoView.setCardBackground(colorId);
+                        }
+                        break;
+                    case 13: // time
+                        infoView.setContentMain(value);
+                        break;
+                    case 14:
+                        infoView.setContentSecond(value);
+                        break;
+                    default:
+                        infoView.addMetaInfo(new MetaInfo(desc.viewType(),value));
+                }
             }
-
-            infoView.setIcon(R.drawable.ic_ems);
-
         }
 
         void bindTicketData(InfoBean bean) {
-            TextView tvSetting = findViewByResName(bean.type().resNameEdit(), "id");
+            TextView tvSetting = (TextView) findViewByResName(bean.type().ui().resNameEdit(), "id");
             if (tvSetting != null) {
                 tvSetting.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -123,11 +148,11 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
                 });
             }
 
-            for (ConceptDescription description : bean.type().conceptDescriptions()) {
+            for (ConceptDesc description : bean.type().conceptDescs()) {
                 String resName = description.resName();
                 String defType = description.resType();
                 if (resName != null) {
-                    TextView tv = findViewByResName(resName, defType);
+                    TextView tv = (TextView) findViewByResName(resName, defType);
                     String value = bean.valueOfConcept(description.concept());
                     if (tv != null && value != null) {
                         tv.setText(value);

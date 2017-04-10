@@ -110,7 +110,7 @@ public class Workflow {
                             .findAll();
                     for (InfoType infoType : infoTypes) {
                         // 在每个包含该主题的分类中，逐个匹配类别的必备元信息，匹配足够信息即提取
-                        Extractor extractor = new ConceptsExtractor(infoType.conceptDescriptions());
+                        Extractor extractor = new ConceptsExtractor(infoType.conceptDescs());
                         InfoBean infoBean = extractor.extract(raw.body());
                         if (infoBean != null) {
                             beans.add(infoBean.raw(raw).type(infoType));

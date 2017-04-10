@@ -1,6 +1,6 @@
 package com.junnanhao.samantha.workflow.extractor;
 
-import com.junnanhao.samantha.model.entity.ConceptDescription;
+import com.junnanhao.samantha.model.entity.ConceptDesc;
 import com.junnanhao.samantha.model.entity.ConceptValue;
 import com.junnanhao.samantha.model.entity.InfoBean;
 
@@ -16,11 +16,11 @@ import io.realm.RealmList;
  */
 
 public class ConceptsExtractor implements Extractor {
-    private List<ConceptDescription> descriptions;
+    private List<ConceptDesc> descriptions;
     private Pattern formatPattern = Pattern.compile("\\$\\{?(\\d+)\\}?");
 
 
-    public ConceptsExtractor(List<ConceptDescription> descriptions) {
+    public ConceptsExtractor(List<ConceptDesc> descriptions) {
         this.descriptions = descriptions;
     }
 
@@ -28,7 +28,7 @@ public class ConceptsExtractor implements Extractor {
     public InfoBean extract(String src) {
         InfoBean bean = new InfoBean().data(new RealmList<ConceptValue>());
 
-        for (ConceptDescription description : descriptions) {
+        for (ConceptDesc description : descriptions) {
             Pattern pattern = Pattern.compile(description.formatter());
             Matcher matcher = pattern.matcher(src);
 

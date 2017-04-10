@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="CardTheme" parent="Theme.AppCompat.Light">
+    </style>
+
+
+    <style name="CardTheme.TitleTextStyle" parent="TextAppearance.AppCompat.Title">
+    </style>
+
+    <style name="CardTheme.TitleTextStyle.Light" parent="TextAppearance.AppCompat.Title.Inverse">
+    </style>
+
+
+</resources>

@@ -9,8 +9,10 @@
       {
         "type": {
           "id": 1,
-          "resNameEdit": "tv_select_destination",
-          "conceptDescriptions": [
+          "ui": {
+            "resNameEdit": "tv_select_destination"
+          },
+          "conceptDescs": [
             {
               "id": 5
             },

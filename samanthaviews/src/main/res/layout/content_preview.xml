@@ -2,7 +2,9 @@
 
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/surface"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"/>
+    android:orientation="vertical">
+
+    <include layout="@layout/preview_strip"/>
+</android.support.constraint.ConstraintLayout>

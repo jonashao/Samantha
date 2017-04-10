@@ -30,4 +30,6 @@ public class InfoBean extends RealmObject {
         }
         return null;
     }
+
+
 }
