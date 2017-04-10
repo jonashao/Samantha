@@ -7,6 +7,7 @@ package com.junnanhao.samanthaviews;
 
 public class MetaInfo {
     public static final String TYPE_PHONE = "phone";
+    public static final String TYPE_LOCATION = "location";
 
     private String type;
     private String value;

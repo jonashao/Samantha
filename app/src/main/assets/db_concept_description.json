@@ -32,7 +32,8 @@
       "id": 14
     },
     "formatter": "(来|到)([^来到取拿领]*)(取|拿|领)",
-    "cather": "$2"
+    "cather": "$2",
+    "viewType": "location"
   },
   {
     "id": 5,

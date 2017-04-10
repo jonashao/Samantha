@@ -19,10 +19,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.junnanhao.samanthaviews.util.ActivityUtils;
+import com.junnanhao.samanthaviews.util.ColorUtils;
 
 import java.util.List;
 
@@ -39,6 +38,7 @@ public class InfoView extends LinearLayout {
     @BindView(R2.id.surface) ConstraintLayout surface;
     @BindView(R2.id.layout_title) ConstraintLayout layoutTitle;
     @BindView(R2.id.list_meta_info) LinearLayout metaInfoList;
+    @BindView(R2.id.layout_detail_container) ConstraintLayout detailContainer;
 
     @Nullable
     @BindViews({R2.id.ic_preview})
@@ -49,6 +49,13 @@ public class InfoView extends LinearLayout {
     List<TextView> tvs;
     private short data_status = 0b00;
     private String[] data_texts = new String[3];
+
+    @BindViews({R2.id.tv_title, R2.id.tv_title_main, R2.id.tv_subtitle})
+    List<TextView> tvTitles;
+    private short title_status = 0b00;
+    private String[] title_texts = new String[3];
+
+    @BindView(R2.id.tv_detail_title) TextView tvDetailTitle;
 
 
     public InfoView(Context context) {
@@ -71,10 +78,6 @@ public class InfoView extends LinearLayout {
     }
 
 
-    public void setTitle(String title) {
-
-    }
-
     public void setCardBackground(@ColorRes int resId) {
         surface.setBackgroundResource(resId);
         layoutTitle.setBackgroundResource(resId);
@@ -84,9 +87,15 @@ public class InfoView extends LinearLayout {
         }
     }
 
-    public void setSubTitle(String subTitle) {
+    public void setTitle(String title) {
+        title_texts[1] = title;
+        showTitle(tvTitles, (short) 0b01, title_texts);
+        tvDetailTitle.setText(title);
+    }
 
-
+    public void setSubTitle(String content) {
+        title_texts[2] = content;
+        showTitle(tvTitles, (short) 0b10, title_texts);
     }
 
     public void setContentMain(String content) {
@@ -102,7 +111,7 @@ public class InfoView extends LinearLayout {
     public void addMetaInfo(final MetaInfo meta) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         switch (meta.type()) {
-            case MetaInfo.TYPE_PHONE:
+            case MetaInfo.TYPE_PHONE: {
                 ConstraintLayout metaView = (ConstraintLayout) inflater
                         .inflate(R.layout.content_meta_info, metaInfoList, false);
 
@@ -123,9 +132,37 @@ public class InfoView extends LinearLayout {
                     }
                 });
                 break;
+            }
+            case MetaInfo.TYPE_LOCATION: {
+                ConstraintLayout metaView = (ConstraintLayout) inflater
+                        .inflate(R.layout.content_meta_info, metaInfoList, false);
 
+                ImageView ic = ButterKnife.findById(metaView, R.id.ic_meta_info);
+                ic.setImageResource(R.drawable.ic_location_on_black_24dp);
+                TextView tv = ButterKnife.findById(metaView, R.id.tv_meta_info);
+                tv.setText(meta.value());
+
+                metaInfoList.addView(metaView);
+                metaView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setData(Uri.parse("baidumap://map/direction?destination=name:" + meta.value()));
+
+                        if (ActivityUtils.isInstallByRead("com.baidu.BaiduMap")) {
+                            getContext().startActivity(intent);
+                        } else {
+                            Uri uri = Uri.parse("http://api.map.baidu.com/place/search?region=广州&output=html&src=junnanhao|Samantha&query=" + meta.value());
+                            intent = new Intent(Intent.ACTION_VIEW, uri);
+                            getContext().startActivity(intent);
+                        }
+                    }
+                });
+                break;
+            }
         }
     }
+
 
     public void addAction(Action action) {
     }
@@ -167,5 +204,22 @@ public class InfoView extends LinearLayout {
         }
     }
 
+    private void showTitle(List<TextView> tvs, short which, String[] values) {
+        title_status |= which;
+        if (title_status == 3) {
+            tvs.get(which).setText(values[which]);
+            tvs.get(which).setVisibility(VISIBLE);
+            tvs.get(0).setVisibility(INVISIBLE);
+        } else {
+            tvs.get(0).setText(values[which]);
+            tvs.get(0).setVisibility(VISIBLE);
+            tvs.get(1).setVisibility(INVISIBLE);
+            tvs.get(2).setVisibility(INVISIBLE);
+        }
+    }
 
+    public void addDetailView(View view) {
+        detailContainer.addView(view);
+        detailContainer.setVisibility(VISIBLE);
+    }
 }

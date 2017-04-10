@@ -1,4 +1,4 @@
-package com.junnanhao.samanthaviews;
+package com.junnanhao.samanthaviews.util;
 
 import android.graphics.Color;
 import android.support.annotation.ColorInt;

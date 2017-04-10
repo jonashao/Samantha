@@ -119,8 +119,6 @@ public class Workflow {
                     }
                 }
             }
-
-
         }
         realm.executeTransaction(new Realm.Transaction() {
             @Override

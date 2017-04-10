@@ -9,8 +9,6 @@
     android:visibility="gone">
 
     <!-- content header line -->
-
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
@@ -35,10 +33,10 @@
 
 
         <TextView
+            android:id="@+id/tv_detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="顺丰"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +49,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="8dp"
-            android:text="12:00-13:00"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -63,12 +60,18 @@
             tools:text="content"/>
     </android.support.constraint.ConstraintLayout>
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_detail_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
     <!-- content body layout -->
     <LinearLayout
         android:id="@+id/list_meta_info"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="vertical"/>
+        android:layout_height="160dp"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"/>
 
 
 </LinearLayout>

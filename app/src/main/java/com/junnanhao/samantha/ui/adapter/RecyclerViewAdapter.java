@@ -109,7 +109,7 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
         void bindLogisticsData(InfoBean bean) {
             for (ConceptDesc desc : bean.type().conceptDescs()) {
                 String value = bean.valueOfConcept(desc.concept());
-                if (value == null ) {
+                if (value == null) {
                     continue;
                 }
                 switch ((int) desc.concept().id()) {
@@ -119,20 +119,20 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
                                 .contains("candidates", value)
                                 .findFirst();
                         if (synonyms != null) {
-                            int drawableId = context.getResources().getIdentifier("ic_" + synonyms.identifier(), "drawable", context.getPackageName());
+                            int drawableId = findIdByResName("ic_" + synonyms.identifier(), "drawable");
                             infoView.setIcon(drawableId);
-                            int colorId = context.getResources().getIdentifier(synonyms.identifier(), "color", context.getPackageName());
+                            int colorId = findIdByResName(synonyms.identifier(), "color");
                             infoView.setCardBackground(colorId);
                         }
+                        infoView.setTitle(value);
                         break;
                     case 13: // time
                         infoView.setContentMain(value);
                         break;
-                    case 14:
+                    case 14: // place
                         infoView.setContentSecond(value);
-                        break;
                     default:
-                        infoView.addMetaInfo(new MetaInfo(desc.viewType(),value));
+                        infoView.addMetaInfo(new MetaInfo(desc.viewType(), value));
                 }
             }
         }
@@ -146,6 +146,10 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
 
                     }
                 });
+            }
+
+            if (bean.type().id() == 1) {
+                infoView.setTitle("火车票");
             }
 
             for (ConceptDesc description : bean.type().conceptDescs()) {
@@ -164,20 +168,14 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
                             tvSetting.setVisibility(View.VISIBLE);
                         }
                     }
+                    if (description.concept().id() == 1) {
+                        infoView.setContentMain(value);
+                    }
                 }
             }
-
-            for (ActionMenuItem item : bean.actions()) {
-                addMenu(item);
-            }
+//            infoView.addDetailView(surface);
         }
 
-        void addMenu(ActionMenuItem item) {
-            TextView tv = (TextView) LayoutInflater.from(context)
-                    .inflate(R.layout.item_swipe_menu, menus, false);
-            tv.setText(item.title());
-            menus.addView(tv);
-        }
 
         @OnClick(R.id.swipe)
         void toggle() {
