@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+        permissions.request(Manifest.permission.CALL_PHONE);
     }
 
     @Override

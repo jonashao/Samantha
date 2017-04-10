@@ -1,23 +1,28 @@
 package com.junnanhao.samanthaviews;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
@@ -94,22 +99,31 @@ public class InfoView extends LinearLayout {
         showContents(tvs, (short) 0b10, data_texts);
     }
 
-    public void addMetaInfo(MetaInfo meta) {
+    public void addMetaInfo(final MetaInfo meta) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         switch (meta.type()) {
             case MetaInfo.TYPE_PHONE:
-                ConstraintLayout metaView = (ConstraintLayout) inflater.inflate(R.layout.content_meta_info, metaInfoList, false);
+                ConstraintLayout metaView = (ConstraintLayout) inflater
+                        .inflate(R.layout.content_meta_info, metaInfoList, false);
+
                 ImageView ic = ButterKnife.findById(metaView, R.id.ic_meta_info);
                 ic.setImageResource(R.drawable.ic_phone_black_24dp);
                 TextView tv = ButterKnife.findById(metaView, R.id.tv_meta_info);
                 tv.setText(meta.value());
+
                 metaInfoList.addView(metaView);
                 metaView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(), "he", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + meta.value()));
+                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                        getContext().startActivity(intent);
                     }
                 });
+                break;
+
         }
     }
 
@@ -137,6 +151,7 @@ public class InfoView extends LinearLayout {
     public void setText(String resName, String s) {
 
     }
+
 
     private void showContents(List<TextView> tvs, short which, String[] values) {
         data_status |= which;
