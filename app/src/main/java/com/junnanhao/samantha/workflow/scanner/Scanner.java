@@ -15,6 +15,4 @@ public interface Scanner {
      * @return a list of raw information scanned from source
      */
     List<Raw> scan();
-
-    String[] permissions();
 }

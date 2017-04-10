@@ -49,6 +49,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="8dp"
+            android:ellipsize="end"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"

@@ -115,10 +115,5 @@ public class SmsScanner implements Scanner {
         return data;
     }
 
-    @Override
-    public String[] permissions() {
-        return new String[]{Manifest.permission.READ_SMS};
-    }
-
 
 }

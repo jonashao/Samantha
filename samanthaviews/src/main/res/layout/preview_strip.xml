@@ -107,6 +107,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="0dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/tv_data_second"

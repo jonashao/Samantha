@@ -12,9 +12,6 @@ import android.view.ViewGroup;
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.ui.adapter.RecyclerViewAdapter;
-import com.junnanhao.samantha.ui.utils.PaddingItemDecoration;
-
-
 
 
 import butterknife.BindView;
@@ -62,4 +59,5 @@ public class CardsFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

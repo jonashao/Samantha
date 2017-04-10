@@ -145,7 +145,7 @@ public class InfoView extends LinearLayout {
                 ImageView ic = ButterKnife.findById(metaView, R.id.ic_meta_info);
                 ic.setImageResource(R.drawable.ic_location_on_black_24dp);
                 TextView tv = ButterKnife.findById(metaView, R.id.tv_meta_info);
-                tv.setText(meta.value());
+                tv.setText(stringOfMaxLength(meta.value(),11));
 
                 metaInfoList.addView(metaView);
                 metaView.setOnClickListener(new OnClickListener() {
