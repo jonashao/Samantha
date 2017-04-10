@@ -3,6 +3,18 @@
     "id": 1,
     "identifier": "sf",
     "best": "顺丰",
-    "candidates": "顺丰 顺丰速运"
+    "candidates": "顺丰 顺丰速运 SF Shunfeng"
+  },
+  {
+    "id": 2,
+    "identifier": "zto",
+    "best": "中通",
+    "candidates": "中通 ZTO zto 中通快递 Zhongtong"
+  },
+  {
+    "id": 3,
+    "identifier": "sto",
+    "best": "申通",
+    "candidates": "申通 STO sto Shentong"
   }
 ]

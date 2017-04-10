@@ -37,6 +37,13 @@ public class ExtractorUnitTest {
     private static final String test2 = "【邮政EMS】你好，请带证件于下午17点到化工天桥底马路边取，可叫同学代领，联系18988900358，谢谢！";
 
     @Test
+    public void filterExtractor_match_correct() throws Exception {
+        String test = "饭天桥（自、代取须出示学生卡）拿取";
+        String replaced = test.replaceAll("\\([^\\(\\)]*\\)|（[^（）]*）", "");
+        assertEquals(replaced,"饭天桥拿取");
+    }
+
+    @Test
     public void conceptExtractor_match_correct() throws Exception {
         List<ConceptDesc> descriptions = new ArrayList<>();
         descriptions.add(new ConceptDesc()

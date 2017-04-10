@@ -124,7 +124,7 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, RecyclerViewAdapt
                             int colorId = findIdByResName(synonyms.identifier(), "color");
                             infoView.setCardBackground(colorId);
                         }
-                        infoView.setTitle(value);
+                        infoView.setDetailTitle(value);
                         break;
                     case 13: // time
                         infoView.setContentMain(value);

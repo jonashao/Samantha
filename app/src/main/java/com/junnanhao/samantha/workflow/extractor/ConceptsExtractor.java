@@ -5,6 +5,7 @@ import com.junnanhao.samantha.model.entity.ConceptValue;
 import com.junnanhao.samantha.model.entity.InfoBean;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +27,12 @@ public class ConceptsExtractor implements Extractor {
 
     @Override
     public InfoBean extract(String src) {
-        InfoBean bean = new InfoBean().data(new RealmList<ConceptValue>());
+        InfoBean bean = new InfoBean()
+                .data(new RealmList<ConceptValue>())
+                .id(UUID.randomUUID().hashCode());
+
+        src = src.replaceAll("\\([^\\(\\)]*\\)|（[^（）]*）", "");
+
 
         for (ConceptDesc description : descriptions) {
             Pattern pattern = Pattern.compile(description.formatter());

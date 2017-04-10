@@ -87,11 +87,16 @@ public class InfoView extends LinearLayout {
         }
     }
 
+    public void setDetailTitle(String title){
+        tvDetailTitle.setText(title);
+    }
+
     public void setTitle(String title) {
         title_texts[1] = title;
         showTitle(tvTitles, (short) 0b01, title_texts);
         tvDetailTitle.setText(title);
     }
+
 
     public void setSubTitle(String content) {
         title_texts[2] = content;
@@ -192,15 +197,24 @@ public class InfoView extends LinearLayout {
 
     private void showContents(List<TextView> tvs, short which, String[] values) {
         data_status |= which;
+        String value = stringOfMaxLength(values[which],11);
         if (data_status == 3) {
-            tvs.get(which).setText(values[which]);
+            tvs.get(which).setText(value);
             tvs.get(which).setVisibility(VISIBLE);
             tvs.get(0).setVisibility(INVISIBLE);
         } else {
-            tvs.get(0).setText(values[which]);
+            tvs.get(0).setText(value);
             tvs.get(0).setVisibility(VISIBLE);
             tvs.get(1).setVisibility(INVISIBLE);
             tvs.get(2).setVisibility(INVISIBLE);
+        }
+    }
+
+    private String stringOfMaxLength(String string, int maxLength){
+        if(string.length()<maxLength){
+            return string;
+        }else{
+            return string.substring(0,maxLength) + "...";
         }
     }
 
