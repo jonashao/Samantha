@@ -20,12 +20,12 @@ and automatically make notifications for you.
 
 ## Techs
 
-| name         | usage                 |
-| ------------ | --------------------- |
-| Realm        | Data                  |
-| Butterknife  | View Binding          |
-| Lombok       | Generate Boilerplate  |
-| RxJava       | Reactive              |
-| RxPermission | Permission management |
-| Foldingcell  | card ui               |
+| name         | usage                      |
+| ------------ | -------------------------- |
+| Realm        | Data                       |
+| ButterKnife  | View Binding               |
+| Lombok       | Generate Boilerplate codes |
+| RxJava       | Reactive                   |
+| RxPermission | Permission management      |
+| FoldingCell  | card ui                    |
 

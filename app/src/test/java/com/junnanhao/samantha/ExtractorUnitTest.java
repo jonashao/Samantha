@@ -41,7 +41,7 @@ public class ExtractorUnitTest {
     @Test
     public void timeExtractor_pattern_correct() throws Exception {
 
-        String time = "(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))((点(半?|([0-5][0-9])分?))|:([0-5][0-9]))";
+        String time = "(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))((点(([0-5][0-9])分|半)?)|:([0-5][0-9]))";
 
         Pattern timePattern = Pattern.compile(time);
         assertTrue(timePattern.matcher("19点半").find());
@@ -71,7 +71,6 @@ public class ExtractorUnitTest {
 
         assertFalse(durationPattern.matcher("248").find());
 
-
         String spaceTest = "—顺丰快递——从现在至 17:30——凭";
         spaceTest = spaceTest.replaceAll("\\s", "");
         assertEquals(spaceTest,"—顺丰快递——从现在至17:30——凭");
@@ -79,34 +78,11 @@ public class ExtractorUnitTest {
         assertTrue(spaceMather.find());
         assertEquals(spaceMather.group(),"现在至17:30");
         assertEquals(spaceMather.group(2),"现在");
-//        assertEquals(matcher.group(1), "现在至19点");
 
-
-//        Matcher matcher = timePattern.matcher("19:00");
-//        assertTrue(matcher.find());
-//
-//        matcher = timePattern.matcher("19点");
-//        assertTrue(matcher.find());
-//
-//        matcher = timePattern.matcher("19点半");
-//        assertTrue(matcher.find());
-//
-//        matcher = timePattern.matcher("18:00");
-//        assertTrue(matcher.find());
-//
-//        matcher = timePattern.matcher("6点30分");
-//        assertTrue(matcher.find());
-
-
-//        Pattern pattern = Pattern.compile(
-//                "((上午?|下午?|早上?|晚上?)(?|现在)((-|至)(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))(点|:)(([0-5][0-9])分|半)?)?)");
-//
-//
-//        String test = "顺丰从现在至 17:30";
-//        test = test.replaceAll("\\s", "");
-//        Matcher matcher = pattern.matcher(test);
-//        assertTrue(matcher.find());
-//        assertEquals(matcher.);
+        String durationTest = "我是宅急送快递员，请于12点50分至1点30分内过来华工一饭天桥大路边取";
+        Matcher durationMatcher = durationPattern.matcher(durationTest);
+        assertTrue(durationMatcher.find());
+        assertEquals(durationMatcher.group(),"12点50分至1点30分");
     }
 
 
