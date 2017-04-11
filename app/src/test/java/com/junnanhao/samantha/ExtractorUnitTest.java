@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import com.junnanhao.samantha.model.entity.Concept;
 import com.junnanhao.samantha.model.entity.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoBean;
+import com.junnanhao.samantha.model.entity.Synonyms;
 import com.junnanhao.samantha.workflow.extractor.ConceptsExtractor;
 import com.junnanhao.samantha.workflow.extractor.Extractor;
 
@@ -39,14 +40,72 @@ public class ExtractorUnitTest {
 
     @Test
     public void timeExtractor_pattern_correct() throws Exception {
-        Pattern pattern = Pattern.compile(
-                "((上午?|下午?|早上?|晚上?)((([1-9]{1})|([0-1][0-9])|([1-2][0-3]))(点|:)(([0-5][0-9])分|半)?|现在)((-|至)(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))(点|:)(([0-5][0-9])分|半)?)?)");
 
+        String time = "(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))((点(半?|([0-5][0-9])分?))|:([0-5][0-9]))";
 
+        Pattern timePattern = Pattern.compile(time);
+        assertTrue(timePattern.matcher("19点半").find());
+        assertTrue(timePattern.matcher("19点25").find());
+        assertTrue(timePattern.matcher("19点19分").find());
+        assertTrue(timePattern.matcher("19:50").find());
 
-        String test = "顺丰从现在至 17:30";
-        Matcher matcher = pattern.matcher(test);
+        String duration = String.format("(((%s)前?|现在)((-|至|到)%s)?)", time, time);
+        Pattern durationPattern = Pattern.compile(duration);
+        assertTrue(durationPattern.matcher("19点半").find());
+        assertTrue(durationPattern.matcher("19点25").find());
+        assertTrue(durationPattern.matcher("19点19分").find());
+        assertTrue(durationPattern.matcher("19:50").find());
+        assertTrue(durationPattern.matcher("19:00-19:30").find());
+        assertTrue(durationPattern.matcher("19:00到19:30").find());
+        assertTrue(durationPattern.matcher("19:00至19:30").find());
+        assertTrue(durationPattern.matcher("19点至19点半").find());
+        assertTrue(durationPattern.matcher("现在至19点").find());
+        assertTrue(durationPattern.matcher("19:00前").find());
+
+        Matcher m = durationPattern.matcher("19点半");
+        assertTrue(m.find());
+        assertEquals(m.group(0), "19点半");
+        Matcher matcher = durationPattern.matcher("北京时间19点半前来拿快递");
         assertTrue(matcher.find());
+        assertEquals(matcher.group(), "19点半前");
+
+        assertFalse(durationPattern.matcher("248").find());
+
+
+        String spaceTest = "—顺丰快递——从现在至 17:30——凭";
+        spaceTest = spaceTest.replaceAll("\\s", "");
+        assertEquals(spaceTest,"—顺丰快递——从现在至17:30——凭");
+        Matcher spaceMather = durationPattern.matcher(spaceTest);
+        assertTrue(spaceMather.find());
+        assertEquals(spaceMather.group(),"现在至17:30");
+        assertEquals(spaceMather.group(2),"现在");
+//        assertEquals(matcher.group(1), "现在至19点");
+
+
+//        Matcher matcher = timePattern.matcher("19:00");
+//        assertTrue(matcher.find());
+//
+//        matcher = timePattern.matcher("19点");
+//        assertTrue(matcher.find());
+//
+//        matcher = timePattern.matcher("19点半");
+//        assertTrue(matcher.find());
+//
+//        matcher = timePattern.matcher("18:00");
+//        assertTrue(matcher.find());
+//
+//        matcher = timePattern.matcher("6点30分");
+//        assertTrue(matcher.find());
+
+
+//        Pattern pattern = Pattern.compile(
+//                "((上午?|下午?|早上?|晚上?)(?|现在)((-|至)(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))(点|:)(([0-5][0-9])分|半)?)?)");
+//
+//
+//        String test = "顺丰从现在至 17:30";
+//        test = test.replaceAll("\\s", "");
+//        Matcher matcher = pattern.matcher(test);
+//        assertTrue(matcher.find());
 //        assertEquals(matcher.);
     }
 

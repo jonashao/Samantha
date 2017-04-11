@@ -30,19 +30,21 @@ public class SubViewSetter {
 
     public void set(Value value) {
         short which = 0b10;
-        data[which] = value.value;
         String v;
         if (value.isMain) {
             which = 0b01;
-            v = ellipsis(data[which], 14);
+            v = ellipsis(value.value, 14);
         } else {
-            v = ellipsis(data[which], 20);
+            v = ellipsis(value.value, 20);
         }
+        data[which] = value.value;
         status |= which;
 
         if (status == 3) {
-            views.get(which).setText(v);
-            views.get(which).setVisibility(VISIBLE);
+            views.get(1).setText(data[1]);
+            views.get(2).setText(data[2]);
+            views.get(1).setVisibility(VISIBLE);
+            views.get(2).setVisibility(VISIBLE);
             views.get(0).setVisibility(INVISIBLE);
         } else {
             views.get(0).setText(v);
