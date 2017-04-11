@@ -140,7 +140,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
 
             String value = bean.valueOfConcept(desc.concept());
 
-            if (setter != null && view != null)
+            if (setter != null && view != null && value != null)
                 setter.set(view, value);
         }
     }

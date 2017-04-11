@@ -30,13 +30,16 @@ public class SubViewSetter {
 
     public void set(Value value) {
         short which = 0b10;
+        data[which] = value.value;
+        String v;
         if (value.isMain) {
             which = 0b01;
+            v = ellipsis(data[which], 14);
+        } else {
+            v = ellipsis(data[which], 20);
         }
         status |= which;
 
-        data[which] = value.value;
-        String v = ellipsis(data[which], 14);
         if (status == 3) {
             views.get(which).setText(v);
             views.get(which).setVisibility(VISIBLE);
@@ -56,10 +59,10 @@ public class SubViewSetter {
         String value;
     }
 
-    public static final Setter<SubViewSetter, Value> SETTER = new Setter<SubViewSetter, Value>() {
-        @Override
-        public void set(SubViewSetter object, Value value) {
-            object.set(value);
-        }
-    };
+//    public static final Setter<SubViewSetter, Value> SETTER = new Setter<SubViewSetter, Value>() {
+//        @Override
+//        public void set(SubViewSetter object, Value value) {
+//            object.set(value);
+//        }
+//    };
 }

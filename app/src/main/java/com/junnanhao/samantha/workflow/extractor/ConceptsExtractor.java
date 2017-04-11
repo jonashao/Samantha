@@ -32,7 +32,7 @@ public class ConceptsExtractor implements Extractor {
                 .id(UUID.randomUUID().hashCode());
 
         src = src.replaceAll("\\([^\\(\\)]*\\)|（[^（）]*）", "");
-
+        src = src.replaceAll("\\s", "");
 
         for (ConceptDesc description : descriptions) {
             Pattern pattern = Pattern.compile(description.formatter());
