@@ -16,30 +16,63 @@
 
 package com.junnanhao.samantha.ui.adapter;
 
+import android.support.constraint.ConstraintLayout;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.InfoBean;
+import com.junnanhao.samantha.ui.adapter.holder.StripViewHolder;
+import com.junnanhao.samantha.ui.adapter.holder.TicketViewHolder;
 
-import com.junnanhao.samanthaviews.InfoView;
 
+import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
 
+import static com.junnanhao.samanthaviews.R.layout.preview_strip;
 
-public class RecyclerViewAdapter extends BaseAdapter<InfoBean, InfoViewHolder> {
+
+public class RecyclerViewAdapter extends BaseAdapter<InfoBean, BaseAdapter.ViewHolder> {
+
     public RecyclerViewAdapter(OrderedRealmCollection<InfoBean> data) {
         super(data);
     }
 
     @Override
-    public InfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        InfoView view = new InfoView(parent.getContext());
-        return new InfoViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewHolder viewHolder;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.item_info, parent, false);
+        ConstraintLayout layoutPreview = ButterKnife.findById(view, R.id.preview);
+
+        switch (viewType) {
+            case 1: // train ticket
+                viewHolder = new TicketViewHolder(view);
+                break;
+            case 2:
+                inflater.inflate(preview_strip, layoutPreview, true);
+                viewHolder = new StripViewHolder(view);
+                break;
+            default:
+                viewHolder = new StripViewHolder(view);
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(InfoViewHolder holder, int position) {
-        final InfoBean bean = getItem(position);
-        holder.bindData(bean);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        if (getData() != null) {
+            InfoBean bean = getData().get(position);
+            if (bean != null) {
+                holder.bindData(getData().get(position));
+            }
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return getData() != null ? getData().get(position).type().id() : 0;
     }
 
 

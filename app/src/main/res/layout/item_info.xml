@@ -22,11 +22,11 @@
 
         <include
             android:id="@+id/detail"
-            layout="@layout/content_detail"/>
+            layout="@layout/item_info_detail"/>
 
         <include
-            android:id="@+id/surface"
-            layout="@layout/content_preview"/>
+            android:id="@+id/preview"
+            layout="@layout/item_info_preview"/>
 
     </com.ramotion.foldingcell.FoldingCell>
 </android.support.v7.widget.CardView>

@@ -27,15 +27,16 @@ public class ConceptDesc extends RealmObject {
     private String cather = "$1";
 
     /**
-     * res Type and resName are used to find correspond view to show the concept,
+     * res Type and identifier are used to find correspond view to show the concept,
      * mainly used in Ticket View
      */
     private String resType = "id";
-    private String resName;
+    private String identifier;
+    private String property = "text";
 
     /**
      * view type decide what kind of view to show the concept.
-     *
+     * <p>
      * textView : setText
      * imageView: setDrawableResource
      * metaInfo: infoView
