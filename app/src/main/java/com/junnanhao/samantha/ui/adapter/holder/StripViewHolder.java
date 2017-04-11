@@ -53,6 +53,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
     List<TextView> tvsTitle;
 
     @BindView(R.id.tv_detail_title) TextView tvDetailTitle;
+    private String type;
 
     final private SubViewSetter titlesSetter = new SubViewSetter(tvsTitle);
     final private SubViewSetter dataSetter = new SubViewSetter(tvsData);
@@ -88,19 +89,25 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
                     .findFirst();
 
             if (synonyms != null) {
-                int drawableId = findIdByResName("ic_" + synonyms.identifier(), "drawable");
-                icon.setImageResource(drawableId);
-
-                int colorId = findIdByResName(synonyms.identifier(), "color");
-                layoutPreview.setBackgroundResource(colorId);
-                layoutTitle.setBackgroundResource(colorId);
-
-                if (ColorUtils.isColorDark(context.getResources().getColor(colorId))) {
-                    ButterKnife.apply(tvsData, TEXT_COLOR_SETTER, Color.WHITE);
-                }
+                setColorIcon(synonyms.identifier());
+            } else {
+                setColorIcon(type);
             }
         }
     };
+
+    private final void setColorIcon(String identifier) {
+        int drawableId = findIdByResName("ic_" + identifier, "drawable");
+        icon.setImageResource(drawableId);
+
+        int colorId = findIdByResName(identifier, "color");
+        layoutPreview.setBackgroundResource(colorId);
+        layoutTitle.setBackgroundResource(colorId);
+
+        if (ColorUtils.isColorDark(context.getResources().getColor(colorId))) {
+            ButterKnife.apply(tvsData, TEXT_COLOR_SETTER, Color.WHITE);
+        }
+    }
 
 
     // use identifier to match view
@@ -129,6 +136,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
 
     @SuppressWarnings("unchecked")
     public void bindData(InfoBean bean) {
+        type = bean.type().name();
         for (ConceptDesc desc : bean.type().conceptDescs()) {
 
             String identifier = desc.identifier();

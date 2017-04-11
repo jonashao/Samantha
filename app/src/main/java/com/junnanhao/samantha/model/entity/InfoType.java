@@ -18,6 +18,7 @@ import lombok.experimental.Accessors;
 public class InfoType extends RealmObject {
     @PrimaryKey private int id;
     private InfoTypeUi ui;
+    private String name;
     private RealmList<ConceptDesc> conceptDescs;
     private RealmList<Sender> senders;
     private String subjects;

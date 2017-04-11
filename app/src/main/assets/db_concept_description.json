@@ -15,7 +15,7 @@
     "concept": {
       "id": 12
     },
-    "formatter": "(顺丰|申通|韵达|圆通|EMS)",
+    "formatter": "(顺丰|申通|韵达|圆通|EMS|宅急送)",
     "identifier": "tv_subject",
     "viewType": "textView",
     "property": "subject"
