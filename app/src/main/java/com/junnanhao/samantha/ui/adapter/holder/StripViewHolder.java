@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.common.collect.ImmutableMap;
@@ -30,6 +29,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
     @BindView(R.id.layout_detail_container) ConstraintLayout detailContainer;
     @BindView(R.id.ic_preview) ImageView icon;
     @BindView(R.id.tv_detail_title) TextView tvDetailTitle;
+    @BindView(R.id.tv_detail_title_content) TextView tvDetailTitleContent;
 
     @BindViews({R.id.tv_data, R.id.tv_data_main, R.id.tv_data_second})
     List<TextView> tvsData;
@@ -47,6 +47,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
         @Override
         public void set(StripViewHolder holder, String value) {
             holder.dataSetter.set(new SubViewSetter.Value(false, value));
+            holder.addMeta("location", value);
         }
     };
 
@@ -54,6 +55,14 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
         @Override
         public void set(StripViewHolder holder, String value) {
             holder.dataSetter.set(new SubViewSetter.Value(true, value));
+            holder.tvDetailTitleContent.setText(value);
+        }
+    };
+
+    private final Setter<String, String> META_SETTER = new Setter<String, String>() {
+        @Override
+        public void set(String object, String value) {
+            addMeta(object, value);
         }
     };
 
@@ -101,6 +110,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
                     .put("subject", StripViewHolder.this)
                     .put("time", StripViewHolder.this)
                     .put("location", StripViewHolder.this)
+                    .put("phone", "phone")
                     .build();
         }
         return views;
@@ -114,6 +124,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
                     .put(12L, SUBJECT_SETTER)
                     .put(14L, LOCATION_SETTER)
                     .put(13L, TIME_SETTER)
+                    .put(11L, META_SETTER)
                     .build();
         }
         return setters;

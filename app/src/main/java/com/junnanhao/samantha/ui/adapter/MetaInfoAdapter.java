@@ -1,10 +1,13 @@
 package com.junnanhao.samantha.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.junnanhao.samanthaviews.MetaInfo;
+import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.model.struct.MetaInfo;
+import com.junnanhao.samantha.ui.adapter.holder.MetaInfoViewHolder;
 
 import java.util.List;
 
@@ -13,32 +16,40 @@ import java.util.List;
  * adapter for recyclerView MataInfo
  */
 
-public class MetaInfoAdapter extends RecyclerView.Adapter<MetaInfoAdapter.ViewHolder> {
-    List<MetaInfo> data;
+class MetaInfoAdapter extends RecyclerView.Adapter<MetaInfoViewHolder> {
+    private List<MetaInfo> data;
 
-    public MetaInfoAdapter(List<MetaInfo> data) {
+    MetaInfoAdapter(List<MetaInfo> data) {
         this.data = data;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public MetaInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        switch (viewType) {
+            default:
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meta_info, parent, false);
+                return new MetaInfoViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public int getItemViewType(int position) {
+        return data.get(position).resId();
+    }
 
+    @Override
+    public void onBindViewHolder(MetaInfoViewHolder holder, int position) {
+        MetaInfo value = data.get(position);
+        if (value != null) {
+            holder.icMetaInfo.setImageResource(value.resId());
+            holder.tvMetaInfo.setText(value.value());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
 }

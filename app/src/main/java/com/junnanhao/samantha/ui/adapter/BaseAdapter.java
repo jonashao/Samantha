@@ -3,6 +3,7 @@ package com.junnanhao.samantha.ui.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +13,14 @@ import android.widget.TextView;
 
 import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.model.entity.Concept;
 import com.junnanhao.samantha.model.entity.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samantha.model.struct.Key2;
 import com.junnanhao.samantha.ui.utils.Setter;
-import com.junnanhao.samanthaviews.MetaInfo;
+import com.junnanhao.samantha.model.struct.MetaInfo;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Nonnull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +56,8 @@ public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.V
         @BindView(R.id.tv_detail_title_content) protected TextView tvDetailTitleContent;
         @BindView(R.id.list_meta_info) RecyclerView rvMetaInfo;
         protected Context context;
-        protected MetaInfoAdapter metaInfoAdapter;
-        protected List<MetaInfo> mataInfoList;
+        MetaInfoAdapter metaInfoAdapter;
+        List<MetaInfo> metaInfoList;
 
         // use identifier to match view
         protected ImmutableMap<String, Object> views;
@@ -78,9 +75,18 @@ public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.V
         }
 
         private void setupRvMetaInfo() {
-            mataInfoList = new ArrayList<>();
-            metaInfoAdapter = new MetaInfoAdapter(mataInfoList);
+            metaInfoList = new ArrayList<>();
+            metaInfoAdapter = new MetaInfoAdapter(metaInfoList);
             rvMetaInfo.setAdapter(metaInfoAdapter);
+            rvMetaInfo.setLayoutManager(new LinearLayoutManager(context));
+        }
+
+        protected void addMeta(String type, String value) {
+            MetaInfo meta = new MetaInfo(type, value);
+            if (!metaInfoList.contains(meta)) {
+                metaInfoList.add(meta);
+                metaInfoAdapter.notifyItemChanged(metaInfoList.size() - 1);
+            }
         }
 
         @NonNull
@@ -101,17 +107,18 @@ public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.V
                 if (setter != null && view != null && value != null)
                     setter.set(view, value);
             }
-        }
 
-        @OnClick(R.id.cell)
-        void foldSwitch() {
             if (isToggleable == null) {
                 int detailHeight = layoutDetail.getHeight();
                 int previewHeight = layoutPreview.getHeight();
                 int p = (previewHeight << 1 - detailHeight);
                 isToggleable = (p <= 0);
             }
-            if (isToggleable) {
+        }
+
+        @OnClick(R.id.cell)
+        void foldSwitch() {
+            if (isToggleable != null && isToggleable) {
                 cell.toggle(false);
             }
         }
