@@ -1,13 +1,16 @@
 package com.junnanhao.samantha.ui.adapter.holder;
 
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.model.entity.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.ui.adapter.BaseAdapter.ViewHolder;
+import com.junnanhao.samantha.ui.utils.Setter;
 
 
 import static com.junnanhao.samanthaviews.R.layout.train_ticket_card;
@@ -23,7 +26,18 @@ public class TicketViewHolder extends ViewHolder {
         LayoutInflater.from(context).inflate(train_ticket_card, layoutPreview, true);
     }
 
+    @NonNull
     @Override
+    protected ImmutableMap<String, Object> getViews() {
+        return ImmutableMap.<String, Object>builder().build();
+    }
+
+    @NonNull
+    @Override
+    protected ImmutableMap<Long, Setter> getSetters() {
+        return ImmutableMap.<Long, Setter>builder().build();
+    }
+
     public void bindData(InfoBean bean) {
 
         TextView tvSetting = (TextView) findViewByResName(bean.type().ui().resNameEdit(), "id");

@@ -16,7 +16,7 @@
       "id": 12
     },
     "formatter": "(顺丰|申通|韵达|圆通|EMS|宅急送)",
-    "identifier": "tv_subject",
+    "identifier": "subject",
     "viewType": "textView",
     "property": "subject"
   },
@@ -27,7 +27,7 @@
     },
     "formatter": "((((([1-9]{1})|([0-1][0-9])|([1-2][0-3]))((点(([0-5][0-9])分|半)?)|:([0-5][0-9])))前?|现在)((-|至|到)(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))((点(([0-5][0-9])分|半)?)|:([0-5][0-9])))?)",
     "cather": "$1",
-    "identifier": "tv_data",
+    "identifier": "time",
     "viewType": "infoView",
     "property": "time"
   },
@@ -38,7 +38,7 @@
     },
     "formatter": "(来|到)([^来到取拿领]*)(取|拿|领)",
     "cather": "$2",
-    "identifier": "tv_data_second",
+    "identifier": "location",
     "viewType": "meta",
     "property": "location"
   },

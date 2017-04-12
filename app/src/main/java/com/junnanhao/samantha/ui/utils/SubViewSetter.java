@@ -61,10 +61,10 @@ public class SubViewSetter {
         String value;
     }
 
-//    public static final Setter<SubViewSetter, Value> SETTER = new Setter<SubViewSetter, Value>() {
-//        @Override
-//        public void set(SubViewSetter object, Value value) {
-//            object.set(value);
-//        }
-//    };
+    public  final Setter<SubViewSetter, Value> SETTER = new Setter<SubViewSetter, Value>() {
+        @Override
+        public void set(SubViewSetter object, Value value) {
+            SubViewSetter.this.set(value);
+        }
+    };
 }

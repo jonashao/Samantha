@@ -14,6 +14,7 @@ public interface Setter<T, V> {
     String PROPERTY_TIME = "time";
     String PROPERTY_IMAGE_RESOURCE = "imageResource";
     String PROPERTY_PHONE = "phone";
+    String PROPERTY_ANY = "any";
 
     void set(T object, V value);
 }
