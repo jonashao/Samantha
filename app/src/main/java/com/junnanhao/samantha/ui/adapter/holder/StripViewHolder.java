@@ -30,15 +30,11 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
     @BindView(R.id.ic_preview) ImageView icon;
     @BindView(R.id.tv_detail_title) TextView tvDetailTitle;
     @BindView(R.id.tv_detail_title_content) TextView tvDetailTitleContent;
-
     @BindViews({R.id.tv_data, R.id.tv_data_main, R.id.tv_data_second})
     List<TextView> tvsData;
 
-//    @BindViews({R.id.tv_title, R.id.tv_title_main, R.id.tv_subtitle})
-//    List<TextView> tvsTitle;
-//    final private SubViewSetter titlesSetter = new SubViewSetter(tvsTitle);
-
     private String typeIdentifier;
+    private long id;
 
     final private SubViewSetter dataSetter = new SubViewSetter(tvsData);
 
@@ -132,6 +128,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
 
     public void bindData(InfoBean bean) {
         typeIdentifier = bean.type().name();
+        id = bean.id();
         super.bindData(bean);
     }
 

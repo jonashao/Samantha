@@ -85,7 +85,6 @@ public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.V
             MetaInfo meta = new MetaInfo(type, value);
             if (!metaInfoList.contains(meta)) {
                 metaInfoList.add(meta);
-                metaInfoAdapter.notifyItemChanged(metaInfoList.size() - 1);
             }
         }
 
@@ -95,8 +94,11 @@ public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.V
         @NonNull
         protected abstract ImmutableMap<Long, Setter> getSetters();
 
+
         @SuppressWarnings("unchecked")
         public void bindData(InfoBean bean) {
+            this.metaInfoList.clear();
+
             for (ConceptDesc desc : bean.type().conceptDescs()) {
 
                 String identifier = desc.identifier();
@@ -107,6 +109,7 @@ public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.V
                 if (setter != null && view != null && value != null)
                     setter.set(view, value);
             }
+            metaInfoAdapter.notifyDataSetChanged();
 
             if (isToggleable == null) {
                 int detailHeight = layoutDetail.getHeight();

@@ -19,10 +19,15 @@ import io.realm.RealmList;
 public class ConceptsExtractor implements Extractor {
     private List<ConceptDesc> descriptions;
     private Pattern formatPattern = Pattern.compile("\\$\\{?(\\d+)\\}?");
-
+    private Pattern paraPattern = Pattern.compile("\\(([^\\(\\)]*)\\)|（([^（）]*)）");
 
     public ConceptsExtractor(List<ConceptDesc> descriptions) {
         this.descriptions = descriptions;
+    }
+
+    public String preHandling(String src) {
+        src = src.replaceAll("\\s", "");
+        return src;
     }
 
     @Override
@@ -31,8 +36,7 @@ public class ConceptsExtractor implements Extractor {
                 .data(new RealmList<ConceptValue>())
                 .id(UUID.randomUUID().hashCode());
 
-        src = src.replaceAll("\\([^\\(\\)]*\\)|（[^（）]*）", "");
-        src = src.replaceAll("\\s", "");
+        src = preHandling(src);
 
         for (ConceptDesc description : descriptions) {
             Pattern pattern = Pattern.compile(description.formatter());
@@ -48,6 +52,14 @@ public class ConceptsExtractor implements Extractor {
                     if (groupValue != null) {
                         formatter = formatMather.replaceFirst(matcher.group(Integer.valueOf(groupValue)));
                         formatMather = formatPattern.matcher(formatter);
+                    }
+                }
+
+                Matcher paraMather = paraPattern.matcher(formatter);
+                while (paraMather.find()) {
+                    String groupValue = paraMather.group(1) != null ? paraMather.group(1) : paraMather.group(2);
+                    if (groupValue != null && formatter.length() == groupValue.length() + 2) {
+                        formatter = groupValue;
                     }
                 }
 

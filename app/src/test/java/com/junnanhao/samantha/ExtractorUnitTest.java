@@ -39,6 +39,26 @@ public class ExtractorUnitTest {
 
 
     @Test
+    public void parameter_replace_correct() throws Exception {
+        String p = "\\(([^\\(\\)]*)\\)|（([^（）]*)）";
+        Pattern pattern = Pattern.compile(p);
+        String test = "hi（me）!";
+        Matcher matcher = pattern.matcher(test);
+        assertTrue(matcher.find());
+
+        System.out.println(matcher.group());
+        System.out.println(matcher.group(1));
+        System.out.println(matcher.group(2));
+
+        ConceptsExtractor extractor = new ConceptsExtractor(null);
+        String re = extractor.preHandling("请1点前到（大学城华工一饭天桥底）领取");
+        assertEquals(re, "请1点前到领取大学城华工一饭天桥底");
+
+
+    }
+
+
+    @Test
     public void timeExtractor_pattern_correct() throws Exception {
 
         String time = "(([1-9]{1})|([0-1][0-9])|([1-2][0-3]))((点(([0-5][0-9])分|半)?)|:([0-5][0-9]))";
@@ -73,16 +93,16 @@ public class ExtractorUnitTest {
 
         String spaceTest = "—顺丰快递——从现在至 17:30——凭";
         spaceTest = spaceTest.replaceAll("\\s", "");
-        assertEquals(spaceTest,"—顺丰快递——从现在至17:30——凭");
+        assertEquals(spaceTest, "—顺丰快递——从现在至17:30——凭");
         Matcher spaceMather = durationPattern.matcher(spaceTest);
         assertTrue(spaceMather.find());
-        assertEquals(spaceMather.group(),"现在至17:30");
-        assertEquals(spaceMather.group(2),"现在");
+        assertEquals(spaceMather.group(), "现在至17:30");
+        assertEquals(spaceMather.group(2), "现在");
 
         String durationTest = "我是宅急送快递员，请于12点50分至1点30分内过来华工一饭天桥大路边取";
         Matcher durationMatcher = durationPattern.matcher(durationTest);
         assertTrue(durationMatcher.find());
-        assertEquals(durationMatcher.group(),"12点50分至1点30分");
+        assertEquals(durationMatcher.group(), "12点50分至1点30分");
     }
 
 

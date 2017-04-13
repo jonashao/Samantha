@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  * Created by Jonas on 2017/3/31.
  * InfoBean is an analogy for information extracted from text.
  */
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Data
 @Accessors(fluent = true)
 public class InfoBean extends RealmObject {
@@ -30,5 +30,4 @@ public class InfoBean extends RealmObject {
         }
         return null;
     }
-
 }

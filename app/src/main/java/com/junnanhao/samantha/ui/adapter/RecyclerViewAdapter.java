@@ -64,7 +64,7 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, BaseAdapter.ViewH
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (getData() != null) {
             InfoBean bean = getData().get(position);
-            if (bean != null) {
+            if (bean != null ) {
                 holder.bindData(getData().get(position));
             }
         }

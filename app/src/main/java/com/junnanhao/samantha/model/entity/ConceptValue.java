@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * Use List of ConceptValue to simulate Map
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Accessors(fluent = true)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @NoArgsConstructor

@@ -46,6 +46,9 @@ public class SmsScanner implements Scanner {
         if (mPattern == null) {
             mPattern = Pattern.compile(SUBJECT_PATTERN);
         }
+        // pre-handling: remove all space characters
+        raw.body(raw.body().replaceAll("^\\s|\\s$",""));
+
         Matcher matcher = mPattern.matcher(raw.body());
 
         if (matcher.find()) {
