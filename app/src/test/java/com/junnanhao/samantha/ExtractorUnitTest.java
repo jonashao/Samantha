@@ -39,6 +39,33 @@ public class ExtractorUnitTest {
 
 
     @Test
+    public void pickNumber_pattern_correct() throws Exception {
+        String p = "(?<=号)([\\(（【\\[ ]?)(\\d{1,4})([）\\)】\\] ]?)";
+        Pattern pattern = Pattern.compile(p);
+        String test = "编号555";
+        Matcher matcher = pattern.matcher(test);
+        assertTrue(matcher.find());
+        assertEquals(matcher.group(2), "555");
+
+        matcher = pattern.matcher("取货号(195)");
+        assertTrue(matcher.find());
+        assertEquals(matcher.group(2), "195");
+
+        matcher = pattern.matcher("快递编号(5012)");
+        assertTrue(matcher.find());
+        assertEquals(matcher.group(2), "5012");
+
+        matcher = pattern.matcher("货号 292");
+        assertTrue(matcher.find());
+        assertEquals(matcher.group(2), "292");
+
+        matcher = pattern.matcher("货号[8596]");
+        assertTrue(matcher.find());
+        assertEquals(matcher.group(2), "8596");
+
+    }
+
+    @Test
     public void parameter_replace_correct() throws Exception {
         String p = "\\(([^\\(\\)]*)\\)|（([^（）]*)）";
         Pattern pattern = Pattern.compile(p);
@@ -53,8 +80,6 @@ public class ExtractorUnitTest {
         ConceptsExtractor extractor = new ConceptsExtractor(null);
         String re = extractor.preHandling("请1点前到（大学城华工一饭天桥底）领取");
         assertEquals(re, "请1点前到领取大学城华工一饭天桥底");
-
-
     }
 
 

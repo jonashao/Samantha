@@ -18,7 +18,7 @@ public class MetaInfo {
 
     private String type;
     private String value;
-    private int resId;
+    private Integer resId;
 
     public MetaInfo(String type, String value) {
         this.type = type;
@@ -31,9 +31,9 @@ public class MetaInfo {
             .build();
 
     public int resId() {
-        if (resId == 0) {
+        if (resId == null) {
             resId = typeResMap.get(type);
-            if (resId == 0) {
+            if (resId == null) {
                 resId = R.drawable.ic_label_black_24dp;
             }
         }

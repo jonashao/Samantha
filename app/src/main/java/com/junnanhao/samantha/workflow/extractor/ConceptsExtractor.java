@@ -64,6 +64,7 @@ public class ConceptsExtractor implements Extractor {
                 }
 
                 bean.data().add(new ConceptValue(description.concept(), formatter));
+                src = matcher.replaceFirst("");
             }
         }
         return bean;

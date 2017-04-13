@@ -107,6 +107,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
                     .put("time", StripViewHolder.this)
                     .put("location", StripViewHolder.this)
                     .put("phone", "phone")
+                    .put("pick_number", "pick_number")
                     .build();
         }
         return views;
@@ -121,6 +122,7 @@ public class StripViewHolder extends BaseAdapter.ViewHolder {
                     .put(14L, LOCATION_SETTER)
                     .put(13L, TIME_SETTER)
                     .put(11L, META_SETTER)
+                    .put(15L, META_SETTER)
                     .build();
         }
         return setters;

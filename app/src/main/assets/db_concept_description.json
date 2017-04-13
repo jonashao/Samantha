@@ -1,6 +1,65 @@
 [
+  // ticket
   {
     "id": 1,
+    "concept": {
+      "id": 3
+    },
+    "identifier": "tv_start_date"
+  },
+  {
+    "id": 2,
+    "concept": {
+      "id": 4
+    },
+    "identifier": "tv_travel_number"
+  },
+  {
+    "id": 3,
+    "concept": {
+      "id": 5
+    },
+    "identifier": "tv_seat_number"
+  },
+  {
+    "id": 4,
+    "concept": {
+      "id": 6
+    },
+    "identifier": "tv_start_station"
+  },
+  {
+    "id": 5,
+    "concept": {
+      "id": 7
+    },
+    "identifier": "tv_start_time"
+  },
+  {
+    "id": 6,
+    "concept": {
+      "id": 8
+    },
+    "identifier": "tv_arrive_time"
+  },
+  {
+    "id": 7,
+    "concept": {
+      "id": 9
+    },
+    "identifier": "tv_arrive_station"
+  },
+  {
+    "id": 8,
+    "concept": {
+      "id": 10
+    },
+    "identifier": "tv_arrive_date"
+  },
+
+  // logistics
+  {
+    "id": 9,
     "concept": {
       "id": 11
     },
@@ -11,7 +70,7 @@
     "property": "phone"
   },
   {
-    "id": 2,
+    "id": 10,
     "concept": {
       "id": 12
     },
@@ -21,7 +80,7 @@
     "property": "subject"
   },
   {
-    "id": 3,
+    "id": 11,
     "concept": {
       "id": 13
     },
@@ -32,7 +91,7 @@
     "property": "time"
   },
   {
-    "id": 4,
+    "id": 12,
     "concept": {
       "id": 14
     },
@@ -43,59 +102,14 @@
     "property": "location"
   },
   {
-    "id": 5,
-    "concept": {
-      "id": 3
-    },
-    "identifier": "tv_start_date"
-  },
-  {
-    "id": 6,
-    "concept": {
-      "id": 4
-    },
-    "identifier": "tv_travel_number"
-  },
-  {
-    "id": 7,
-    "concept": {
-      "id": 5
-    },
-    "identifier": "tv_seat_number"
-  },
-  {
-    "id": 8,
-    "concept": {
-      "id": 6
-    },
-    "identifier": "tv_start_station"
-  },
-  {
-    "id": 9,
-    "concept": {
-      "id": 7
-    },
-    "identifier": "tv_start_time"
-  },
-  {
-    "id": 11,
-    "concept": {
-      "id": 8
-    },
-    "identifier": "tv_arrive_time"
-  },
-  {
-    "id": 12,
-    "concept": {
-      "id": 9
-    },
-    "identifier": "tv_arrive_station"
-  },
-  {
     "id": 13,
     "concept": {
-      "id": 10
+      "id": 15
     },
-    "identifier": "tv_arrive_date"
+    "formatter": "(?<=号)([\\(（【\\[ ]?)(\\d{1,4})([）\\)】\\] ]?)",
+    "cather": "取货号$2",
+    "identifier": "pick_number",
+    "viewType": "meta",
+    "property": "pick_number"
   }
 ]
