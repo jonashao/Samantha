@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.model.entity.Concept;
+import com.junnanhao.samantha.model.entity.ConceptValue;
+import com.junnanhao.samantha.model.entity.InfoType;
 import com.junnanhao.samantha.workflow.Workflow;
 import com.junnanhao.samantha.model.entity.ActionMenuItem;
 import com.junnanhao.samantha.model.entity.InfoBean;
@@ -88,7 +91,20 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     void onFabClick() {
-        workflow.scan();
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                InfoBean bean = realm.createObject(InfoBean.class, UUID.randomUUID().hashCode())
+                        .type(realm.where(InfoType.class).equalTo("id", 2).findFirst());
+
+                bean.data().add(new ConceptValue(realm.where(Concept.class).equalTo("id",11).findFirst(), "17080959345"));
+                bean.data().add(new ConceptValue(realm.where(Concept.class).equalTo("id",12).findFirst(), "EMS"));
+                bean.data().add(new ConceptValue(realm.where(Concept.class).equalTo("id",13).findFirst(), "19:00-21:00"));
+                bean.data().add(new ConceptValue(realm.where(Concept.class).equalTo("id",14).findFirst(), "C10楼下"));
+                bean.data().add(new ConceptValue(realm.where(Concept.class).equalTo("id",15).findFirst(), "取货号956"));
+            }
+        });
     }
 
 

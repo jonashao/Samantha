@@ -49,9 +49,9 @@ public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.V
     public abstract void onBindViewHolder(VH holder, int position);
 
     public static abstract class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.cell) FoldingCell cell;
         @BindView(R.id.detail) LinearLayout layoutDetail;
         @BindView(R.id.preview) protected ConstraintLayout layoutPreview;
-        @BindView(R.id.cell) FoldingCell cell;
         @BindView(R.id.tv_detail_title) protected TextView tvDetailTitle;
         @BindView(R.id.tv_detail_title_content) protected TextView tvDetailTitleContent;
         @BindView(R.id.list_meta_info) RecyclerView rvMetaInfo;

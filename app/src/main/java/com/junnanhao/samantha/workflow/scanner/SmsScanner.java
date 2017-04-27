@@ -47,7 +47,7 @@ public class SmsScanner implements Scanner {
             mPattern = Pattern.compile(SUBJECT_PATTERN);
         }
         // pre-handling: remove all space characters
-        raw.body(raw.body().replaceAll("^\\s|\\s$",""));
+        raw.body(raw.body().replaceAll("^\\s|\\s$", ""));
 
         Matcher matcher = mPattern.matcher(raw.body());
 
@@ -111,6 +111,8 @@ public class SmsScanner implements Scanner {
                         .id(UUID.randomUUID().hashCode())
                         .datetime(new Date(cursor.getLong(dateIndex)))
                         .sender(new Sender().type(Raw.TYPE_SMS).value(cursor.getString(senderIndex)))));
+                System.out.println(data.get(data.size()-1));
+
             }
             cursor.close();
         }
