@@ -22,5 +22,6 @@
     <string name="setting">设置</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="hello_blank_fragment">Hello Blank</string>
+    <string name="title_activity_template">模板</string>
 
 </resources>

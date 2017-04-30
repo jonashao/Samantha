@@ -1,6 +1,7 @@
 package com.junnanhao.samantha.main;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,13 +14,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.templates.TemplateActivity;
 import com.junnanhao.samantha.workflow.Workflow;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    @BindView(R.id.drawer_layout)  DrawerLayout drawer;
 
     private FragmentTransactionHelper transactionHelper;
     private Workflow workflow;
@@ -28,11 +34,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -62,7 +68,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -104,8 +109,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        transactionHelper.setCurrentItem(id);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (id == R.id.nav_templates) {
+            Intent intent = new Intent(this, TemplateActivity.class);
+            startActivity(intent);
+        } else {
+            transactionHelper.setCurrentItem(id);
+        }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
