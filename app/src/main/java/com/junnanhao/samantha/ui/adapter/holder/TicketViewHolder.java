@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.model.entity.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samantha.ui.adapter.BaseAdapter.ViewHolder;
 import com.junnanhao.samantha.ui.utils.Setter;
 
 
@@ -20,7 +19,7 @@ import static com.junnanhao.samanthaviews.R.layout.train_ticket_card;
  * hold train ticket views
  */
 
-public class TicketViewHolder extends ViewHolder {
+public class TicketViewHolder extends InfoBeanViewHolder {
     public TicketViewHolder(View itemView) {
         super(itemView);
         LayoutInflater.from(context).inflate(train_ticket_card, layoutPreview, true);

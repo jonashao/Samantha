@@ -23,5 +23,9 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="hello_blank_fragment">Hello Blank</string>
     <string name="title_activity_template">模板</string>
+    <string name="desc_template_avatar">template avatar</string>
+    <string name="template_version">0.1.1</string>
+    <string name="template_description">description of the template, It can be very very long, even seceral lines</string>
+    <string name="template_title">Title of the template</string>
 
 </resources>

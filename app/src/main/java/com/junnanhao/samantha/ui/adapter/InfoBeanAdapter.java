@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.InfoBean;
+import com.junnanhao.samantha.ui.adapter.holder.InfoBeanViewHolder;
 import com.junnanhao.samantha.ui.adapter.holder.StripViewHolder;
 import com.junnanhao.samantha.ui.adapter.holder.TicketViewHolder;
 
@@ -33,15 +34,15 @@ import io.realm.OrderedRealmCollection;
 import static com.junnanhao.samanthaviews.R.layout.preview_strip;
 
 
-public class RecyclerViewAdapter extends BaseAdapter<InfoBean, BaseAdapter.ViewHolder> {
+public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
 
-    public RecyclerViewAdapter(OrderedRealmCollection<InfoBean> data) {
+    public InfoBeanAdapter(OrderedRealmCollection<InfoBean> data) {
         super(data);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder viewHolder;
+    public InfoBeanViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        InfoBeanViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_info, parent, false);
         ConstraintLayout layoutPreview = ButterKnife.findById(view, R.id.preview);
@@ -61,10 +62,10 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, BaseAdapter.ViewH
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(InfoBeanViewHolder holder, int position) {
         if (getData() != null) {
             InfoBean bean = getData().get(position);
-            if (bean != null ) {
+            if (bean != null) {
                 holder.bindData(getData().get(position));
             }
         }
@@ -74,6 +75,5 @@ public class RecyclerViewAdapter extends BaseAdapter<InfoBean, BaseAdapter.ViewH
     public int getItemViewType(int position) {
         return getData() != null ? getData().get(position).type().id() : 0;
     }
-
 
 }

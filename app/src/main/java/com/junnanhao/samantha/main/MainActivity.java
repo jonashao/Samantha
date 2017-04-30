@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.templates.TemplateActivity;
+import com.junnanhao.samantha.templates.TemplatesActivity;
 import com.junnanhao.samantha.workflow.Workflow;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_templates) {
-            Intent intent = new Intent(this, TemplateActivity.class);
+            Intent intent = new Intent(this, TemplatesActivity.class);
             startActivity(intent);
         } else {
             transactionHelper.setCurrentItem(id);

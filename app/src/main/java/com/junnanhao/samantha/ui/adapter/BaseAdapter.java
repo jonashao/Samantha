@@ -37,7 +37,7 @@ import io.realm.RealmRecyclerViewAdapter;
 public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.ViewHolder>
         extends RealmRecyclerViewAdapter<T, VH> {
 
-    BaseAdapter(OrderedRealmCollection<T> data) {
+    public BaseAdapter(OrderedRealmCollection<T> data) {
         super(data, true);
         setHasStableIds(true);
     }
@@ -49,81 +49,13 @@ public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.V
     public abstract void onBindViewHolder(VH holder, int position);
 
     public static abstract class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.cell) FoldingCell cell;
-        @BindView(R.id.detail) LinearLayout layoutDetail;
-        @BindView(R.id.preview) protected ConstraintLayout layoutPreview;
-        @BindView(R.id.tv_detail_title) protected TextView tvDetailTitle;
-        @BindView(R.id.tv_detail_title_content) protected TextView tvDetailTitleContent;
-        @BindView(R.id.list_meta_info) RecyclerView rvMetaInfo;
+
         protected Context context;
-        MetaInfoAdapter metaInfoAdapter;
-        List<MetaInfo> metaInfoList;
-
-        // use identifier to match view
-        protected ImmutableMap<String, Object> views;
-
-        // use view type and property to match setter
-        protected ImmutableMap<Long, Setter> setters;
-
-        private Boolean isToggleable = null;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             context = itemView.getContext();
-            setupRvMetaInfo();
-        }
-
-        private void setupRvMetaInfo() {
-            metaInfoList = new ArrayList<>();
-            metaInfoAdapter = new MetaInfoAdapter(metaInfoList);
-            rvMetaInfo.setAdapter(metaInfoAdapter);
-            rvMetaInfo.setLayoutManager(new LinearLayoutManager(context));
-        }
-
-        protected void addMeta(String type, String value) {
-            MetaInfo meta = new MetaInfo(type, value);
-            if (!metaInfoList.contains(meta)) {
-                metaInfoList.add(meta);
-            }
-        }
-
-        @NonNull
-        protected abstract ImmutableMap<String, Object> getViews();
-
-        @NonNull
-        protected abstract ImmutableMap<Long, Setter> getSetters();
-
-
-        @SuppressWarnings("unchecked")
-        public void bindData(InfoBean bean) {
-            this.metaInfoList.clear();
-
-            for (ConceptDesc desc : bean.type().conceptDescs()) {
-
-                String identifier = desc.identifier();
-                Object view = getViews().get(identifier);
-                Setter setter = getSetters().get(desc.concept().id());
-                String value = bean.valueOfConcept(desc.concept());
-
-                if (setter != null && view != null && value != null)
-                    setter.set(view, value);
-            }
-            metaInfoAdapter.notifyDataSetChanged();
-
-            if (isToggleable == null) {
-                int detailHeight = layoutDetail.getHeight();
-                int previewHeight = layoutPreview.getHeight();
-                int p = (previewHeight << 1 - detailHeight);
-                isToggleable = (p <= 0);
-            }
-        }
-
-        @OnClick(R.id.cell)
-        void foldSwitch() {
-            if (isToggleable != null && isToggleable) {
-                cell.toggle(false);
-            }
         }
 
         protected int findIdByResName(String name, String defType) {
@@ -132,13 +64,6 @@ public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.V
                 id = context.getResources().getIdentifier(name, defType, context.getPackageName());
             }
             return id;
-        }
-
-        protected View findViewByResName(String name, String defType) {
-            int id = findIdByResName(name, defType);
-            if (id != 0) {
-                return ButterKnife.findById(cell, id);
-            } else return null;
         }
 
     }

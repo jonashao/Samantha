@@ -11,7 +11,6 @@ import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.model.entity.Synonyms;
-import com.junnanhao.samantha.ui.adapter.BaseAdapter;
 import com.junnanhao.samantha.ui.utils.Setter;
 import com.junnanhao.samantha.ui.utils.SubViewSetter;
 import com.junnanhao.samanthaviews.util.ColorUtils;
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 
 
-public class StripViewHolder extends BaseAdapter.ViewHolder {
+public class StripViewHolder extends InfoBeanViewHolder {
     @BindView(R.id.layout_title) ConstraintLayout layoutTitle;
     @BindView(R.id.layout_detail_container) ConstraintLayout detailContainer;
     @BindView(R.id.ic_preview) ImageView icon;

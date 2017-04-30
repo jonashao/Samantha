@@ -16,10 +16,10 @@ import java.util.List;
  * adapter for recyclerView MataInfo
  */
 
-class MetaInfoAdapter extends RecyclerView.Adapter<MetaInfoViewHolder> {
+public class MetaInfoAdapter extends RecyclerView.Adapter<MetaInfoViewHolder> {
     private List<MetaInfo> data;
 
-    MetaInfoAdapter(List<MetaInfo> data) {
+    public MetaInfoAdapter(List<MetaInfo> data) {
         this.data = data;
     }
 

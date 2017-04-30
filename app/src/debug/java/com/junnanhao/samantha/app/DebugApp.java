@@ -9,6 +9,7 @@ import com.junnanhao.samantha.model.entity.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoType;
 import com.junnanhao.samantha.model.entity.SenderBook;
 import com.junnanhao.samantha.model.entity.Synonyms;
+import com.junnanhao.samantha.model.entity.TemplateItem;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import java.io.IOException;
@@ -61,6 +62,10 @@ public class DebugApp extends Application {
 
                     is = getAssets().open("db_synonyms.json");
                     realm.createOrUpdateAllFromJson(Synonyms.class, is);
+                    is.close();
+
+                    is = getAssets().open("db_template_items.json");
+                    realm.createOrUpdateAllFromJson(TemplateItem.class, is);
                     is.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

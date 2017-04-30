@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samantha.ui.adapter.RecyclerViewAdapter;
+import com.junnanhao.samantha.ui.adapter.InfoBeanAdapter;
 
 
 import butterknife.BindView;
@@ -24,10 +24,10 @@ import timber.log.Timber;
  * A placeholder fragment containing a simple view.
  */
 public class CardsFragment extends Fragment {
-    @BindView(R.id.recycler_view_cards) RecyclerView recyclerView;
+    @BindView(R.id.recycler_view) RecyclerView recyclerView;
 
     private Unbinder unbinder;
-    private RecyclerViewAdapter mAdapter;
+    private InfoBeanAdapter mAdapter;
 
     public CardsFragment() {
     }
@@ -45,13 +45,13 @@ public class CardsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Realm realm = Realm.getDefaultInstance();
-        mAdapter = new RecyclerViewAdapter(realm.where(InfoBean.class).findAllAsync());
+        mAdapter = new InfoBeanAdapter(realm.where(InfoBean.class).findAllAsync());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cards, container, false);
+        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         unbinder = ButterKnife.bind(this, view);
         setupRecyclerView();
         return view;

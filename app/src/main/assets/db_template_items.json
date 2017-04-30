@@ -1,0 +1,183 @@
+[
+  {
+    "id": 1,
+    "publisher": {
+      "id": 1,
+      "username": "官方",
+      "avatar": "R.drawable.ic_template"
+    },
+    "title":"12306火车票",
+    "version": "0.1.1",
+    "description": "发自12306官方火车票的通知信息模板",
+    "updateDate": "2017-05-01",
+    "subscriberNum": 51,
+    "starNum": 15,
+    "template": {
+      "type": {
+        "id": 1,
+        "ui": {
+          "resNameEdit": "tv_select_destination"
+        },
+        "conceptDescs": [
+          {
+            "id": 1
+          },
+          {
+            "id": 2
+          },
+          {
+            "id": 3
+          },
+          {
+            "id": 4
+          },
+          {
+            "id": 5
+          },
+          {
+            "id": 6
+          },
+          {
+            "id": 7
+          },
+          {
+            "id": 8
+          }
+        ]
+      },
+      "pattern": "订单(E\\d{9,10}),(\\w+)您已购(\\d+)月(\\d+)日([A-Z]\\d{1,5})次(\\d{1,2})车(\\w+)号([上中下]铺)?([^\\d]+)(\\d{1,2}):(\\d{1,2})开。",
+      "conceptFormats": [
+        {
+          "concept": {
+            "id": 1,
+            "meaning": "order_number"
+          },
+          "formatter": "$1"
+        },
+        {
+          "concept": {
+            "id": 2,
+            "meaning": "passenger"
+          },
+          "formatter": "$2"
+        },
+        {
+          "concept": {
+            "id": 3,
+            "meaning": "date",
+            "resIdName": "tv_start_date"
+          },
+          "formatter": "$3月$4日"
+        },
+        {
+          "concept": {
+            "id": 4,
+            "meaning": "train_number",
+            "resIdName": "tv_travel_number"
+          },
+          "formatter": "$5"
+        },
+        {
+          "concept": {
+            "id": 5,
+            "meaning": "seat_number",
+            "resIdName": "tv_seat_number"
+          },
+          "formatter": "$6车$7号$8"
+        },
+        {
+          "concept": {
+            "id": 6,
+            "meaning": "start_station",
+            "resIdName": "tv_start_station"
+          },
+          "formatter": "$9站"
+        },
+        {
+          "concept": {
+            "id": 7,
+            "meaning": "start_time",
+            "resIdName": "tv_start_time"
+          },
+          "formatter": "${10}:${11}"
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "publisher": {
+      "id": 1,
+      "username": "官方",
+      "avatar": "R.drawable.ic_template"
+    },
+    "title":"12306火车票",
+    "version": "0.1.1",
+    "description": "发自12306官方火车票的通知信息模板",
+    "updateDate": "2017-05-01",
+    "subscriberNum": 51,
+    "starNum": 15,
+    "template": {
+      "type": {
+        "id": 1
+      },
+      "pattern": "订单(E\\d{9,10}),(\\w+)您已购(\\d+)月(\\d+)日([A-Z]\\d{1,5})次(\\d{1,2})车(\\w+)号([上中下]铺)?([^\\d]+)(\\d{1,2}):(\\d{1,2})开。",
+      "conceptFormats": [
+        {
+          "concept": {
+            "id": 1,
+            "meaning": "order_number"
+          },
+          "formatter": "$1"
+        },
+        {
+          "concept": {
+            "id": 2,
+            "meaning": "passenger"
+          },
+          "formatter": "$2"
+        },
+        {
+          "concept": {
+            "id": 3,
+            "meaning": "date",
+            "resIdName": "tv_start_date"
+          },
+          "formatter": "$3月$4日"
+        },
+        {
+          "concept": {
+            "id": 4,
+            "meaning": "train_number",
+            "resIdName": "tv_travel_number"
+          },
+          "formatter": "$5"
+        },
+        {
+          "concept": {
+            "id": 5,
+            "meaning": "seat_number",
+            "resIdName": "tv_seat_number"
+          },
+          "formatter": "$6车$7号$8"
+        },
+        {
+          "concept": {
+            "id": 6,
+            "meaning": "start_station",
+            "resIdName": "tv_start_station"
+          },
+          "formatter": "$9站"
+        },
+        {
+          "concept": {
+            "id": 7,
+            "meaning": "start_time",
+            "resIdName": "tv_start_time"
+          },
+          "formatter": "${10}:${11}"
+        }
+      ]
+    }
+  }
+]

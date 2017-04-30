@@ -1,7 +1,7 @@
 package com.junnanhao.samantha.model.entity;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,8 +14,8 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(fluent = true)
 @Data
-public class Template extends RealmObject {
-    private InfoType type;
-    private String pattern;
-    private RealmList<ConceptFormat> conceptFormats;
+public class User extends RealmObject {
+    @PrimaryKey private long id;
+    private String username;
+    private String avatar;
 }
