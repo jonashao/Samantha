@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_today"
+            android:icon="@drawable/ic_today_black_24dp"
+            android:title="@string/today"/>
+        <item
+            android:id="@+id/nav_trip"
+            android:icon="@drawable/ic_local_airport_black_24dp"
+            android:title="@string/travel"/>
+        <item
+            android:id="@+id/nav_meeting"
+            android:icon="@drawable/ic_work_black_24dp"
+            android:title="@string/invitation"/>
+        <item
+            android:id="@+id/nav_bill"
+            android:icon="@drawable/ic_payment_black_24dp"
+            android:title="@string/finance"/>
+
+        <item
+            android:id="@+id/nav_other"
+            android:icon="@drawable/ic_more_black_24dp"
+            android:title="@string/others"/>
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_templates"
+                android:icon="@drawable/ic_template"
+                android:title="@string/template"/>
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/setting"/>
+        </menu>
+    </item>
+
+</menu>

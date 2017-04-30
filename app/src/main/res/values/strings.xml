@@ -12,4 +12,15 @@
     <string name="delete">delete</string>
     <string name="toast_warn_sms_permission_not_granted">您未授权读取短信，无法帮您处理短信</string>
     <string name="ic_collapse_description">icon collapse</string>
+
+    <string name="today">今天</string>
+    <string name="travel">行程</string>
+    <string name="invitation">邀请</string>
+    <string name="finance">财务</string>
+    <string name="others">其他</string>
+    <string name="template">模板</string>
+    <string name="setting">设置</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="hello_blank_fragment">Hello Blank</string>
+
 </resources>

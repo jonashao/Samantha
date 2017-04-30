@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.realm.Realm;
+import timber.log.Timber;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -29,6 +30,15 @@ public class CardsFragment extends Fragment {
     private RecyclerViewAdapter mAdapter;
 
     public CardsFragment() {
+    }
+
+
+    public static Fragment newInstance() {
+        CardsFragment fragment = new CardsFragment();
+        Bundle args = new Bundle();
+        Timber.d("new cards instance " + fragment.getId());
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
