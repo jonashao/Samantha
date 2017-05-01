@@ -32,5 +32,6 @@
     <string name="template_origin">这是一大段文本，可能转录自一条短信。比如：【大街网】 广州卓越教育培训中心招聘负责人发现您的专业背景很适合，亲自发了一封职位邀请，可优先面试： d-j.me/43On9zm 回复TD退订</string>
     <string name="tag">标记</string>
     <string name="action_next_step">下一步</string>
+    <string name="hint_template_selection_name">给选中的文本取个名字吧...</string>
 
 </resources>

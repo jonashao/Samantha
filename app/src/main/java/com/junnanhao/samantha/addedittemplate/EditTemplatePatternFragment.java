@@ -5,6 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.CharacterStyle;
+import android.text.style.ClickableSpan;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,10 +21,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.templates.TemplatesFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -50,7 +56,7 @@ public class EditTemplatePatternFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add_edit_template, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_template_add_edit, container, false);
         ButterKnife.bind(this, rootView);
 
         editPattern.setCustomSelectionActionModeCallback(callback);
@@ -72,10 +78,26 @@ public class EditTemplatePatternFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            CharacterStyle style;
+            int start = editPattern.getSelectionStart();
+            int end = editPattern.getSelectionEnd();
+            Timber.d("start:%d end:%d", start, end);
+            SpannableStringBuilder ssb = new SpannableStringBuilder(editPattern.getText());
+
             switch (item.getItemId()) {
                 case R.id.tag:
+                    style = new BackgroundColorSpan(getResources().getColor(R.color.green_dark));
+                    ssb.setSpan(style, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                    ssb.setSpan(new ClickableSpan() {
+//                        @Override
+//                        public void onClick(View widget) {
+//                            viewPager.setAdapter(new SectionsPagerAdapter(getChildFragmentManager()));
+//                        }
+//                    }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                    editPattern.setMovementMethod(LinkMovementMethod.getInstance());
+                    editPattern.setText(ssb);
                     viewPager.setAdapter(new SectionsPagerAdapter(getChildFragmentManager()));
-                    mode.finish();//收起操作菜单
+//                    mode.finish();//收起操作菜单
                     break;
             }
             return false;//返回true则系统的"复制"、"搜索"之类的item将无效，只有自定义item有响应
@@ -89,7 +111,7 @@ public class EditTemplatePatternFragment extends Fragment {
 
     private static class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-         SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -103,21 +125,8 @@ public class EditTemplatePatternFragment extends Fragment {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 9;
+            return 3;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-                default:
-                    return "SECTION " + (position + 1);
-            }
-        }
     }
 }

@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -30,8 +31,7 @@ public class EditTemplateSpanFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-
-    @BindView(R.id.section_label) TextView textView;
+    @BindView(R.id.autoCompleteTextView) AutoCompleteTextView autoCompleteTextView;
 
     public EditTemplateSpanFragment() {
     }
@@ -51,10 +51,17 @@ public class EditTemplateSpanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, rootView);
-        textView.setText("label " + getArguments().getInt(ARG_SECTION_NUMBER));
+        int layoutId = R.layout.fragment_template_add_edit_tag;
+        int position = getArguments().getInt(ARG_SECTION_NUMBER);
+        if (position == 1) {
+            layoutId = R.layout.fragment_template_add_edit_tag;
+        }
 
+
+        View rootView = inflater.inflate(layoutId, container, false);
+        ButterKnife.bind(this, rootView);
+        autoCompleteTextView.requestFocus();
+        autoCompleteTextView.setCursorVisible(true);
         return rootView;
     }
 
