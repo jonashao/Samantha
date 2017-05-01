@@ -1,7 +1,6 @@
-package com.junnanhao.samantha.templates;
+package com.junnanhao.samantha.addedittemplate;
 
-import android.content.Intent;
-import android.support.design.widget.TabLayout;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,14 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.addedittemplate.AddEditTemplateActivity;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-public class TemplatesActivity extends AppCompatActivity {
+public class AddEditTemplateActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -34,13 +30,12 @@ public class TemplatesActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private FrameLayout mContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_template);
-        ButterKnife.bind(this);
+        setContentView(R.layout.activity_add_edit_template);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,12 +45,10 @@ public class TemplatesActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, EditTemplatePatternFragment.newInstance(1))
+                .addToBackStack(null)
+                .commit();
 
     }
 
@@ -63,7 +56,7 @@ public class TemplatesActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_template, menu);
+        getMenuInflater().inflate(R.menu.menu_add_edit_template, menu);
         return true;
     }
 
@@ -75,17 +68,11 @@ public class TemplatesActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_next_step) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @OnClick(R.id.fab)
-    void addTemplate() {
-        Intent intent = new Intent(this, AddEditTemplateActivity.class);
-        startActivity(intent);
     }
 
 
@@ -93,7 +80,7 @@ public class TemplatesActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -102,14 +89,14 @@ public class TemplatesActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a TemplatesFragment (defined as a static inner class below).
-            return TemplatesFragment.newInstance(position + 1);
+            // Return a EditTemplatePatternFragment (defined as a static inner class below).
+            return EditTemplatePatternFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 9;
+            return 3;
         }
 
         @Override
@@ -121,9 +108,8 @@ public class TemplatesActivity extends AppCompatActivity {
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
-                default:
-                    return "SECTION " + (position + 1);
             }
+            return null;
         }
     }
 }

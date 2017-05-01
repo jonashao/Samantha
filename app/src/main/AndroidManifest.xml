@@ -31,6 +31,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.junnanhao.samantha.main.MainActivity"/>
         </activity>
+        <activity
+            android:name=".addedittemplate.AddEditTemplateActivity"
+            android:label="@string/title_activity_add_edit_template"
+            android:parentActivityName=".templates.TemplatesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.junnanhao.samantha.templates.TemplatesActivity"/>
+        </activity>
     </application>
 
 </manifest>
