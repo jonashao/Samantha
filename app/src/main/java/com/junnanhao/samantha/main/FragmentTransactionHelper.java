@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.ui.fragment.CardsFragment;
 
@@ -17,6 +18,14 @@ public class FragmentTransactionHelper {
     private FragmentManager manager;
     private int containerId;
     private Fragment current;
+
+    private ImmutableMap<Integer, Integer> resToTypeId = ImmutableMap.of(
+            R.id.nav_today, 0,
+            R.id.nav_trip, 1,
+            R.id.nav_other, 2,
+            R.id.nav_meeting, 3,
+            R.id.nav_bill, 4
+    );
 
     public FragmentTransactionHelper(FragmentManager manager, int containerId) {
         this.manager = manager;
@@ -45,8 +54,9 @@ public class FragmentTransactionHelper {
     }
 
     private Fragment getItem(int itemId) {
-        if (itemId == R.id.nav_today) {
-            return CardsFragment.newInstance();
+        Integer typeId = resToTypeId.get(itemId);
+        if (typeId != null) {
+            return CardsFragment.newInstance(typeId);
         }
         return InfoBaseFragment.newInstance(itemId);
     }

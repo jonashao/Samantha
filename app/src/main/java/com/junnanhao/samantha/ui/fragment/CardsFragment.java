@@ -18,12 +18,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import timber.log.Timber;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class CardsFragment extends Fragment {
+    private static final String ARG_TYPE_ID = "type_id";
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
 
     private Unbinder unbinder;
@@ -33,9 +35,10 @@ public class CardsFragment extends Fragment {
     }
 
 
-    public static Fragment newInstance() {
+    public static Fragment newInstance(int typeId) {
         CardsFragment fragment = new CardsFragment();
         Bundle args = new Bundle();
+        args.putInt(ARG_TYPE_ID, typeId);
         Timber.d("new cards instance " + fragment.getId());
         fragment.setArguments(args);
         return fragment;
@@ -44,8 +47,13 @@ public class CardsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int typeId = getArguments().getInt(ARG_TYPE_ID);
         Realm realm = Realm.getDefaultInstance();
-        mAdapter = new InfoBeanAdapter(realm.where(InfoBean.class).findAllAsync());
+        RealmQuery<InfoBean> query = realm.where(InfoBean.class);
+        if (typeId != 0) {
+            query.equalTo("type.id", typeId);
+        }
+        mAdapter = new InfoBeanAdapter(query.findAllAsync());
     }
 
     @Override
