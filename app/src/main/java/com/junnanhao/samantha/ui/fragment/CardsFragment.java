@@ -59,7 +59,7 @@ public class CardsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+        View view = inflater.inflate(R.layout.layout_recycler_view, container, false);
         unbinder = ButterKnife.bind(this, view);
         setupRecyclerView();
         return view;
@@ -67,7 +67,6 @@ public class CardsFragment extends Fragment {
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        recyclerView.addItemDecoration(new PaddingItemDecoration(getActivity(), PaddingItemDecoration.VERTICAL));
         recyclerView.setAdapter(mAdapter);
     }
 

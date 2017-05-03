@@ -1,9 +1,10 @@
 package com.junnanhao.samantha.addedittemplate;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -11,6 +12,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.CharacterStyle;
 import android.text.style.ClickableSpan;
+import android.util.SparseArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,13 +20,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.model.entity.Concept;
+import com.junnanhao.samantha.model.entity.ConceptDesc;
+import com.junnanhao.samantha.model.entity.ConceptFormat;
+
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 import timber.log.Timber;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,6 +49,15 @@ public class EditTemplatePatternFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     @BindView(R.id.editText_template_pattern) EditText editPattern;
     @BindView(R.id.viewPager_container) ViewPager viewPager;
+    @BindViews({R.id.autoCompleteTextView, R.id.autoCompleteTextView2}) List<AutoCompleteTextView> autoCompleteTextViews;
+    private SparseArray<ConceptFormat> conceptFormatSparseArray = new SparseArray<>(5);
+    private SparseArray<ConceptDesc> conceptDescSparseArray = new SparseArray<>(5);
+    private SpansPagerAdapter pagerAdapter;
+    private int currentKey = 0;
+    private ConceptFormat currentConceptFormat = null;
+    private ConceptDesc currentConceptDesc = null;
+
+    public static final int REQUEST_SMS_SELECT = 16;
 
     public EditTemplatePatternFragment() {
     }
@@ -58,9 +79,55 @@ public class EditTemplatePatternFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_template_add_edit, container, false);
         ButterKnife.bind(this, rootView);
-
+        pagerAdapter = new SpansPagerAdapter();
+        viewPager.setAdapter(pagerAdapter);
         editPattern.setCustomSelectionActionModeCallback(callback);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            editPattern.setCustomInsertionActionModeCallback(insertCallback);
+        }
         return rootView;
+    }
+
+    ActionMode.Callback insertCallback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater menuInflater = mode.getMenuInflater();
+            menuInflater.inflate(R.menu.menu_edit_template_text_selection_insert, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId() == R.id.fromSms) {
+                Intent intent = new Intent(getContext(), SmsSelectActivity.class);
+                startActivityForResult(intent, REQUEST_SMS_SELECT);
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+        }
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_SMS_SELECT) {
+                String body = data.getExtras().getString(SmsSelectActivity.EXTRA_SMS_BODY);
+                if (body != null && body.length() > 0) {
+                    editPattern.setText(body);
+                }
+            }
+        }
     }
 
     ActionMode.Callback callback = new ActionMode.Callback() {
@@ -81,22 +148,36 @@ public class EditTemplatePatternFragment extends Fragment {
             CharacterStyle style;
             int start = editPattern.getSelectionStart();
             int end = editPattern.getSelectionEnd();
-            Timber.d("start:%d end:%d", start, end);
+            currentKey = (start << 16) | end;
+            currentConceptFormat = conceptFormatSparseArray.get(currentKey);
+            currentConceptDesc = conceptDescSparseArray.get(currentKey);
+
             SpannableStringBuilder ssb = new SpannableStringBuilder(editPattern.getText());
 
             switch (item.getItemId()) {
                 case R.id.tag:
                     style = new BackgroundColorSpan(getResources().getColor(R.color.green_dark));
                     ssb.setSpan(style, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    ssb.setSpan(new ClickableSpan() {
-//                        @Override
-//                        public void onClick(View widget) {
-//                            viewPager.setAdapter(new SectionsPagerAdapter(getChildFragmentManager()));
-//                        }
-//                    }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    editPattern.setMovementMethod(LinkMovementMethod.getInstance());
+                    ssb.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+                            setCurrentSpan(currentConceptFormat, currentConceptDesc);
+                        }
+                    }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    editPattern.setMovementMethod(LinkMovementMethod.getInstance());
                     editPattern.setText(ssb);
-                    viewPager.setAdapter(new SectionsPagerAdapter(getChildFragmentManager()));
+
+                    if (currentConceptFormat == null) {
+                        currentConceptFormat = new ConceptFormat();
+                        conceptFormatSparseArray.put(currentKey, currentConceptFormat);
+                    }
+                    if (currentConceptDesc == null) {
+                        currentConceptDesc = new ConceptDesc();
+                        conceptDescSparseArray.put(currentKey, currentConceptDesc);
+                    }
+
+                    setCurrentSpan(currentConceptFormat, currentConceptDesc);
+
 //                    mode.finish();//收起操作菜单
                     break;
             }
@@ -109,23 +190,54 @@ public class EditTemplatePatternFragment extends Fragment {
     };
 
 
-    private static class SectionsPagerAdapter extends FragmentPagerAdapter {
+    private void setCurrentSpan(ConceptFormat format, ConceptDesc desc) {
+        if (format != null && format.concept() != null && format.concept().meaning() != null) {
+            Timber.d("set span | currentConceptFormat:%s", currentConceptFormat);
+            autoCompleteTextViews.get(0).setText(format.concept().meaning());
+        } else {
+            autoCompleteTextViews.get(0).setText("");
+        }
 
-        SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+        if (desc != null && desc.property() != null) {
+            autoCompleteTextViews.get(1).setText(desc.property());
+        } else {
+            autoCompleteTextViews.get(1).setText(getText(R.string.hint_template_selection_meta));
+        }
+    }
+
+    @OnTextChanged(R.id.autoCompleteTextView)
+    void updateMeaning(CharSequence charSequence) {
+        Timber.d("text changed:%s", charSequence.toString());
+        Timber.d("currentConceptFormat:%s", currentConceptFormat);
+        if (currentConceptFormat != null && charSequence.length() > 0) {
+            currentConceptFormat.concept(new Concept().meaning(charSequence.toString()));
+        }
+    }
+
+    private static class SpansPagerAdapter extends PagerAdapter {
+
+
+        SpansPagerAdapter() {
         }
 
         @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a TemplatesFragment (defined as a static inner class below).
-            return EditTemplateSpanFragment.newInstance(position + 1);
+        public Object instantiateItem(ViewGroup container, int position) {
+            return container.getChildAt(position);
+        }
+
+        public void initAutoEditText(AutoCompleteTextView autoCompleteTextView) {
+            autoCompleteTextView.requestFocus();
+            autoCompleteTextView.setCursorVisible(true);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 2;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
         }
 
     }

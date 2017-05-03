@@ -40,6 +40,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.junnanhao.samantha.templates.TemplatesActivity"/>
         </activity>
+        <activity
+            android:name=".addedittemplate.SmsSelectActivity"
+            android:parentActivityName=".addedittemplate.AddEditTemplateActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.junnanhao.samantha.addedittemplate.AddEditTemplateActivity"/>
+        </activity>
     </application>
 
 </manifest>

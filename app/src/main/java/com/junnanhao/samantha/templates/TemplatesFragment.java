@@ -56,7 +56,7 @@ public class TemplatesFragment extends Fragment implements TemplatesContract.Vie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+        View rootView = inflater.inflate(R.layout.layout_recycler_view, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
         Bundle arguments = getArguments();
