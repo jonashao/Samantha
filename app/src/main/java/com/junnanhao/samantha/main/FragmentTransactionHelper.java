@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.ui.fragment.CardsFragment;
+import com.junnanhao.samantha.info.InfoFragment;
 
 /**
  * Created by Jonas on 2017/4/27.
@@ -56,7 +56,7 @@ public class FragmentTransactionHelper {
     private Fragment getItem(int itemId) {
         Integer typeId = resToTypeId.get(itemId);
         if (typeId != null) {
-            return CardsFragment.newInstance(typeId);
+            return InfoFragment.newInstance(typeId);
         }
         return InfoBaseFragment.newInstance(itemId);
     }

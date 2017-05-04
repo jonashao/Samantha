@@ -2,12 +2,12 @@ package com.junnanhao.samantha.app;
 
 import android.app.Application;
 
-import com.junnanhao.samantha.model.entity.Concept;
-import com.junnanhao.samantha.model.entity.ConceptDesc;
-import com.junnanhao.samantha.model.entity.InfoType;
+import com.junnanhao.samantha.model.entity.concept.Concept;
+import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
+import com.junnanhao.samantha.model.entity.infoType.InfoType;
 import com.junnanhao.samantha.model.entity.SenderBook;
 import com.junnanhao.samantha.model.entity.Synonyms;
-import com.junnanhao.samantha.model.entity.TemplateItem;
+import com.junnanhao.samantha.model.entity.template.TemplateItem;
 
 import java.io.IOException;
 import java.io.InputStream;

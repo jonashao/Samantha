@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.model.entity.Template;
-import com.junnanhao.samantha.model.entity.TemplateItem;
+import com.junnanhao.samantha.model.entity.template.Template;
+import com.junnanhao.samantha.model.entity.template.TemplateItem;
 
 import java.util.List;
 

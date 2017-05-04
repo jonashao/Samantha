@@ -18,9 +18,9 @@ package com.junnanhao.samantha.templates;
 
 import android.support.annotation.NonNull;
 
-import com.junnanhao.samantha.base.BasePresenter;
-import com.junnanhao.samantha.base.BaseView;
-import com.junnanhao.samantha.model.entity.Template;
+import com.junnanhao.samantha.app.base.BasePresenter;
+import com.junnanhao.samantha.app.base.BaseView;
+import com.junnanhao.samantha.model.entity.template.Template;
 
 import java.util.List;
 

@@ -4,12 +4,12 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 import com.junnanhao.samantha.BuildConfig;
-import com.junnanhao.samantha.model.entity.Concept;
-import com.junnanhao.samantha.model.entity.ConceptDesc;
-import com.junnanhao.samantha.model.entity.InfoType;
+import com.junnanhao.samantha.model.entity.concept.Concept;
+import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
+import com.junnanhao.samantha.model.entity.infoType.InfoType;
 import com.junnanhao.samantha.model.entity.SenderBook;
 import com.junnanhao.samantha.model.entity.Synonyms;
-import com.junnanhao.samantha.model.entity.TemplateItem;
+import com.junnanhao.samantha.model.entity.template.TemplateItem;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import java.io.IOException;

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.Raw;
-import com.junnanhao.samantha.ui.utils.PaddingItemDecoration;
+import com.junnanhao.samantha.info.utils.PaddingItemDecoration;
 import com.junnanhao.samantha.workflow.scanner.SmsScanner;
 
 import java.util.List;

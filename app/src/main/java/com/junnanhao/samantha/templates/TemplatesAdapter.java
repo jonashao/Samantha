@@ -1,6 +1,5 @@
 package com.junnanhao.samantha.templates;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.model.entity.TemplateItem;
-import com.junnanhao.samantha.ui.adapter.BaseAdapter;
+import com.junnanhao.samantha.model.entity.template.TemplateItem;
+import com.junnanhao.samantha.info.adapter.BaseAdapter;
 
 import butterknife.BindView;
 import io.realm.OrderedRealmCollection;

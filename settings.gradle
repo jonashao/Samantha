@@ -1,1 +1,1 @@
-include ':app', ':samanthaviews'
+include ':app', ':samanthaviews', ':swipe'

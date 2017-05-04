@@ -1,6 +1,10 @@
 package com.junnanhao.samantha.model.entity;
 
 
+import com.junnanhao.samantha.model.entity.concept.Concept;
+import com.junnanhao.samantha.model.entity.concept.ConceptValue;
+import com.junnanhao.samantha.model.entity.infoType.InfoType;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

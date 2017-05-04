@@ -2,7 +2,7 @@ package com.junnanhao.samantha.templates;
 
 import android.support.annotation.NonNull;
 
-import com.junnanhao.samantha.model.entity.Template;
+import com.junnanhao.samantha.model.entity.template.Template;
 
 /**
  * Created by Jonas on 2017/4/30.

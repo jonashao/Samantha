@@ -1,7 +1,7 @@
 package com.junnanhao.samantha.workflow.extractor;
 
-import com.junnanhao.samantha.model.entity.ConceptDesc;
-import com.junnanhao.samantha.model.entity.ConceptValue;
+import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
+import com.junnanhao.samantha.model.entity.concept.ConceptValue;
 import com.junnanhao.samantha.model.entity.InfoBean;
 
 import java.util.List;

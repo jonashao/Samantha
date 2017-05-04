@@ -1,10 +1,9 @@
 package com.junnanhao.samantha;
 
 import com.google.common.base.Joiner;
-import com.junnanhao.samantha.model.entity.Concept;
-import com.junnanhao.samantha.model.entity.ConceptDesc;
+import com.junnanhao.samantha.model.entity.concept.Concept;
+import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samantha.model.entity.Synonyms;
 import com.junnanhao.samantha.workflow.extractor.ConceptsExtractor;
 import com.junnanhao.samantha.workflow.extractor.Extractor;
 
