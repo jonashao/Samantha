@@ -22,18 +22,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samantha.info.adapter.holder.InfoBeanViewHolder;
 import com.junnanhao.samantha.info.adapter.holder.StripViewHolder;
 import com.junnanhao.samantha.info.adapter.holder.TicketViewHolder;
+import com.junnanhao.samantha.model.entity.InfoBean;
+import com.junnanhao.samantha.info.adapter.holder.InfoBeanViewHolder;
 
 
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
-import io.realm.Realm;
-import io.realm.RealmModel;
 
-import static com.junnanhao.samanthaviews.R.layout.preview_strip;
+import static com.junnanhao.samantha.R.layout.preview_strip;
+import static com.junnanhao.samanthaviews.R.layout.train_ticket_card;
 
 
 public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
@@ -51,6 +50,7 @@ public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
 
         switch (viewType) {
             case 1: // train ticket
+                inflater.inflate(train_ticket_card,layoutPreview,true);
                 viewHolder = new TicketViewHolder(view);
                 break;
             case 2:
@@ -65,6 +65,7 @@ public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
 
     @Override
     public void onBindViewHolder(InfoBeanViewHolder holder, int position) {
+
         if (getData() != null) {
             InfoBean bean = getData().get(position);
             if (bean != null) {
@@ -73,6 +74,12 @@ public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
         }
     }
 
+
+    @Override
+    public void onViewRecycled(InfoBeanViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.clear();
+    }
 
     @Override
     public int getItemViewType(int position) {

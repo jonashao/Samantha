@@ -2,6 +2,7 @@ package com.junnanhao.samantha.info.adapter.holder;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.model.entity.ConceptUiMapper;
 import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.model.struct.MetaInfo;
@@ -25,14 +27,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmList;
 
 public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
-    @BindView(R.id.cell)  FoldingCell cell;
-    @BindView(R.id.detail)  LinearLayout layoutDetail;
-    @BindView(R.id.preview) ConstraintLayout layoutPreview;
+    @BindView(R.id.cell) FoldingCell cell;
+    @BindView(R.id.detail) LinearLayout layoutDetail;
+    @Nullable
+    @BindView(R.id.preview)
+    ConstraintLayout layoutPreview;
     @BindView(R.id.tv_detail_title) TextView tvDetailTitle;
     @BindView(R.id.tv_detail_title_content) TextView tvDetailTitleContent;
-    @BindView(R.id.list_meta_info)  RecyclerView rvMetaInfo;
+    @BindView(R.id.list_meta_info) RecyclerView rvMetaInfo;
     protected Context context;
     private MetaInfoAdapter metaInfoAdapter;
     private List<MetaInfo> metaInfoList;
@@ -76,6 +82,7 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
     @SuppressWarnings("unchecked")
     public void bindData(InfoBean bean) {
         this.metaInfoList.clear();
+        tvDetailTitle.setText(bean.valueOfUi("title"));
 
         for (ConceptDesc desc : bean.type().conceptDescs()) {
 
@@ -91,13 +98,16 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
 
         if (isToggleable == null) {
             int detailHeight = layoutDetail.getHeight();
-            int previewHeight = layoutPreview.getHeight();
+            int previewHeight = 0;
+            if (layoutPreview != null) {
+                previewHeight = layoutPreview.getHeight();
+            }
             int p = (previewHeight << 1 - detailHeight);
             isToggleable = (p <= 0);
         }
     }
 
-//    @OnClick(R.id.cell)
+    //    @OnClick(R.id.cell)
     public void foldSwitch() {
         if (isToggleable != null && isToggleable) {
             cell.toggle(false);
@@ -111,4 +121,6 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
             return ButterKnife.findById(cell, id);
         } else return null;
     }
+
+    public abstract void clear();
 }

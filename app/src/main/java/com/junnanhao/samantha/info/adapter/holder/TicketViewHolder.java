@@ -22,7 +22,6 @@ import static com.junnanhao.samanthaviews.R.layout.train_ticket_card;
 public class TicketViewHolder extends InfoBeanViewHolder {
     public TicketViewHolder(View itemView) {
         super(itemView);
-        LayoutInflater.from(context).inflate(train_ticket_card, layoutPreview, true);
     }
 
     @NonNull
@@ -74,5 +73,10 @@ public class TicketViewHolder extends InfoBeanViewHolder {
                 }
             }
         }
+    }
+
+    @Override
+    public void clear() {
+
     }
 }

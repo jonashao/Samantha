@@ -23,6 +23,7 @@ public class InfoBean extends RealmObject {
     @PrimaryKey long id;
     private InfoType type;
     private Raw raw;
+    private RealmList<ConceptUiMapper> ui;
     private RealmList<ActionMenuItem> actions;
     private RealmList<ConceptValue> data;
 
@@ -34,4 +35,16 @@ public class InfoBean extends RealmObject {
         }
         return null;
     }
+
+    public String valueOfUi(String name) {
+        for (ConceptUiMapper mapper : ui) {
+            for (View view : mapper.views()) {
+                if (view.name().equals(name)) {
+                    return valueOfConcept(mapper.concept());
+                }
+            }
+        }
+        return "";
+    }
+
 }

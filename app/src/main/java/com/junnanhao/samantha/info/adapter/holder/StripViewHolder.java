@@ -67,7 +67,7 @@ public class StripViewHolder extends InfoBeanViewHolder {
             holder.tvDetailTitle.setText(value);
             Realm realm = Realm.getDefaultInstance();
             Synonyms synonyms = realm.where(Synonyms.class)
-                    .contains("candidates", value)
+                    .contains(Synonyms.FILED_CANDIDATES, value)
                     .findFirst();
 
             if (synonyms != null) {
@@ -133,11 +133,23 @@ public class StripViewHolder extends InfoBeanViewHolder {
         super.bindData(bean);
     }
 
+    @Override
+    public void clear() {
+        ButterKnife.apply(tvsData, TEXT_SETTER, "");
+    }
+
 
     private static final ButterKnife.Setter<TextView, Integer> TEXT_COLOR_SETTER = new ButterKnife.Setter<TextView, Integer>() {
         @Override
         public void set(@NonNull TextView view, Integer value, int index) {
             view.setTextColor(value);
+        }
+    };
+
+    private static final ButterKnife.Setter<TextView, String> TEXT_SETTER = new ButterKnife.Setter<TextView, String>() {
+        @Override
+        public void set(@NonNull TextView view, String value, int index) {
+            view.setText(value);
         }
     };
 

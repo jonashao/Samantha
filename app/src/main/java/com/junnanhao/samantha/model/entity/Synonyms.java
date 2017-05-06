@@ -14,6 +14,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 public class Synonyms extends RealmObject {
+    public static final String FILED_CANDIDATES = "candidates";
+
     @PrimaryKey String identifier;
     String best;
     String candidates;

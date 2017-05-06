@@ -40,5 +40,6 @@
     <string name="sms_content">短信内容</string>
     <string name="deleted">已删除</string>
     <string name="undo">撤销</string>
+    <string name="order_number">订单号</string>
 
 </resources>
