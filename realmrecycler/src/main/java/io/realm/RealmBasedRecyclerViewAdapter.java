@@ -631,9 +631,24 @@ public abstract class RealmBasedRecyclerViewAdapter
      * If it is extended to LinearLayoutWithHeaders, rowWrappers will have to be used.
      */
     public void onItemSwipedDismiss(int position) {
+        if (this.onItemSwipedListener != null) {
+            this.onItemSwipedListener.onItemSwiped(position);
+            return;
+        }
+
         final BaseRealm realm = realmResults.realm;
         realm.beginTransaction();
         realmResults.deleteFromRealm(position);
         realm.commitTransaction();
+    }
+
+    private OnItemSwipedListener onItemSwipedListener;
+
+    public void setOnItemSwipedListener(OnItemSwipedListener onItemSwipedListener) {
+        this.onItemSwipedListener = onItemSwipedListener;
+    }
+
+    public interface OnItemSwipedListener {
+        void onItemSwiped(int position);
     }
 }

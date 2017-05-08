@@ -8,7 +8,6 @@
     <string name="start_station">start station</string>
     <string name="final_station">final station</string>
     <string name="arrow">arrow</string>
-    <string name="archive">archive</string>
     <string name="delete">delete</string>
     <string name="toast_warn_sms_permission_not_granted">您未授权读取短信，无法帮您处理短信</string>
     <string name="ic_collapse_description">icon collapse</string>
@@ -20,6 +19,8 @@
     <string name="others">其他</string>
     <string name="template">模板</string>
     <string name="setting">设置</string>
+    <string name="archive">归档</string>
+
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="hello_blank_fragment">Hello Blank</string>
     <string name="title_activity_template">模板</string>
@@ -42,5 +43,6 @@
     <string name="undo">撤销</string>
     <string name="order_number">订单号</string>
     <string name="works_done">事情都做完了</string>
+    <string name="select_sms">选择短信</string>
 
 </resources>

@@ -42,6 +42,7 @@
         </activity>
         <activity
             android:name=".addedittemplate.SmsSelectActivity"
+            android:label="@string/select_sms"
             android:parentActivityName=".addedittemplate.AddEditTemplateActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

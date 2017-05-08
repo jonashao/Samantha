@@ -40,7 +40,6 @@ public class InfoFragment extends Fragment {
         InfoFragment fragment = new InfoFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_TYPE_ID, typeId);
-        Timber.d("new cards instance " + fragment.getId());
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,9 +50,15 @@ public class InfoFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         int typeId = getArguments().getInt(ARG_TYPE_ID);
         RealmQuery<InfoBean> query = realm.where(InfoBean.class);
-        if (typeId != 0) {
+        if (typeId > 0) {
             query.equalTo("type.id", typeId);
         }
+        if (typeId < 0) {
+            query.equalTo("archived", true);
+        } else {
+            query.equalTo("archived", false);
+        }
+        Timber.d("typeId " + typeId);
         RealmResults<InfoBean> results = query.findAllSorted("id");
         mAdapter = new InfoBeanAdapter(getContext(), results, true, true);
         recyclerView.setAdapter(mAdapter);
@@ -79,8 +84,6 @@ public class InfoFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
 
 
 }

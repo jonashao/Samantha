@@ -26,7 +26,7 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.drawer_layout)  DrawerLayout drawer;
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
 
     private FragmentTransactionHelper transactionHelper;
     private Workflow workflow;
@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            transactionHelper.setCurrentItem(R.id.nav_today);
             return true;
         }
 
@@ -109,6 +108,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_templates) {

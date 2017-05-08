@@ -66,6 +66,11 @@ public class SmsScanner implements Scanner {
     private void start() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         lastReadDate = preferences.getLong(LAST_READ, 0);
+        if (BuildConfig.DEBUG) {
+            Calendar selectAfter = Calendar.getInstance();
+            selectAfter.set(2015, 1, 1);
+            lastReadDate = selectAfter.getTimeInMillis();
+        }
     }
 
     private void end() {
@@ -86,11 +91,6 @@ public class SmsScanner implements Scanner {
         }
 
         String[] selectionArgs = new String[]{Long.toString(lastReadDate)};
-        if (BuildConfig.DEBUG) {
-            Calendar selectAfter = Calendar.getInstance();
-            selectAfter.set(2015, 1, 1);
-            selectionArgs = new String[]{Long.toString(selectAfter.getTimeInMillis())};
-        }
 
         final Cursor cursor = mContext.getContentResolver()
                 .query(SMS_CONTENT, projection, selection, selectionArgs, sortOrder);    // 获取手机短信
@@ -111,7 +111,7 @@ public class SmsScanner implements Scanner {
                         .id(UUID.randomUUID().hashCode())
                         .datetime(new Date(cursor.getLong(dateIndex)))
                         .sender(new Sender().type(Raw.TYPE_SMS).value(cursor.getString(senderIndex)))));
-                System.out.println(data.get(data.size()-1));
+                System.out.println(data.get(data.size() - 1));
 
             }
             cursor.close();

@@ -4,25 +4,29 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_today"
-            android:icon="@drawable/ic_today_black_24dp"
+            android:icon="@drawable/ic_today"
             android:title="@string/today"/>
         <item
             android:id="@+id/nav_trip"
-            android:icon="@drawable/ic_local_airport_black_24dp"
+            android:icon="@drawable/ic_travel"
             android:title="@string/travel"/>
         <item
             android:id="@+id/nav_meeting"
-            android:icon="@drawable/ic_work_black_24dp"
+            android:icon="@drawable/ic_letter"
             android:title="@string/invitation"/>
         <item
             android:id="@+id/nav_bill"
-            android:icon="@drawable/ic_payment_black_24dp"
+            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
             android:title="@string/finance"/>
 
         <item
             android:id="@+id/nav_other"
             android:icon="@drawable/ic_more_black_24dp"
             android:title="@string/others"/>
+        <item
+            android:id="@+id/nav_archive"
+            android:icon="@drawable/ic_archive_black_24dp"
+            android:title="@string/archive"/>
     </group>
 
     <item android:title="Communicate">

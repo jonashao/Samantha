@@ -19,13 +19,15 @@ public class FragmentTransactionHelper {
     private int containerId;
     private Fragment current;
 
-    private ImmutableMap<Integer, Integer> resToTypeId = ImmutableMap.of(
-            R.id.nav_today, 0,
-            R.id.nav_trip, 1,
-            R.id.nav_other, 2,
-            R.id.nav_meeting, 3,
-            R.id.nav_bill, 4
-    );
+    private ImmutableMap<Integer, Integer> resToTypeId = ImmutableMap.<Integer, Integer>builder()
+            .put(R.id.nav_today, 0)
+            .put(R.id.nav_trip, 1)
+            .put(R.id.nav_other, 2)
+            .put(R.id.nav_meeting, 3)
+            .put(R.id.nav_bill, 4)
+            .put(R.id.nav_archive, -1)
+            .build();
+
 
     public FragmentTransactionHelper(FragmentManager manager, int containerId) {
         this.manager = manager;

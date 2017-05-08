@@ -6,6 +6,7 @@ import com.junnanhao.samantha.model.entity.concept.ConceptValue;
 import com.junnanhao.samantha.model.entity.infoType.InfoType;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -29,6 +30,10 @@ public class InfoBean extends RealmObject {
     private Raw raw;
     private RealmList<ActionMenuItem> actions;
     private RealmList<ConceptValue> data;
+    private Date createdTime;
+    private Date startTime;
+    private Date endTime;
+    private boolean archived = false;
 
     public String valueOfConcept(Concept concept) {
         ConceptValue conceptValue = conceptValue(concept);
