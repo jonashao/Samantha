@@ -1,1 +1,1 @@
-include ':app', ':samanthaviews', ':swipe'
+include ':app', ':samanthaviews',  ':realmrecycler'

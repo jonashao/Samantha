@@ -16,74 +16,67 @@
 
 package com.junnanhao.samantha.info.adapter;
 
-import android.support.constraint.ConstraintLayout;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.info.adapter.holder.StripViewHolder;
-import com.junnanhao.samantha.info.adapter.holder.TicketViewHolder;
 import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.info.adapter.holder.InfoBeanViewHolder;
-
+import com.ramotion.foldingcell.FoldingCell;
 
 import butterknife.ButterKnife;
-import io.realm.OrderedRealmCollection;
+import io.realm.RealmResults;
 
 import static com.junnanhao.samantha.R.layout.preview_strip;
-import static com.junnanhao.samanthaviews.R.layout.train_ticket_card;
 
 
 public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
 
-    public InfoBeanAdapter(OrderedRealmCollection<InfoBean> data) {
-        super(data);
+    public InfoBeanAdapter(Context context, RealmResults<InfoBean> realmResults, boolean automaticUpdate, boolean animateResults) {
+        super(context, realmResults, automaticUpdate, animateResults);
     }
 
     @Override
-    public InfoBeanViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public InfoBeanViewHolder onCreateRealmViewHolder(ViewGroup parent, int viewType) {
         InfoBeanViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_info, parent, false);
-        ConstraintLayout layoutPreview = ButterKnife.findById(view, R.id.preview);
+        FoldingCell cell = ButterKnife.findById(view, R.id.cell);
+        View surface;
 
         switch (viewType) {
-            case 1: // train ticket
-                inflater.inflate(train_ticket_card,layoutPreview,true);
-                viewHolder = new TicketViewHolder(view);
-                break;
-            case 2:
-                inflater.inflate(preview_strip, layoutPreview, true);
-                viewHolder = new StripViewHolder(view);
-                break;
+//            case 1: // train ticket
+//                surface = inflater.inflate(train_ticket_card, cell, true);
+//                viewHolder = new TicketViewHolder(view);
+//                break;
             default:
+                surface = inflater.inflate(preview_strip, cell, true);
                 viewHolder = new StripViewHolder(view);
+                break;
         }
+        viewHolder.surface(surface);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(InfoBeanViewHolder holder, int position) {
-
-        if (getData() != null) {
-            InfoBean bean = getData().get(position);
+    public void onBindRealmViewHolder(InfoBeanViewHolder holder, int position) {
+        if (realmResults != null) {
+            InfoBean bean = realmResults.get(position);
             if (bean != null) {
-                holder.bindData(getData().get(position));
+                holder.bindData(bean);
             }
         }
     }
 
-
-    @Override
-    public void onViewRecycled(InfoBeanViewHolder holder) {
-        super.onViewRecycled(holder);
-        holder.clear();
-    }
-
+    
     @Override
     public int getItemViewType(int position) {
-        return getData() != null ? getData().get(position).type().id() : 0;
+        return realmResults!= null ? realmResults.get(position).type().id() : 0;
     }
+
+
 
 }

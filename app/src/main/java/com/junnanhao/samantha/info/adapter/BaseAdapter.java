@@ -8,46 +8,28 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
-import io.realm.Realm;
+import io.realm.RealmBasedRecyclerViewAdapter;
 import io.realm.RealmModel;
 import io.realm.RealmObject;
 import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
+import io.realm.RealmViewHolder;
+import lombok.Setter;
 
 /**
  * Created by Jonas on 2017/3/31.
  * Adapter to bind data to view.
  */
 
-public abstract class BaseAdapter<T extends RealmObject, VH extends BaseAdapter.ViewHolder>
-        extends RealmRecyclerViewAdapter<T, VH> {
+public abstract class BaseAdapter<T extends RealmModel, VH extends BaseAdapter.ViewHolder>
+        extends RealmBasedRecyclerViewAdapter<T, VH> {
 
-    public BaseAdapter(OrderedRealmCollection<T> data) {
-        super(data, false);
-        setHasStableIds(true);
-    }
-
-    @Override
-    public abstract VH onCreateViewHolder(ViewGroup parent, int viewType);
-
-    @Override
-    public abstract void onBindViewHolder(VH holder, int position);
-
-    public void remove(final int position) {
-        if (getData() == null) {
-            return;
-        }
-        Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                final RealmObject t = getData().get(position);
-                t.deleteFromRealm();
-                notifyDataSetChanged();
-            }
-        });
+    public BaseAdapter(Context context, RealmResults<T> realmResults, boolean automaticUpdate, boolean animateResults) {
+        super(context, realmResults, automaticUpdate, animateResults);
     }
 
 
-    public static abstract class ViewHolder extends RecyclerView.ViewHolder {
+    public static abstract class ViewHolder extends RealmViewHolder {
 
         protected Context context;
 
@@ -64,6 +46,8 @@ public abstract class BaseAdapter<T extends RealmObject, VH extends BaseAdapter.
             }
             return id;
         }
-
     }
+
+
+
 }

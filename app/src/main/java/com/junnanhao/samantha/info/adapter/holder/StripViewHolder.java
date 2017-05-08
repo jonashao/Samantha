@@ -24,19 +24,34 @@ import io.realm.Realm;
 
 
 public class StripViewHolder extends InfoBeanViewHolder {
-    @BindView(R.id.layout_title) ConstraintLayout layoutTitle;
-    @BindView(R.id.layout_detail_container) ConstraintLayout detailContainer;
-    @BindView(R.id.ic_preview) ImageView icon;
-    @BindView(R.id.tv_detail_title) TextView tvDetailTitle;
-    @BindView(R.id.tv_detail_title_content) TextView tvDetailTitleContent;
+
     @BindViews({R.id.tv_data, R.id.tv_data_main, R.id.tv_data_second})
     List<TextView> tvsData;
+    @BindViews({R.id.tv_title, R.id.tv_title_main, R.id.tv_subtitle})
+    List<TextView> tvsTitle;
+
+    @BindView(R.id.ic_preview)
+    ImageView icon;
 
     private String typeIdentifier;
-    private long id;
 
     final private SubViewSetter dataSetter = new SubViewSetter(tvsData);
 
+    public void bindData(InfoBean bean) {
+        typeIdentifier = bean.type().name();
+        super.bindData(bean);
+        String title = bean.valueOfUi("title_main");
+        String subtitle = bean.valueOfUi("subtitle");
+        String data = bean.valueOfUi("data");
+        String dataSecond = bean.valueOfUi("data_second");
+        SubViewSetter dataSetter = new SubViewSetter(tvsData);
+        dataSetter.set(new SubViewSetter.Value(true, data));
+        dataSetter.set(new SubViewSetter.Value(false, dataSecond));
+        SubViewSetter titleSetter = new SubViewSetter(tvsTitle);
+        titleSetter.set(new SubViewSetter.Value(true, title));
+        titleSetter.set(new SubViewSetter.Value(false, subtitle));
+        layoutPreview.setBackgroundResource(R.color.deliver);
+    }
 
     private static final Setter<StripViewHolder, String> LOCATION_SETTER = new Setter<StripViewHolder, String>() {
         @Override
@@ -60,6 +75,7 @@ public class StripViewHolder extends InfoBeanViewHolder {
             addMeta(object, value);
         }
     };
+
 
     private static final Setter<StripViewHolder, String> SUBJECT_SETTER = new Setter<StripViewHolder, String>() {
         @Override
@@ -127,11 +143,6 @@ public class StripViewHolder extends InfoBeanViewHolder {
         return setters;
     }
 
-    public void bindData(InfoBean bean) {
-        typeIdentifier = bean.type().name();
-        id = bean.id();
-        super.bindData(bean);
-    }
 
     @Override
     public void clear() {
@@ -152,6 +163,7 @@ public class StripViewHolder extends InfoBeanViewHolder {
             view.setText(value);
         }
     };
+
 
 
 }

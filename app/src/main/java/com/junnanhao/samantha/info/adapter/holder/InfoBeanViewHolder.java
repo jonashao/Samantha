@@ -7,11 +7,13 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.info.utils.SwipeDismissTouchListener;
 import com.junnanhao.samantha.model.entity.ConceptUiMapper;
 import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoBean;
@@ -27,21 +29,25 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 import io.realm.Realm;
 import io.realm.RealmList;
 
 public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
     @BindView(R.id.cell) FoldingCell cell;
     @BindView(R.id.detail) LinearLayout layoutDetail;
-    @Nullable
-    @BindView(R.id.preview)
-    ConstraintLayout layoutPreview;
+    View layoutPreview;
     @BindView(R.id.tv_detail_title) TextView tvDetailTitle;
     @BindView(R.id.tv_detail_title_content) TextView tvDetailTitleContent;
     @BindView(R.id.list_meta_info) RecyclerView rvMetaInfo;
+
+    @BindView(R.id.layout_title) ConstraintLayout layoutTitle;
+    @BindView(R.id.layout_detail_container) ConstraintLayout detailContainer;
+
     protected Context context;
     private MetaInfoAdapter metaInfoAdapter;
     private List<MetaInfo> metaInfoList;
+    private InfoBean bean;
 
     // use identifier to match view
     ImmutableMap<String, Object> views;
@@ -72,15 +78,19 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
         }
     }
 
+    public void surface(View view) {
+        layoutPreview = view;
+    }
+
     @NonNull
     protected abstract ImmutableMap<String, Object> getViews();
 
     @NonNull
     protected abstract ImmutableMap<Long, Setter> getSetters();
 
-
     @SuppressWarnings("unchecked")
     public void bindData(InfoBean bean) {
+        this.bean = bean;
         this.metaInfoList.clear();
         tvDetailTitle.setText(bean.valueOfUi("title"));
 
@@ -123,4 +133,6 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
     }
 
     public abstract void clear();
+
+
 }

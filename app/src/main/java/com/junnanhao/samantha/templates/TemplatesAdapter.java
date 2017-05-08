@@ -1,5 +1,6 @@
 package com.junnanhao.samantha.templates;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.junnanhao.samantha.info.adapter.BaseAdapter;
 
 import butterknife.BindView;
 import io.realm.OrderedRealmCollection;
+import io.realm.RealmResults;
 import timber.log.Timber;
 
 /**
@@ -19,23 +21,22 @@ import timber.log.Timber;
  * Adapter for templates list
  */
 
- class TemplatesAdapter extends BaseAdapter<TemplateItem, TemplatesAdapter.ViewHolder> {
+class TemplatesAdapter extends BaseAdapter<TemplateItem, TemplatesAdapter.ViewHolder> {
 
-    TemplatesAdapter(OrderedRealmCollection<TemplateItem> data) {
-        super(data);
-        Timber.d("adapter size: %d",data.size());
+    public TemplatesAdapter(Context context, RealmResults<TemplateItem> realmResults, boolean automaticUpdate, boolean animateResults) {
+        super(context, realmResults, automaticUpdate, animateResults);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateRealmViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_template, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        if (getData() != null) {
-            TemplateItem template = getData().get(position);
+    public void onBindRealmViewHolder(ViewHolder holder, int position) {
+        if (realmResults != null) {
+            TemplateItem template = realmResults.get(position);
             if (template != null) {
                 holder.title.setText(template.title());
                 holder.version.setText(template.version());
@@ -43,6 +44,7 @@ import timber.log.Timber;
             }
         }
     }
+
 
     static class ViewHolder extends BaseAdapter.ViewHolder {
         @BindView(R.id.img_template_avatar) ImageView avatar;
