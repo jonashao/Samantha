@@ -57,7 +57,6 @@ public class SmsSelectActivity extends AppCompatActivity {
         private SmsCallback callback;
         private PrettyTime prettyTime;
 
-
         Adapter(List<Raw> data, SmsCallback callback) {
             this.data = data;
             this.callback = callback;

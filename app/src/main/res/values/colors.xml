@@ -2,9 +2,13 @@
 <resources>
     <color name="colorPrimary">#000</color>
     <color name="colorPrimaryDark">#000</color>
+    <color name="colorAccent">#FFEB3B</color>
 
-    <color name="white">#F1F8E9</color>
+    <color name="white">#ffffff</color>
     <color name="white_2">#dcedc8</color>
+    <color name="white_3">#F1F8E9</color>
+
+    <color name="black">#000000</color>
 
     <color name="green">#91b54d</color>
     <color name="green_dark">#719234</color>
@@ -15,6 +19,8 @@
     <color name="red_pressed">#FF6666</color>
     <color name="green_normal">#37C000</color>
     <color name="green_pressed">#30A070</color>
+    <color name="green_accent">#64DD17</color>
+
     <color name="purple_normal">#9932CC</color>
     <color name="purple_pressed">#9F79EE</color>
 
