@@ -57,6 +57,7 @@ public class ConceptsExtractor implements Extractor {
 
                 Matcher paraMather = paraPattern.matcher(formatter);
                 while (paraMather.find()) {
+                    // 括号内的内容
                     String groupValue = paraMather.group(1) != null ? paraMather.group(1) : paraMather.group(2);
                     if (groupValue != null && formatter.length() == groupValue.length() + 2) {
                         formatter = groupValue;

@@ -70,16 +70,17 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
 
     void addMeta(String type, String value) {
         MetaInfo meta = new MetaInfo(type, value);
-        if (!metaInfoList.contains(meta)) {
+        if (!metaInfoList.contains(meta) && meta.value() != null && meta.value().length() > 0) {
             metaInfoList.add(meta);
         }
     }
 
     void addMeta(@Nonnull ConceptValue conceptValue) {
-        MetaInfo metaInfo = new MetaInfo(conceptValue);
-        metaInfoList.add(metaInfo);
+        MetaInfo meta = new MetaInfo(conceptValue);
+        if (!metaInfoList.contains(meta) && meta.value() != null && meta.value().length() > 0) {
+            metaInfoList.add(meta);
+        }
     }
-
 
 
     @NonNull

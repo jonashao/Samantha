@@ -11,7 +11,6 @@
     card_view:cardElevation="6dp"
     card_view:cardPreventCornerOverlap="false"
     card_view:cardUseCompatPadding="true"
-    tools:context="com.junnanhao.samantha.info.InfoView"
     tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="0dp">
 
