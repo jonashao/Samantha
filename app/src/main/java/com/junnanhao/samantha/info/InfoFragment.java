@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView;
 import io.realm.Realm;
+import io.realm.RealmBasedRecyclerViewAdapter;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import timber.log.Timber;
@@ -48,7 +49,7 @@ public class InfoFragment extends Fragment {
     public void onStart() {
         super.onStart();
         realm = Realm.getDefaultInstance();
-        int typeId = getArguments().getInt(ARG_TYPE_ID);
+        final int typeId = getArguments().getInt(ARG_TYPE_ID);
         RealmQuery<InfoBean> query = realm.where(InfoBean.class);
         if (typeId > 0) {
             query.equalTo("type.id", typeId);
@@ -59,8 +60,21 @@ public class InfoFragment extends Fragment {
             query.equalTo("archived", false);
         }
         Timber.d("typeId " + typeId);
-        RealmResults<InfoBean> results = query.findAllSorted("id");
+        final RealmResults<InfoBean> results = query.findAllSorted("id");
         mAdapter = new InfoBeanAdapter(getContext(), results, true, true);
+        mAdapter.setOnItemSwipedListener(new RealmBasedRecyclerViewAdapter.OnItemSwipedListener() {
+            @Override
+            public void onItemSwiped(int position) {
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                if (typeId < 0) {
+                    results.deleteFromRealm(position);
+                } else {
+                    results.get(position).archived(true);
+                }
+                realm.commitTransaction();
+            }
+        });
         recyclerView.setAdapter(mAdapter);
     }
 

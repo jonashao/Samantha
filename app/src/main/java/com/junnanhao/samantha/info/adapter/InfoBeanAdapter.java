@@ -29,7 +29,6 @@ import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.info.adapter.holder.InfoBeanViewHolder;
 
 import butterknife.ButterKnife;
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 import static com.junnanhao.samantha.R.layout.preview_strip;
@@ -40,15 +39,6 @@ public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
 
     public InfoBeanAdapter(Context context, final RealmResults<InfoBean> realmResults, boolean automaticUpdate, boolean animateResults) {
         super(context, realmResults, automaticUpdate, animateResults);
-        setOnItemSwipedListener(new OnItemSwipedListener() {
-            @Override
-            public void onItemSwiped(int position) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realmResults.get(position).archived(true);
-                realm.commitTransaction();
-            }
-        });
     }
 
     @Override
