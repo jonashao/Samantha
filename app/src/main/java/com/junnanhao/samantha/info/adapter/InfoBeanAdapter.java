@@ -20,17 +20,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.info.adapter.holder.StripViewHolder;
+import com.junnanhao.samantha.info.adapter.holder.TicketViewHolder;
 import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.info.adapter.holder.InfoBeanViewHolder;
-import com.ramotion.foldingcell.FoldingCell;
 
 import butterknife.ButterKnife;
 import io.realm.RealmResults;
 
 import static com.junnanhao.samantha.R.layout.preview_strip;
+import static com.junnanhao.samantha.R.layout.train_ticket_card;
 
 
 public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
@@ -44,20 +46,17 @@ public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
         InfoBeanViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_info, parent, false);
-        FoldingCell cell = ButterKnife.findById(view, R.id.cell);
-        View surface;
-
+        FrameLayout container = ButterKnife.findById(view, R.id.surface);
         switch (viewType) {
-//            case 1: // train ticket
-//                surface = inflater.inflate(train_ticket_card, cell, true);
-//                viewHolder = new TicketViewHolder(view);
-//                break;
+            case 1: // train ticket
+                inflater.inflate(train_ticket_card, container, true);
+                viewHolder = new TicketViewHolder(view);
+                break;
             default:
-                surface = inflater.inflate(preview_strip, cell, true);
+                inflater.inflate(preview_strip, container, true);
                 viewHolder = new StripViewHolder(view);
                 break;
         }
-        viewHolder.surface(surface);
         return viewHolder;
     }
 
@@ -71,12 +70,11 @@ public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
         }
     }
 
-    
+
     @Override
     public int getItemViewType(int position) {
-        return realmResults!= null ? realmResults.get(position).type().id() : 0;
+        return realmResults != null ? realmResults.get(position).type().id() : 0;
     }
-
 
 
 }

@@ -26,6 +26,11 @@
             android:id="@+id/detail"
             layout="@layout/item_info_detail"/>
 
+        <FrameLayout
+            android:id="@+id/surface"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 
     </com.ramotion.foldingcell.FoldingCell>
 

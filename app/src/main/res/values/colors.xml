@@ -18,12 +18,12 @@
     <color name="purple_normal">#9932CC</color>
     <color name="purple_pressed">#9F79EE</color>
 
-
     <color name="backgroundColor">#dbf2e7</color>
     <color name="backgroundColorPress">#DBDBD3</color>
 
     <color name="dark_gray">#4C535B</color>
     <color name="dark_gray_press">#ff7e8a97</color>
     <color name="yellow">#FFFF00</color>
+    <color name="grey">#607D8B</color>
 
 </resources>

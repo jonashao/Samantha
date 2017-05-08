@@ -2,6 +2,8 @@ package com.junnanhao.samantha.model.struct;
 
 import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.R;
+import com.junnanhao.samantha.model.entity.concept.Concept;
+import com.junnanhao.samantha.model.entity.concept.ConceptValue;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -25,10 +27,23 @@ public class MetaInfo {
         this.value = value;
     }
 
+    public MetaInfo(ConceptValue conceptValue) {
+        Concept concept = conceptValue.concept();
+        value = conceptValue.value();
+        int resId;
+        do {
+            type = concept.meaning();
+            resId = MetaInfo.typeResMap.get(type);
+            concept = concept.parent();
+        } while (resId == 0 && concept != null);
+    }
+
     public static ImmutableMap<String, Integer> typeResMap = ImmutableMap.<String, Integer>builder()
             .put("phone", R.drawable.ic_phone_black_24dp)
             .put("location", R.drawable.ic_location_on_black_24dp)
+            .put("place", R.drawable.ic_location_on_black_24dp)
             .build();
+
 
     public int resId() {
         if (resId == null) {

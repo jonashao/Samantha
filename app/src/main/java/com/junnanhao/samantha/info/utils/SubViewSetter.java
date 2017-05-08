@@ -29,6 +29,9 @@ public class SubViewSetter {
     }
 
     public void set(Value value) {
+        if (value.value == null || value.value.length() <= 0) {
+            return;
+        }
         short which = 0b10;
         String v;
         if (value.isMain) {

@@ -14,6 +14,7 @@
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
+        app:rrvEmptyLayoutId="@layout/layout_no_info"
         app:rrvLayoutType="LinearLayout"
         app:rrvSwipeToDelete="true"/>
 

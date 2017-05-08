@@ -1,6 +1,7 @@
 package com.junnanhao.samantha.model.entity;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,6 +15,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 public class View extends RealmObject {
-    String name;
+    @PrimaryKey String name;
 }
 

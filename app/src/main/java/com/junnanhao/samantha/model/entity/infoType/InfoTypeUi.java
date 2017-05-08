@@ -1,5 +1,8 @@
 package com.junnanhao.samantha.model.entity.infoType;
 
+import com.junnanhao.samantha.model.entity.ConceptUiMapper;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,4 +19,5 @@ public class InfoTypeUi extends RealmObject {
     private String resNameEdit;
     private String layoutName;
     private int color;
+    private RealmList<ConceptUiMapper> viewMap;
 }

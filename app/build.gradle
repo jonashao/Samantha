@@ -83,5 +83,6 @@ dependencies {
     debugCompile 'com.facebook.stetho:stetho:1.4.1'
     debugCompile 'com.uphyca:stetho_realm:2.0.0'
     provided 'org.projectlombok:lombok:1.12.6'
+    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     compile project(path: ':realmrecycler')
 }

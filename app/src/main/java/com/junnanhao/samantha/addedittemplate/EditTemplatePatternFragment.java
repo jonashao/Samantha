@@ -107,7 +107,6 @@ public class EditTemplatePatternFragment extends Fragment {
                 Intent intent = new Intent(getContext(), SmsSelectActivity.class);
                 startActivityForResult(intent, REQUEST_SMS_SELECT);
             }
-
             return false;
         }
 

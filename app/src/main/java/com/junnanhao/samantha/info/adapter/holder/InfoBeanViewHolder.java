@@ -2,21 +2,19 @@ package com.junnanhao.samantha.info.adapter.holder;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.common.collect.ImmutableMap;
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.info.utils.SwipeDismissTouchListener;
-import com.junnanhao.samantha.model.entity.ConceptUiMapper;
 import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
 import com.junnanhao.samantha.model.entity.InfoBean;
+import com.junnanhao.samantha.model.entity.concept.ConceptValue;
 import com.junnanhao.samantha.model.struct.MetaInfo;
 import com.junnanhao.samantha.info.adapter.BaseAdapter;
 import com.junnanhao.samantha.info.adapter.MetaInfoAdapter;
@@ -26,21 +24,20 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTouch;
-import io.realm.Realm;
-import io.realm.RealmList;
+import timber.log.Timber;
 
 public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
     @BindView(R.id.cell) FoldingCell cell;
     @BindView(R.id.detail) LinearLayout layoutDetail;
-    View layoutPreview;
+    @BindView(R.id.surface) FrameLayout layoutPreview;
     @BindView(R.id.tv_detail_title) TextView tvDetailTitle;
     @BindView(R.id.tv_detail_title_content) TextView tvDetailTitleContent;
     @BindView(R.id.list_meta_info) RecyclerView rvMetaInfo;
-
     @BindView(R.id.layout_title) ConstraintLayout layoutTitle;
     @BindView(R.id.layout_detail_container) ConstraintLayout detailContainer;
 
@@ -78,9 +75,12 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
         }
     }
 
-    public void surface(View view) {
-        layoutPreview = view;
+    void addMeta(@Nonnull ConceptValue conceptValue) {
+        MetaInfo metaInfo = new MetaInfo(conceptValue);
+        metaInfoList.add(metaInfo);
     }
+
+
 
     @NonNull
     protected abstract ImmutableMap<String, Object> getViews();
@@ -105,20 +105,25 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
                 setter.set(view, value);
         }
         metaInfoAdapter.notifyDataSetChanged();
-
-        if (isToggleable == null) {
-            int detailHeight = layoutDetail.getHeight();
-            int previewHeight = 0;
-            if (layoutPreview != null) {
-                previewHeight = layoutPreview.getHeight();
-            }
-            int p = (previewHeight << 1 - detailHeight);
-            isToggleable = (p <= 0);
+        if (metaInfoList.size() >= 2) {
+            isToggleable = true;
         }
     }
 
-    //    @OnClick(R.id.cell)
-    public void foldSwitch() {
+
+    private void checkToggleable() {
+        int detailHeight = layoutDetail.getHeight();
+        int previewHeight = 0;
+        if (layoutPreview != null) {
+            previewHeight = layoutPreview.getHeight();
+        }
+        Timber.d("title:%s, detail:%s", previewHeight, detailHeight);
+        int p = (previewHeight << 1 - detailHeight);
+        isToggleable = (p <= 0);
+    }
+
+    @OnClick(R.id.cell)
+    void foldSwitch() {
         if (isToggleable != null && isToggleable) {
             cell.toggle(false);
         }

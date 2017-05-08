@@ -3,6 +3,7 @@ package com.junnanhao.samantha.info.adapter.holder;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.model.entity.Synonyms;
 import com.junnanhao.samantha.info.utils.Setter;
 import com.junnanhao.samantha.info.utils.SubViewSetter;
+import com.junnanhao.samantha.model.entity.concept.ConceptValue;
 import com.junnanhao.samanthaviews.util.ColorUtils;
 
 import java.util.List;
@@ -50,7 +52,21 @@ public class StripViewHolder extends InfoBeanViewHolder {
         SubViewSetter titleSetter = new SubViewSetter(tvsTitle);
         titleSetter.set(new SubViewSetter.Value(true, title));
         titleSetter.set(new SubViewSetter.Value(false, subtitle));
-        layoutPreview.setBackgroundResource(R.color.deliver);
+        String identifier = bean.valueOfUi("identifier");
+        Realm realm = Realm.getDefaultInstance();
+        Synonyms synonyms = realm.where(Synonyms.class)
+                .contains(Synonyms.FILED_CANDIDATES, identifier)
+                .findFirst();
+        if (synonyms != null) {
+            setColorIcon(synonyms.identifier());
+        } else {
+            setColorIcon(typeIdentifier);
+        }
+        realm.close();
+        List<ConceptValue> conceptValues = bean.valuesOfUi("meta");
+        for (ConceptValue conceptValue : conceptValues) {
+            addMeta(conceptValue);
+        }
     }
 
     private static final Setter<StripViewHolder, String> LOCATION_SETTER = new Setter<StripViewHolder, String>() {
@@ -100,8 +116,10 @@ public class StripViewHolder extends InfoBeanViewHolder {
         icon.setImageResource(drawableId);
 
         int colorId = findIdByResName(identifier, "color");
+        int color = ContextCompat.getColor(context, colorId);
         layoutPreview.setBackgroundResource(colorId);
         layoutTitle.setBackgroundResource(colorId);
+        cell.initialize(1000, ColorUtils.darken(color, .7f), 2);
 
         if (colorId != 0 && ColorUtils.isColorDark(context.getResources().getColor(colorId))) {
             ButterKnife.apply(tvsData, TEXT_COLOR_SETTER, Color.WHITE);
@@ -163,7 +181,6 @@ public class StripViewHolder extends InfoBeanViewHolder {
             view.setText(value);
         }
     };
-
 
 
 }
