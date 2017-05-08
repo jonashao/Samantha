@@ -24,9 +24,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.model.entity.Concept;
-import com.junnanhao.samantha.model.entity.ConceptDesc;
-import com.junnanhao.samantha.model.entity.ConceptFormat;
+import com.junnanhao.samantha.model.entity.concept.Concept;
+import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
+import com.junnanhao.samantha.model.entity.template.ConceptFormat;
 
 import java.util.List;
 
@@ -107,7 +107,6 @@ public class EditTemplatePatternFragment extends Fragment {
                 Intent intent = new Intent(getContext(), SmsSelectActivity.class);
                 startActivityForResult(intent, REQUEST_SMS_SELECT);
             }
-
             return false;
         }
 

@@ -1,10 +1,10 @@
 package com.junnanhao.samantha.workflow.extractor;
 
-import com.junnanhao.samantha.model.entity.ConceptFormat;
-import com.junnanhao.samantha.model.entity.ConceptValue;
+import com.junnanhao.samantha.model.entity.template.ConceptFormat;
+import com.junnanhao.samantha.model.entity.concept.ConceptValue;
 import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samantha.model.entity.InfoType;
-import com.junnanhao.samantha.model.entity.Template;
+import com.junnanhao.samantha.model.entity.infoType.InfoType;
+import com.junnanhao.samantha.model.entity.template.Template;
 
 import java.util.ArrayList;
 import java.util.List;

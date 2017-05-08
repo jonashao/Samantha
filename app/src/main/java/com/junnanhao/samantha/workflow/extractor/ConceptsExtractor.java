@@ -1,7 +1,7 @@
 package com.junnanhao.samantha.workflow.extractor;
 
-import com.junnanhao.samantha.model.entity.ConceptDesc;
-import com.junnanhao.samantha.model.entity.ConceptValue;
+import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
+import com.junnanhao.samantha.model.entity.concept.ConceptValue;
 import com.junnanhao.samantha.model.entity.InfoBean;
 
 import java.util.List;
@@ -57,6 +57,7 @@ public class ConceptsExtractor implements Extractor {
 
                 Matcher paraMather = paraPattern.matcher(formatter);
                 while (paraMather.find()) {
+                    // 括号内的内容
                     String groupValue = paraMather.group(1) != null ? paraMather.group(1) : paraMather.group(2);
                     if (groupValue != null && formatter.length() == groupValue.length() + 2) {
                         formatter = groupValue;

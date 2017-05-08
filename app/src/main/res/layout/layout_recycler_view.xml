@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.junnanhao.samantha.ui.fragment.CardsFragment"
+    tools:context="com.junnanhao.samantha.info.InfoFragment"
     tools:showIn="@layout/activity_main">
 
     <android.support.v7.widget.RecyclerView

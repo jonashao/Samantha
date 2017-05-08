@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "concept": {
+      "id": 13
+      //time
+    },
+    "views": [
+      {
+        "name": "data"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "concept": {
+      "id": 14
+      // place
+    },
+    "views": [
+      {
+        "name": "data_second"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "concept": {
+      "id": 12
+      // logistics company name
+    },
+    "views": [
+      {
+        "name": "identifier"
+      },
+      {
+        "name": "detail_title"
+      }
+    ]
+  }
+]

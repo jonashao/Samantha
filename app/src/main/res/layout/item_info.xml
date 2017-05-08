@@ -3,29 +3,34 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="6dp"
     card_view:cardElevation="6dp"
     card_view:cardPreventCornerOverlap="false"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    tools:layout_editor_absoluteX="8dp"
+    tools:layout_editor_absoluteY="0dp">
 
-        <com.ramotion.foldingcell.FoldingCell
-            android:id="@+id/cell"
+    <com.ramotion.foldingcell.FoldingCell
+        android:id="@+id/cell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <include
+            android:id="@+id/detail"
+            layout="@layout/item_info_detail"/>
+
+        <FrameLayout
+            android:id="@+id/surface"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false">
+            android:layout_height="wrap_content"/>
 
-            <include
-                android:id="@+id/detail"
-                layout="@layout/item_info_detail"/>
 
-            <include
-                android:id="@+id/preview"
-                layout="@layout/item_info_preview"/>
-
-        </com.ramotion.foldingcell.FoldingCell>
+    </com.ramotion.foldingcell.FoldingCell>
 
 </android.support.v7.widget.CardView>

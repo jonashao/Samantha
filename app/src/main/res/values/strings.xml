@@ -38,5 +38,9 @@
     <string name="sender">发送者</string>
     <string name="time_demo">12:00</string>
     <string name="sms_content">短信内容</string>
+    <string name="deleted">已删除</string>
+    <string name="undo">撤销</string>
+    <string name="order_number">订单号</string>
+    <string name="works_done">事情都做完了</string>
 
 </resources>

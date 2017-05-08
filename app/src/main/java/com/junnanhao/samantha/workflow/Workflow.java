@@ -3,13 +3,12 @@ package com.junnanhao.samantha.workflow;
 import android.content.Context;
 
 import com.junnanhao.samantha.app.RxBus;
-import com.junnanhao.samantha.model.entity.Concept;
 import com.junnanhao.samantha.model.entity.InfoBean;
-import com.junnanhao.samantha.model.entity.InfoType;
+import com.junnanhao.samantha.model.entity.infoType.InfoType;
 import com.junnanhao.samantha.model.entity.Raw;
 import com.junnanhao.samantha.model.entity.SenderBook;
-import com.junnanhao.samantha.model.entity.Template;
-import com.junnanhao.samantha.util.ClassUtils;
+import com.junnanhao.samantha.model.entity.template.Template;
+import com.junnanhao.samantha.app.util.ClassUtils;
 import com.junnanhao.samantha.workflow.extractor.ConceptsExtractor;
 import com.junnanhao.samantha.workflow.extractor.Extractor;
 import com.junnanhao.samantha.workflow.extractor.TemplateExtractor;

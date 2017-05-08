@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.junnanhao.samantha.R;
-import com.junnanhao.samantha.model.entity.Template;
-import com.junnanhao.samantha.model.entity.TemplateItem;
+import com.junnanhao.samantha.model.entity.template.Template;
+import com.junnanhao.samantha.model.entity.template.TemplateItem;
 
 import java.util.List;
 
@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.realm.Realm;
+import io.realm.RealmResults;
 import timber.log.Timber;
 
 /**
@@ -64,7 +65,10 @@ public class TemplatesFragment extends Fragment implements TemplatesContract.Vie
 
         Realm realm = Realm.getDefaultInstance();
         Timber.d("type:%s", infoType);
-        mAdapter = new TemplatesAdapter(realm.where(TemplateItem.class).equalTo("template.type.id", infoType).findAll());
+        RealmResults<TemplateItem> results = realm.where(TemplateItem.class)
+                .equalTo("template.type.id", infoType)
+                .findAllSorted("id");
+        mAdapter = new TemplatesAdapter(getContext(), results, false, false);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

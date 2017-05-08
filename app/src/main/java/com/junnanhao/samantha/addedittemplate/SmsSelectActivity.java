@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.Raw;
-import com.junnanhao.samantha.ui.utils.PaddingItemDecoration;
+import com.junnanhao.samantha.info.utils.PaddingItemDecoration;
 import com.junnanhao.samantha.workflow.scanner.SmsScanner;
+
+import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.List;
 
@@ -53,10 +55,13 @@ public class SmsSelectActivity extends AppCompatActivity {
     private static class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private List<Raw> data;
         private SmsCallback callback;
+        private PrettyTime prettyTime;
+
 
         Adapter(List<Raw> data, SmsCallback callback) {
             this.data = data;
             this.callback = callback;
+            this.prettyTime = new PrettyTime();
         }
 
         @Override
@@ -71,7 +76,7 @@ public class SmsSelectActivity extends AppCompatActivity {
             String subject = raw.subject();
             String sender = raw.sender().value();
             holder.sender.setText(subject != null ? subject : sender);
-            holder.time.setText(raw.datetime().toString());
+            holder.time.setText(prettyTime.format(raw.datetime()));
             holder.body.setText(raw.body());
         }
 
