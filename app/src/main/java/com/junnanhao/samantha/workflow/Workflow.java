@@ -1,7 +1,10 @@
 package com.junnanhao.samantha.workflow;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
+import com.junnanhao.samantha.BuildConfig;
 import com.junnanhao.samantha.app.RxBus;
 import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.model.entity.infoType.InfoType;
@@ -26,6 +29,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import timber.log.Timber;
 
 public class Workflow {
     private Context mContext;
@@ -41,7 +45,6 @@ public class Workflow {
 
     public void start() {
         setupScanners();
-
         disposable.add(RxBus.get()
                 .toFlowable(ClassUtils.<LinkedList<Raw>>castClass(LinkedList.class))
                 .subscribeOn(Schedulers.computation())
@@ -55,6 +58,15 @@ public class Workflow {
 
     public void stop() {
         disposable.clear();
+        for (Scanner scanner : scanners) {
+            scanner.end();
+        }
+        if (BuildConfig.DEBUG) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.apply();
+        }
     }
 
     private void setupScanners() {
@@ -70,9 +82,9 @@ public class Workflow {
     private LinkedList<Raw> scanSource() {
         LinkedList<Raw> data = new LinkedList<>();
         for (Scanner scanner : scanners) {
-            List<Raw> scanned = scanner.scan();
+            List<Raw> scanned = scanner.scan(false);
             if (scanned != null) {
-                data.addAll(scanner.scan());
+                data.addAll(scanned);
             }
         }
         return data;

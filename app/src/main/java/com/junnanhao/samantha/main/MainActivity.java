@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
 
     private FragmentTransactionHelper transactionHelper;
+
     private Workflow workflow;
 
     @Override
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Timber.d("on create main activity");
+        Timber.d("on create %s", MainActivity.this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity
 
         workflow = new Workflow(this);
         workflow.start();
-
         RxPermissions permissions = new RxPermissions(this);
         permissions.request(Manifest.permission.READ_SMS)
                 .subscribe(new Consumer<Boolean>() {
@@ -80,7 +80,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        workflow.stop();
+        if (workflow != null) {
+            workflow.stop();
+        }
+        Timber.d("on destroy %s", MainActivity.this);
     }
 
     @Override

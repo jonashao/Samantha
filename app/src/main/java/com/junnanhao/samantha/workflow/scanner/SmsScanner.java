@@ -61,9 +61,10 @@ public class SmsScanner implements Scanner {
 
     public SmsScanner(Context context) {
         mContext = context;
+        start();
     }
 
-    private void start() {
+    public void start() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         lastReadDate = preferences.getLong(LAST_READ, 0);
         if (BuildConfig.DEBUG) {
@@ -73,7 +74,7 @@ public class SmsScanner implements Scanner {
         }
     }
 
-    private void end() {
+    public void end() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(LAST_READ, lastReadDate);
@@ -82,8 +83,14 @@ public class SmsScanner implements Scanner {
 
 
     @Override
-    public List<Raw> scan() {
-        start();
+    public List<Raw> scan(boolean scanAll) {
+        Timber.d("lastReadDate:%s", new Date(lastReadDate));
+        if (scanAll) {
+            Calendar selectAfter = Calendar.getInstance();
+            selectAfter.set(2015, 1, 1);
+            lastReadDate = selectAfter.getTimeInMillis();
+        }
+
         int res = mContext.checkCallingOrSelfPermission(Manifest.permission.READ_SMS);
         if (res != PackageManager.PERMISSION_GRANTED) {
             Timber.e("no permission to read sms");
@@ -102,9 +109,9 @@ public class SmsScanner implements Scanner {
             final int bodyIndex = cursor.getColumnIndex("body");
             final int dateIndex = cursor.getColumnIndex("date");
             final int senderIndex = cursor.getColumnIndex("address");
-
-            lastReadDate = System.currentTimeMillis();
-
+            if (scanAll) {
+                lastReadDate = System.currentTimeMillis();
+            }
             while (cursor.moveToNext()) {
                 data.add(splitSubject(new Raw()
                         .body(cursor.getString(bodyIndex))
@@ -116,7 +123,6 @@ public class SmsScanner implements Scanner {
             }
             cursor.close();
         }
-        end();
         return data;
     }
 

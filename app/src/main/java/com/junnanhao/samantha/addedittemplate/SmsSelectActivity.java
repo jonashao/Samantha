@@ -22,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public class SmsSelectActivity extends AppCompatActivity {
 
@@ -34,11 +35,12 @@ public class SmsSelectActivity extends AppCompatActivity {
         setContentView(R.layout.layout_recycler_view);
         ButterKnife.bind(this);
         setupRecyclerView();
+        Timber.d("on create");
     }
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Raw> data = new SmsScanner(this).scan();
+        List<Raw> data = new SmsScanner(this).scan(true);
         recyclerView.addItemDecoration(new PaddingItemDecoration());
         recyclerView.setAdapter(new Adapter(data, new Adapter.SmsCallback() {
             @Override
