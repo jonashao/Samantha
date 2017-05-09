@@ -29,17 +29,16 @@
             android:title="@string/archive"/>
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_templates"
-                android:icon="@drawable/ic_template"
-                android:title="@string/template"/>
-            <item
-                android:id="@+id/nav_setting"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="@string/setting"/>
-        </menu>
-    </item>
+    <group android:id="@+id/nav_settings">
+        <item
+            android:id="@+id/nav_templates"
+            android:icon="@drawable/ic_template"
+            android:title="@string/template"/>
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/setting"/>
+    </group>
+
 
 </menu>
