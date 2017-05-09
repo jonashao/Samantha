@@ -1,8 +1,12 @@
 package com.junnanhao.samantha.info.adapter.holder;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -29,6 +33,7 @@ import javax.annotation.Nonnull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import timber.log.Timber;
 
 public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
@@ -40,11 +45,14 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
     @BindView(R.id.list_meta_info) RecyclerView rvMetaInfo;
     @BindView(R.id.layout_title) ConstraintLayout layoutTitle;
     @BindView(R.id.layout_detail_container) ConstraintLayout detailContainer;
+    @BindView(R.id.tv_origin_text) TextView tvOriginText;
+    @BindView(R.id.layout_detail_content) LinearLayout layoutDetailContent;
 
     protected Context context;
     private MetaInfoAdapter metaInfoAdapter;
     private List<MetaInfo> metaInfoList;
     private InfoBean bean;
+    private int mShortAnimationDuration;
 
     // use identifier to match view
     ImmutableMap<String, Object> views;
@@ -53,12 +61,16 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
     ImmutableMap<Long, Setter> setters;
 
     private Boolean isToggleable = null;
+    private boolean isShowingOriginText = false;
 
     InfoBeanViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
         setupRvMetaInfo();
+        tvOriginText.setVisibility(View.GONE);
+        mShortAnimationDuration = context.getResources().getInteger(
+                android.R.integer.config_shortAnimTime);
     }
 
     private void setupRvMetaInfo() {
@@ -82,7 +94,6 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
         }
     }
 
-
     @NonNull
     protected abstract ImmutableMap<String, Object> getViews();
 
@@ -94,6 +105,7 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
         this.bean = bean;
         this.metaInfoList.clear();
         tvDetailTitle.setText(bean.valueOfUi("title"));
+        tvOriginText.setText(bean.raw().body());
 
         for (ConceptDesc desc : bean.type().conceptDescs()) {
 
@@ -112,6 +124,7 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
     }
 
 
+    @SuppressWarnings("unused")
     private void checkToggleable() {
         int detailHeight = layoutDetail.getHeight();
         int previewHeight = 0;
@@ -123,13 +136,45 @@ public abstract class InfoBeanViewHolder extends BaseAdapter.ViewHolder {
         isToggleable = (p <= 0);
     }
 
-    @OnClick(R.id.cell)
+    @OnClick({R.id.cell, R.id.layout_title})
     void foldSwitch() {
+        if (isShowingOriginText) {
+            crossFading(tvDetailTitle, layoutDetailContent, mShortAnimationDuration);
+            isShowingOriginText = false;
+            return;
+        }
+
         if (isToggleable != null && isToggleable) {
+            tvOriginText.setVisibility(View.GONE);
             cell.toggle(false);
         }
     }
 
+    @OnLongClick(R.id.layout_title)
+    boolean showOriginText() {
+        crossFading(layoutDetailContent, tvOriginText, mShortAnimationDuration);
+        isShowingOriginText = true;
+        return true;
+    }
+
+    private void crossFading(final View from, View to, int duration) {
+        to.setAlpha(0f);
+        to.setVisibility(View.VISIBLE);
+        to.animate()
+                .alpha(1f)
+                .setDuration(duration)
+                .setListener(null);
+
+        from.animate()
+                .alpha(0f)
+                .setDuration(duration)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        from.setVisibility(View.GONE);
+                    }
+                });
+    }
 
     View findViewByResName(String name, String defType) {
         int id = findIdByResName(name, defType);

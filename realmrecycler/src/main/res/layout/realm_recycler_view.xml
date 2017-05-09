@@ -11,7 +11,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rrv_recycler_view"
-            android:scrollbars="vertical"
+            android:scrollbars="none"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:paddingLeft="8dp"

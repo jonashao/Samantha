@@ -18,14 +18,15 @@
 
 
     <!-- Base application theme. -->
-    <style name="CardTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.CardTheme" parent="Theme.AppCompat.Light">
     </style>
 
-
-    <style name="CardTheme.TitleTextStyle" parent="TextAppearance.AppCompat.Title">
+    <style name="AppTheme.CardTheme.Title" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="CardTheme.TitleTextStyle.Light" parent="TextAppearance.AppCompat.Title.Inverse">
+    <style name="AppTheme.CardTheme.Body" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
     </style>
 
 
