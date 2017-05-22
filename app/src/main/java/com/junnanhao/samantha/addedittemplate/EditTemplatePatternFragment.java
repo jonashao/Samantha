@@ -1,17 +1,21 @@
 package com.junnanhao.samantha.addedittemplate;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.CharacterStyle;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.SparseArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -22,11 +26,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.model.entity.concept.Concept;
 import com.junnanhao.samantha.model.entity.concept.ConceptDesc;
 import com.junnanhao.samantha.model.entity.template.ConceptFormat;
+import com.junnanhao.samanthaviews.util.ColorUtils;
 
 import java.util.List;
 
@@ -85,6 +91,12 @@ public class EditTemplatePatternFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             editPattern.setCustomInsertionActionModeCallback(insertCallback);
         }
+
+        ButterKnife.apply(autoCompleteTextViews, new ButterKnife.Setter<AutoCompleteTextView, Object>() {
+            @Override
+            public void set(@NonNull AutoCompleteTextView view, Object value, int index) {
+            }
+        },null );
         return rootView;
     }
 
@@ -144,7 +156,6 @@ public class EditTemplatePatternFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            CharacterStyle style;
             int start = editPattern.getSelectionStart();
             int end = editPattern.getSelectionEnd();
             currentKey = (start << 16) | end;
@@ -155,16 +166,29 @@ public class EditTemplatePatternFragment extends Fragment {
 
             switch (item.getItemId()) {
                 case R.id.tag:
-                    style = new BackgroundColorSpan(getResources().getColor(R.color.green_dark));
-                    ssb.setSpan(style, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    int backgroundColor = getResources().getColor(R.color.green_dark);
+                    final int foregroundColor = ColorUtils.isColorDark(backgroundColor) ? Color.WHITE : Color.BLACK;
+
+                    ssb.setSpan(new BackgroundColorSpan(backgroundColor), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     ssb.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(View widget) {
                             setCurrentSpan(currentConceptFormat, currentConceptDesc);
                         }
+
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+                            ds.setColor(foregroundColor);
+                        }
                     }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                    ssb.setSpan(new ForegroundColorSpan(foregroundColor), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    Timber.d("is span color dark:", ColorUtils.isColorDark(backgroundColor));
+
                     editPattern.setMovementMethod(LinkMovementMethod.getInstance());
                     editPattern.setText(ssb);
+
 
                     if (currentConceptFormat == null) {
                         currentConceptFormat = new ConceptFormat();

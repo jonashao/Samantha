@@ -74,7 +74,7 @@ public class SmsScanner implements Scanner {
         }
     }
 
-    public void end() {
+    public void stop() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(LAST_READ, lastReadDate);

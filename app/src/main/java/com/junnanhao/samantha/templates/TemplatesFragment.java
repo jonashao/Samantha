@@ -66,7 +66,7 @@ public class TemplatesFragment extends Fragment implements TemplatesContract.Vie
         Realm realm = Realm.getDefaultInstance();
         Timber.d("type:%s", infoType);
         RealmResults<TemplateItem> results = realm.where(TemplateItem.class)
-                .equalTo("template.type.id", infoType)
+                .beginsWith("template.type.id", String.valueOf(infoType))
                 .findAllSorted("id");
         mAdapter = new TemplatesAdapter(getContext(), results, false, false);
         recyclerView.setAdapter(mAdapter);

@@ -73,7 +73,7 @@ public class InfoBeanAdapter extends BaseAdapter<InfoBean, InfoBeanViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return realmResults != null ? realmResults.get(position).type().id() : 0;
+        return realmResults != null ? Integer.valueOf(realmResults.get(position).type().id()) : 0;
     }
 
 

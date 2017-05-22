@@ -48,7 +48,7 @@ public class TicketViewHolder extends InfoBeanViewHolder {
             });
         }
 
-        if (bean.type().id() == 1) {
+        if (bean.type().id().matches("1[0-9]*")) {
             tvDetailTitle.setText("火车票");
         }
 

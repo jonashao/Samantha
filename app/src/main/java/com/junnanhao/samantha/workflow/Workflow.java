@@ -29,7 +29,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import timber.log.Timber;
 
 public class Workflow {
     private Context mContext;
@@ -59,7 +58,7 @@ public class Workflow {
     public void stop() {
         disposable.clear();
         for (Scanner scanner : scanners) {
-            scanner.end();
+            scanner.stop();
         }
         if (BuildConfig.DEBUG) {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);

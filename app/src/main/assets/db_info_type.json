@@ -1,4 +1,5 @@
 [
+  //  1开头的为 出行
   {
     "id": 100,
     "name": "train_ticket",
@@ -37,12 +38,9 @@
     "id": 110,
     "name": "hotel"
   },
+  //  2开头的为 生活
   {
     "id": 200,
-    "name": "invitation"
-  },
-  {
-    "id": 300,
     "name": "deliver",
     "conceptDescs": [
       {
@@ -75,5 +73,10 @@
       ]
     },
     "subjects": "顺丰 韵达 EMS 申通 圆通 天天 云喇叭 好递 马上收 爱学派 蜂达达 宅急送"
+  },
+  //  3开头的为 工作
+  {
+    "id": 300,
+    "name": "invitation"
   }
 ]

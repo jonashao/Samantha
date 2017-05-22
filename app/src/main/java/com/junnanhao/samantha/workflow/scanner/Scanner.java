@@ -15,6 +15,6 @@ public interface Scanner {
      * @return a list of raw information scanned from source
      */
     List<Raw> scan(boolean all);
-    void end();
+    void stop();
     void start();
 }

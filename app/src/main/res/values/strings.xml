@@ -33,6 +33,7 @@
     <string name="hint_template_pattern">长按从短信改编模板</string>
     <string name="tag">标记</string>
     <string name="action_next_step">下一步</string>
+    <string name="action_last_step">上一步</string>
     <string name="hint_template_selection_name">给选中的文本取个名字吧...</string>
     <string name="hint_template_selection_meta">这是什么类型的数据呢？时间，地点，编号之类的..</string>
     <string name="edit_from_sms">从短信改编</string>
@@ -44,5 +45,9 @@
     <string name="order_number">订单号</string>
     <string name="works_done">事情都做完了</string>
     <string name="select_sms">选择短信</string>
+    <string name="done">已完成</string>
+    <string name="history_cards">历史卡片</string>
+    <string name="today_todo">今日待办</string>
+    <string name="today_done">今日完成</string>
 
 </resources>

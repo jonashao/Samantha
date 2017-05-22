@@ -1,6 +1,7 @@
 package com.junnanhao.samantha.templates;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.junnanhao.samantha.R;
 import com.junnanhao.samantha.addedittemplate.AddEditTemplateActivity;
@@ -83,9 +85,10 @@ public class TemplatesActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.fab)
-    void addTemplate() {
-        Intent intent = new Intent(this, AddEditTemplateActivity.class);
-        startActivity(intent);
+    void addTemplate(View view) {
+//        Intent intent = new Intent(this, AddEditTemplateActivity.class);
+//        startActivity(intent);
+        Snackbar.make(view,"创建模板成功",Snackbar.LENGTH_SHORT).show();
     }
 
 
@@ -109,18 +112,18 @@ public class TemplatesActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 9;
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "出行";
                 case 1:
-                    return "SECTION 2";
+                    return "生活";
                 case 2:
-                    return "SECTION 3";
+                    return "工作";
                 default:
                     return "SECTION " + (position + 1);
             }

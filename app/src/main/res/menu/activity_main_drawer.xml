@@ -5,28 +5,16 @@
         <item
             android:id="@+id/nav_today"
             android:icon="@drawable/ic_today"
-            android:title="@string/today"/>
+            android:title="@string/today_todo"/>
         <item
-            android:id="@+id/nav_trip"
-            android:icon="@drawable/ic_travel"
-            android:title="@string/travel"/>
+            android:id="@+id/nav_done"
+            android:icon="@drawable/ic_done_black_24dp"
+            android:title="@string/today_done"/>
         <item
-            android:id="@+id/nav_meeting"
-            android:icon="@drawable/ic_letter"
-            android:title="@string/invitation"/>
-        <item
-            android:id="@+id/nav_bill"
-            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:title="@string/finance"/>
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="@string/history_cards"/>
 
-        <item
-            android:id="@+id/nav_other"
-            android:icon="@drawable/ic_more_black_24dp"
-            android:title="@string/others"/>
-        <item
-            android:id="@+id/nav_archive"
-            android:icon="@drawable/ic_archive_black_24dp"
-            android:title="@string/archive"/>
     </group>
 
     <group android:id="@+id/nav_settings">

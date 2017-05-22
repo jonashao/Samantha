@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @Data
 public class TemplateItem extends RealmObject {
-    @PrimaryKey private int id;
+    @PrimaryKey private String id;
     private Template template;
     private User publisher;
     private String title;

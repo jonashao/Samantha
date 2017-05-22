@@ -33,6 +33,7 @@ public class InfoBean extends RealmObject {
     private Date createdTime;
     private Date startTime;
     private Date endTime;
+    private boolean done = false;
     private boolean archived = false;
 
     public String valueOfConcept(Concept concept) {

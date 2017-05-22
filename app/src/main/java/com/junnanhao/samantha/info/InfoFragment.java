@@ -13,6 +13,8 @@ import com.junnanhao.samantha.model.entity.InfoBean;
 import com.junnanhao.samantha.info.adapter.InfoBeanAdapter;
 
 
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -54,10 +56,15 @@ public class InfoFragment extends Fragment {
         if (typeId > 0) {
             query.equalTo("type.id", typeId);
         }
-        if (typeId < 0) {
-            query.equalTo("archived", true);
-        } else {
-            query.equalTo("archived", false);
+        if (typeId == -1) {
+            query.equalTo("done", true);
+        }
+        if (typeId == 0) {
+            query.equalTo("done", false);
+        }
+        if (typeId == -2) {
+            Date date = new Date();
+            query.isNotNull("endTime").lessThan("endTime", date.getTime());
         }
         Timber.d("typeId " + typeId);
         final RealmResults<InfoBean> results = query.findAllSorted("id");
@@ -70,7 +77,7 @@ public class InfoFragment extends Fragment {
                 if (typeId < 0) {
                     results.deleteFromRealm(position);
                 } else {
-                    results.get(position).archived(true);
+                    results.get(position).done(true);
                 }
                 realm.commitTransaction();
             }
