@@ -57,6 +57,10 @@ public class FragmentTransactionHelper {
         fragmentTransaction.commit();
     }
 
+    public Fragment getCurrent() {
+        return current;
+    }
+
     private Fragment getItem(int itemId) {
         Integer typeId = resToTypeId.get(itemId);
         if (typeId != null) {

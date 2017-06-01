@@ -19,6 +19,7 @@ import com.junnanhao.samantha.workflow.scanner.Scanner;
 import com.junnanhao.samantha.workflow.scanner.SmsScanner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -107,7 +108,7 @@ public class Workflow {
                     Extractor extractor = new TemplateExtractor(next);
                     InfoBean infoBean = extractor.extract(raw.body());
                     if (infoBean != null) {
-                        beans.add(infoBean.raw(raw));
+                        beans.add(infoBean.raw(raw).createdTime(new Date()));
                         break;
                     }
                 }
@@ -123,7 +124,7 @@ public class Workflow {
                         Extractor extractor = new ConceptsExtractor(infoType.conceptDescs());
                         InfoBean infoBean = extractor.extract(raw.body());
                         if (infoBean != null) {
-                            beans.add(infoBean.raw(raw).type(infoType));
+                            beans.add(infoBean.raw(raw).type(infoType).createdTime(new Date()));
                             break;
                         }
                     }

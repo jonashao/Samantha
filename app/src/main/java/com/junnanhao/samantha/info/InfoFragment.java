@@ -64,7 +64,7 @@ public class InfoFragment extends Fragment {
         }
         if (typeId == -2) {
             Date date = new Date();
-            query.isNotNull("endTime").lessThan("endTime", date.getTime());
+            query.isNotNull("endTime").lessThan("endTime", date);
         }
         Timber.d("typeId " + typeId);
         final RealmResults<InfoBean> results = query.findAllSorted("id");

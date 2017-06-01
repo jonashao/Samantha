@@ -49,5 +49,6 @@
     <string name="history_cards">历史卡片</string>
     <string name="today_todo">今日待办</string>
     <string name="today_done">今日完成</string>
+    <string name="search_hint">搜索...</string>
 
 </resources>
